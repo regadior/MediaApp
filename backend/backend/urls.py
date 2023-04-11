@@ -16,7 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from mediaapp import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/user/register', views.register, name='register'),
+    path('api/user/login', views.login, name='login'),
 ]

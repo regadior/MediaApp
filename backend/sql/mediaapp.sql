@@ -7,10 +7,10 @@ use mediaapp;
 #CREACIÓN DE UNA TABLA USUARIO CON ID_ROL COMO FK
 create table usuario(
     id_usuario int auto_increment primary key,
-    nombre varchar(50) not null,
-    apellido varchar(100) not null,
+    name varchar(50) not null,
+    apells varchar(100) not null,
     nick varchar(50) not null unique,
-    mail varchar(256) not null unique,
+    email varchar(256) not null unique,
     contraseña varchar(3000) not null,
     descripcion varchar(3000),
     img_perfil varchar(500),
@@ -21,7 +21,7 @@ create table usuario(
 #CREACIÓN DE UNA TABLA ROL_USUARIO
 create table rol_usuario(
     id_rol int auto_increment primary key,
-    nombre varchar(50) not null,
+    name varchar(50) not null,
     descripcion varchar(100) not null
 );
 
@@ -61,12 +61,12 @@ ADD
 
 #INSERTADOS TODOS LOS TIPOS DE USUARIO QUE EXISTEN Y UNA DESCRIPCIÓN
 INSERT INTO
-    `mediaapp`.`rol_usuario` (`id_rol`, `nombre`, `descripcion`)
+    `mediaapp`.`rol_usuario` (`id_rol`, `name`, `descripcion`)
 VALUES
     ('1', 'admin', 'Tiene todos los permisos');
 
 INSERT INTO
-    `mediaapp`.`rol_usuario` (`id_rol`, `nombre`, `descripcion`)
+    `mediaapp`.`rol_usuario` (`id_rol`, `name`, `descripcion`)
 VALUES
     (
         '2',
@@ -75,6 +75,6 @@ VALUES
     );
 
 INSERT INTO
-    `mediaapp`.`rol_usuario` (`id_rol`, `nombre`, `descripcion`)
+    `mediaapp`.`rol_usuario` (`id_rol`, `name`, `descripcion`)
 VALUES
     ('3', 'user', 'Usuario normal');
