@@ -1,0 +1,133 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.Register {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(#141e30, #243b55);
+}
+
+.Register_form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: rgba(0, 0, 0, .5);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, .6);
+    border-radius: 5px;
+    padding: 40px;
+    width: 400px;
+}
+
+.Register_form>h2 {
+    color: #fff;
+    text-align: center;
+    margin-bottom: 30px;
+}
+/* INICIO ESTILOS PARA REDIRIGIR AL FORMULARIO */
+.Register_cuenta {
+    font-size: 10px;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+
+}
+
+.Register_cuenta>.header_Link {
+    margin-left: 5px;
+    font-size: 12px;
+    color: #67c2ff;
+}
+
+/* FIN ESTILOS PARA REDIRIGIR AL FORMULARIO */
+
+
+.Register_box {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 9%;
+    /* border: 1px solid red; */
+}
+
+/* INICIO ESTILOS PARA LOS INPUT */
+.Register_box>input {
+    border: none;
+    border-bottom: 1px solid #fff;
+    background-color: transparent;
+    outline: none;
+    color: #fff;
+    padding: 1px 2px 9px 2px;
+}
+
+/* FIN ESTILOS PARA LOS INPUT */
+
+
+
+/* INICIO CREAR EFECTO DE LAS LETRAS ALEJANDOSE */
+
+.Register_box label {
+    color: #fff;
+    position: absolute;
+    pointer-events: none;
+    font-size: 16px;
+    transition: .4s;
+    top: -5px;
+}
+
+.Register_box input:focus~label,
+.Register_box input:valid~label {
+    top: -20px;
+    left: 0;
+    color: #0394f4;
+    font-size: 12px;
+}
+
+/* FIN CREAR EFECTO DE LAS LETRAS ALEJANDOSE */
+
+/* INICIO DAR ESTILOS AL BOTON */
+
+.Register_boton {
+    display: flex;
+    justify-content: center;
+}
+
+.Register_boton input:hover {
+    box-shadow:
+        0 0 0px #013050,
+        0 0 4px #00243b,
+        0 0 9px #00375c,
+        0 0 15px #005892;
+}
+
+.Register_boton input[type="submit"] {
+    color: #fff;
+    background-color: #0394f4;
+    font-weight: bold;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 2px;
+}
+
+
+/* FIN DAR ESTILOS AL BOTON */
+
+
+/* INICIO PARA DAR ESTILOS A LOS ERRORES DE EL FORMULARIO */
+.Register_error_sesion{
+    color: #790e0e;
+    font-size: 12px;
+}
+
+
+/* FIN PARA DAR ESTILOS A LOS ERRORES DE EL FORMULARIO */
