@@ -31,7 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'mediaapp.apps.MediaappConfig',#necesario para las tablas
+    'users.apps.UsersConfig',
+    #'mediaapp.apps.MediaappConfig',#necesario para las tablas
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
