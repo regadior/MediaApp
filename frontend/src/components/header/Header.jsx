@@ -3,10 +3,9 @@ import { Link } from 'react-router-dom'
 import logo from '../../assets/Logo.png'
 import usuarionolog from '../icons/usuarionolog.png'
 import './Header.css'
-function Header({ logged }) {
-  let usuario = "prueba";
+function Header({ logged, onClickLogout }) {
+  let usuario = "regadior";
   return (
-
     <header>
       <div className='header2'>
         <div className='header_logo'>
@@ -18,7 +17,10 @@ function Header({ logged }) {
         </ul>
         <div className='header_perfil'>
           {logged ? (
-            <Link className='header_Link header_login1' to={`/${usuario}`}><img src={usuarionolog} alt="User avatar" /></Link>
+            <>
+              <Link className='header_Link header_login1' to={`/profile/${usuario}`}><img src={usuarionolog} alt="User avatar" /></Link>
+              <div onClick={onClickLogout}>logout</div>
+            </>
           ) : (
             <Link className='header_Link header_login2' to={`/login`}>Login</Link>
           )}
