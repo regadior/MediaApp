@@ -18,7 +18,7 @@ def generate_session_token(usuario):
     issued_at = datetime.datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.%fZ') # fecha de creación del session_token
     expires_at = (datetime.datetime.utcnow() + datetime.timedelta(minutes=30)).strftime('%Y-%m-%dT%H:%M:%S.%fZ') # fecha de expiración del session_token
     payload = {
-        'user_id': usuario.id_usuario,
+        'user_id': usuario.user_id,
         'username': usuario.nick,
         'name': usuario.name,
         'apells': usuario.apells,
@@ -125,19 +125,10 @@ def login(request):
             if hash_password(pass1) != user.contraseña:
                 return JsonResponse({'error': 'Password is invalid'}, status=401)
             #ENVIA EL session_token DE SESION CON UN 200 OK EN UN JSON
-            return JsonResponse({'session_token': generate_session_token(user)}, status=200)
+            return JsonResponse({'session_token': generate_session_token(user),
+                                 'user_id': user.user_id}, status=200)
         except Usuario.DoesNotExist:
             return JsonResponse({'error': 'Username does not exist'}, status=400)
-    return HttpResponse(status=405)
-
-#VISTA PARA CERRAR SESIÓN DE UN USUARIO AL ENDPOINT http://localhost:8000/api/user/logout
-@csrf_exempt
-def logout(request):
-    if request.method == 'POST':
-        # Elimina el session_token de sesión del usuario
-        response = JsonResponse({'OK': 'Successfully logged out'}, status=200)
-        response.delete_cookie('session_session_token')
-        return response
     return HttpResponse(status=405)
 
 #VISTA PARA OBTENER INFO DE UN USUARIO AL ENDPOINT http://localhost:8000/api/user/logout
