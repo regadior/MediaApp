@@ -7,26 +7,11 @@ import RegisterPage from './pages/session/register/RegisterPage';
 import Header from './components/header/Header';
 import ProfilePage from './pages/profile/ProfilePage';
 function App() {
-  const [logged, setLogged] = useState(false);
 
-  // Verificar si el usuario ha iniciado sesión al cargar la aplicación
-  let token = window.localStorage.getItem('session_token');
-  useEffect(() => {
-    if (token) {
-      setLogged(true);
-    } else {
-      setLogged(false);
-    }
-  }, [token]);
-
-  function handleClickLogout() {
-    window.localStorage.removeItem("session_token");
-    setLogged(false);
-  }
 
   return (
     <>
-      <Header logged={logged} onClickLogout={handleClickLogout} />
+      <Header />
         <Routes>
           <Route path='/login' element={<LoginPage />} />
           <Route path='/register' element={<RegisterPage />} />
