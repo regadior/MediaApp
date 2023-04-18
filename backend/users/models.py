@@ -19,7 +19,7 @@ class RolUsuario(models.Model):
 
 
 class Usuario(models.Model):
-    id_usuario = models.AutoField(primary_key=True)
+    user_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50)
     apells = models.CharField(max_length=100)
     nick = models.CharField(unique=True, max_length=50)

@@ -4,29 +4,47 @@ from django.views.decorators.csrf import csrf_exempt
 import hashlib
 import jwt
 import json
+import datetime #Para obtener fecha sistema
 import re #Módulo de Python que proporciona soporte para expresiones regulares
 from django.http import JsonResponse, HttpResponse #importamos para poder responder con json o http
 # Create your views here.
-
+secret = 'secreto'
 #FUNCION PARA HASHEAR LA CONTRASEÑA
 def hash_password(pass1):
     return hashlib.sha256(pass1.encode()).hexdigest()
 
-#FUNCION QUE GENERA UN TOKEN DE SESIÓN
-def generate_token(usuario):
+#FUNCION QUE GENERA UN session_token DE SESIÓN
+def generate_session_token(usuario):
+    issued_at = datetime.datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.%fZ') # fecha de creación del session_token
+    expires_at = (datetime.datetime.utcnow() + datetime.timedelta(minutes=30)).strftime('%Y-%m-%dT%H:%M:%S.%fZ') # fecha de expiración del session_token
     payload = {
-        'user_id': usuario.id_usuario,
+        'user_id': usuario.user_id,
         'username': usuario.nick,
         'name': usuario.name,
         'apells': usuario.apells,
-        'email': usuario.email
+        'email': usuario.email,
+        'issued_at': issued_at,
+        'expires_at': expires_at
     }
-    secret = 'secreto'
-    token = jwt.encode(payload, secret, algorithm='HS256')
-    token = token.decode('utf-8')
-    return token
+    session_token = jwt.encode(payload, secret, algorithm='HS256')
+    session_token = session_token.decode('utf-8')
+    return session_token
+#FUNCION QUE VALIDA UN session_token DE SESIÓN
+def validate_session_token(session_token):
+    if not session_token:
+        return JsonResponse({'error': 'Token not exists.'}, status=401)
+    if not session_token.startswith('Bearer '):
+        return JsonResponse({'error': 'token needs to start with Bearer.'}, status=401)
+    try:
+        # Si el token no se puede decodificar correctamente, se levanta una excepción para indicar que es inválido
+        payload = jwt.decode(session_token, secret, algorithms=['HS256'])
+    except jwt.DecodeError:
+        return JsonResponse({'error': 'cannot decode correctly'}, status=401)
+        # Verificar si el token ha expirado
+    if 'expires_at' in payload and payload['expires_at'] < datetime.datetime.utcnow():
+        return JsonResponse({'error': 'session token expired.'}, status=401)
 
-#VISTA PARA REGISTRAR A UN USUARIO AL ENDPOINT http://localhost:8000/api/user/register/
+#VISTA PARA REGISTRAR A UN USUARIO AL ENDPOINT http://localhost:8000/api/user/register
 @csrf_exempt
 def register(request):
     if request.method == 'POST':
@@ -93,7 +111,7 @@ def register(request):
         return JsonResponse({'OK': 'Successfully registered user'}, status=200)
     return HttpResponse(status=405)
 
-#VISTA PARA INICIAR SESION DE UN USUARIO AL ENDPOINT http://localhost:8000/api/user/login/
+#VISTA PARA INICIAR SESION DE UN USUARIO AL ENDPOINT http://localhost:8000/api/user/login
 @csrf_exempt
 def login(request):
     if request.method == 'POST':
@@ -103,12 +121,21 @@ def login(request):
         try:
             #SE COMPRUEBA QUE EL USUARIO EXISTA SEGUN SU NOMBRE DE USUARIO
             user = Usuario.objects.get(nick=nick)
-            print(user)
             #SE COMPRUBA QUE LA CONTRASEÑA ALMACENADA ES IGUAL A LA INTRODUCIDA
             if hash_password(pass1) != user.contraseña:
                 return JsonResponse({'error': 'Password is invalid'}, status=401)
-            #ENVIA EL TOKEN DE SESION CON UN 200 OK EN UN JSON
-            return JsonResponse({'session_token': generate_token(user)}, status=200)
+            #ENVIA EL session_token DE SESION CON UN 200 OK EN UN JSON
+            return JsonResponse({'session_token': generate_session_token(user),
+                                 'user_id': user.user_id}, status=200)
         except Usuario.DoesNotExist:
             return JsonResponse({'error': 'Username does not exist'}, status=400)
     return HttpResponse(status=405)
+
+#VISTA PARA OBTENER INFO DE UN USUARIO AL ENDPOINT http://localhost:8000/api/user/logout
+@csrf_exempt
+def userdata(request):
+    if request.method == 'GET':
+        # Obtener el session_token de la cabecera Authorization
+        session_token = request.META.get('HTTP_AUTHORIZATION')
+        validate_session_token(session_token)
+        return HttpResponse(status=405)

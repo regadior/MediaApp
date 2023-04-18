@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';//Para redirigir a una direccion sijn actualizar
 import { Link } from 'react-router-dom'
 import './Register.css';
-function Register() {
+export default function RegisterPage() {
   const navigate = useNavigate();
   const [error1, setError1] = useState("");
   const [error2, setError2] = useState("");
@@ -143,5 +143,3 @@ function Register() {
     </div>
   )
 }
-
-export default Register;

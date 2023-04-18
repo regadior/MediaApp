@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';//Para redirigir a una direccion sijn actualizar
 import { Link } from 'react-router-dom'
 import './Login.css';
-function Login() {
+export default function LoginPage() {
     const navigate = useNavigate();
     const [error1, setError1] = useState("");
     const [error2, setError2] = useState("");
@@ -39,7 +39,9 @@ function Login() {
                 nick,
                 pass1,
             });
-            localStorage.setItem("session_token", res.data.session_token); //Se almacena el token de sesion en el localstorage
+            window.localStorage.setItem("session_token", res.data.session_token); //Se almacena el token de sesion en el localstorage
+            window.localStorage.setItem("user_id", res.data.user_id);
+            console.log(res.data.user_id);
             navigate("/"); //Redirigir a /
         } catch (err) {
             if (err.response) {
@@ -80,5 +82,3 @@ function Login() {
         </div>
     )
 }
-
-export default Login;

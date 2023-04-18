@@ -6,7 +6,7 @@ use mediaapp;
 
 #CREACIÓN DE UNA TABLA USUARIO CON ID_ROL COMO FK
 create table usuario(
-    id_usuario int auto_increment primary key,
+    user_id int auto_increment primary key,
     name varchar(50) not null,
     apells varchar(100) not null,
     nick varchar(50) not null unique,
