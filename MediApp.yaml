@@ -1,0 +1,787 @@
+#security:
+ # - BearerAuth: [] para añadir sec a los endpoints
+ #que endpoints hay que crear en una aplicacion para poder tener una barra de buscar usuarios por nombre  en la app donde los enpoint Rest estan creados con Django
+openapi: 3.0.3
+info:
+  title: Swagger MediApp - OpenAPI 3.0
+  description: >-
+    Descripción
+  version: 1.0.0
+  x-app-version: 1.0.0
+servers:
+  - url: http://localhost:8000/    # The "url: " prefix is required
+security:
+  - BearerAuth: []    
+tags:
+  - name: Authentication
+    description: Login and register users
+  - name: Healt
+    description: Status and health check
+  - name: User
+    description: User management for a user
+  - name: Games Saved
+    description: Games Saved management for a User
+paths:
+#Authend
+  /api/auth/register:
+    post:
+      tags:
+        - Authentication
+      summary: User register
+      description: Endpoint to perform a user register
+      operationId: register
+      requestBody:
+        description: Create a new user
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegister'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSuccessfullyAuth'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+  /api/auth/login:
+    post:
+      tags:
+        - Authentication
+      summary: User login
+      description: Endpoint to perform a user login
+      operationId: login
+      requestBody:
+        description: Credentials to login
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCredentials'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSuccessfullyAuth'
+
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+#Userend
+  /api/users/{userId}:
+    get:
+      tags:
+        - User
+      summary: Get User data by userId
+      description: Endpoint to perform a user data search
+      operationId: GetUserByUsername
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: userId
+          description: Numeric ID of the user who owns the book
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthenticatedUserData'
+
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+    put:
+      tags:
+        - User
+      summary: Update own User
+      description: Endpoint to perform a user update
+      operationId: UpdateOwnUser
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: userId
+          description: Numeric ID of the user who owns the book
+          schema:
+            type: integer
+          required: true
+      responses:
+        '204':
+          description: No Content
+
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+    patch:
+      summary: Update a User field
+      tags:
+        - User
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: userId
+          description: Numeric ID of the user who owns the book
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        description: Credentials to update a User field
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/PatchOperation'
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request - Missing or incorrect parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '401':
+          description: Unauthorized - Invalid sessionToken
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '404':
+          description: NotFound - User or book does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+  /api/users/search:
+    get:
+      tags:
+        - User
+      summary: Get User data by querry parameter
+      description: Endpoint to perform a user data search
+      operationId: GetUserByQuerry
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: query
+          in: query
+          description: Parameter to search Users
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchUser'
+
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+#Gameend
+  /api/users/{userId}/games/{gameId}/savegame:
+    post:
+      tags:
+        - Games Saved
+      summary: Create a SaveGame
+      description: Endpoint to Create a SaveGame
+      operationId: AddSaveGame
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: userId
+          description: Numeric ID of the user who is going to store the game
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: gameId
+          description: Numeric ID of the game you want to store
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Add SaveGame
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserSavegameNoId'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSavegame'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+  /api/users/{userId}/savegames:
+    get:
+      tags:
+        - Games Saved
+      summary: Get all User SaveGames By userId
+      description: Endpoint to Get all User SaveGames
+      operationId: GetAllSaveGames
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: userId
+          description: Numerical ID of the user who wants to get All savagames
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AllUserSavegame'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+  /api/games/{gameId}/savegames:
+    get:
+      tags:
+        - Games Saved
+      summary: Get details User SaveGame By gameId
+      description: Endpoint to Get details for a User SaveGame By gameId
+      operationId: GetSaveGameByGameId
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: gameId
+          description: Numeric ID of the game you want to get
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSavegame'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+  /api/users/{userId}/games/{gameId}/savegame/{savegameId}:
+    put:
+      tags:
+        - Games Saved
+      summary: Update a SaveGame
+      description: Endpoint to Update a SaveGame
+      operationId: UpdateSaveGame
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: userId
+          description: Numeric ID of the user who is going to store the game
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: gameId
+          description: Numeric ID of the game you want to store
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: savegameId
+          description: Numeric ID of the savegame you nedd to update
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Update SaveGame
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SaveUserSavegame'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSavegame'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+  /api/users/{userId}/games/{gameId}/wishlist:
+    patch:
+      tags:
+        - Games Saved
+      summary: Modify if the game is on the wishlist
+      description: Endpoint to modify if the game is wishlisted, true is add and false is remove
+      operationId: AddGameToWishlist
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: userId
+          description: Numeric ID of the user who is going to store the game
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: gameId
+          description: Numeric ID of the game you want to store
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Add Game to wishlist
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchOperationGameWishlist'
+        required: true
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+  /api/users/{userId}/games/{gameId}/favorites:
+    patch:
+      tags:
+        - Games Saved
+      summary: Modify if the game is in favorites
+      description: Endpoint to if the game is in favorites, true is yes and false is no
+      operationId: AddGameToFavorites
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: userId
+          description: Numeric ID of the user who is going to store the game
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: gameId
+          description: Numeric ID of the game you want to store
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Add Game to favorites
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchOperationGameFavorites'
+        required: true
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+  /api/users/{userId}/games/{gameId}/punctuation:
+    patch:
+      tags:
+        - Games Saved
+      summary: Modify game punctuation
+      description: Endpoint to modify game punctuation min 0.00 max 10.00
+      operationId: AddGameGameScore
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: userId
+          description: Numeric ID of the user who is going to store the game
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: gameId
+          description: Numeric ID of the game you want to store
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Add Game Punctuation
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchOperationGamePunctuation'
+        required: true
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+components:
+  schemas:
+    UserRegister:
+      type: object
+      properties:
+        name:
+          type: string
+        surenames:
+          type: string
+        username:
+          type: string
+        email:
+          type: string
+          format: email
+        password1:
+          type: string
+        password2:
+          type: string
+    UserSuccessfullyAuth:
+      type: object
+      properties:
+        userId:
+          type: integer
+          format: integer
+        name:
+          type: string
+        surenames:
+          type: string
+        username:
+          type: string
+        email:
+          type: string
+          format: email
+        rol:
+          type: array
+          items:
+            type: string
+            enum: ["user", "mod", "admin"]
+    AuthenticatedUserData:
+      type: object
+      properties:
+        userId:
+          type: integer
+          format: integer
+        name:
+          type: string
+        surenames:
+          type: string
+        username:
+          type: string
+        email:
+          type: string
+          format: email
+        description:
+          type: string
+        rol:
+          type: array
+          items:
+            type: string
+            enum: ["user", "mod", "admin"]
+        singUpDate:
+          type: string
+          format: date
+        imgprofile:
+          type: string
+        imgbanner:
+          type: string
+    SearchUser:
+      type: object
+      properties:
+        wishlist:
+          type: boolean
+        username:
+          type: string
+        email:
+          type: string
+          format: email
+        imgprofile:
+          type: string
+        imgbanner:
+          type: string
+    SaveUserSavegame:
+      type: object
+      properties:
+        savegameName:
+          type: string
+        saveDate:
+          type: string
+          format: date
+        gameStateId:
+          type: integer
+        description:
+          type: string
+    AllUserSavegame:
+      type: array
+      items:
+        type: object
+        properties:
+          userGameSave_id:
+            type: integer
+          userId:
+            type: integer
+          gameId:
+            type: integer
+          savegameName:
+            type: string
+          saveDate:
+            type: string
+            format: date
+          gameStateId:
+            type: integer
+          description:
+            type: string
+    UserSavegame:
+      type: object
+      properties:
+        userGameSave_id:
+          type: integer
+        userId:
+          type: integer
+        gameId:
+          type: integer
+        savegameName:
+          type: string
+        saveDate:
+          type: string
+          format: date
+        gameStateId:
+          type: integer
+        description:
+          type: string
+    UserSavegameNoId:
+      type: object
+      properties:
+        userId:
+          type: integer
+        gameId:
+          type: integer
+        savegameName:
+          type: string
+        saveDate:
+          type: string
+          format: date
+        gameStateId:
+          type: integer
+        description:
+          type: string
+    UserCredentials:
+      type: object
+      properties:
+        username:
+          type: string
+          example: prueba1
+        password:
+          type: string
+          example: 12345678
+    PatchOperation:
+      type: object
+      properties:
+        op:
+          type: string
+          example: replace
+        path:
+          type: string
+          example: /name
+        value:
+          type: string
+          example: prueba2
+    PatchOperationGameWishlist:
+      type: object
+      properties:
+        op:
+          type: string
+          example: replace
+        path:
+          type: string
+          example: /wishlist
+        value:
+          type: string
+          example: true
+    PatchOperationGameFavorites:
+      type: object
+      properties:
+        op:
+          type: string
+          example: replace
+        path:
+          type: string
+          example: /favorites
+        value:
+          type: string
+          example: true
+    PatchOperationGamePunctuation:
+      type: object
+      properties:
+        op:
+          type: string
+          example: replace
+        path:
+          type: string
+          example: /punctuation
+        value:
+          type: string
+          example: true
+    ExceptionResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          default: 418
+          multipleOf: 1
+          enum:
+            - 202
+            - 502
+            - 400
+            - 409
+            - 100
+            - 201
+            - 417
+            - 424
+            - 403
+            - 504
+            - 410
+            - 505
+            - 418
+            - 419
+            - 507
+            - 500
+            - 411
+            - 423
+            - 420
+            - 405
+            - 301
+            - 302
+            - 207
+            - 300
+            - 511
+            - 204
+            - 203
+            - 406
+            - 404
+            - 501
+            - 304
+            - 200
+            - 206
+            - 402
+            - 308
+            - 412
+            - 428
+            - 102
+            - 407
+            - 431
+            - 408
+            - 413
+            - 414
+            - 416
+            - 205
+            - 303
+            - 503
+            - 101
+            - 307
+            - 429
+            - 401
+            - 451
+            - 422
+            - 415
+            - 305
+            - 421
+        code:
+          type: string
+          default: im_a_teapot
+        message:
+          type: string
+          default: I'm a teapot
+        appVersion:
+          type: string
+          default: 1.0.0
+  securitySchemes:
+    BearerAuth:
+      description: >-
+        A valid Access Token is required to access protected resources. To
+        obtain one, simply authenticate to the API through the authentication
+        endpoint. If the authentication is successful, an Access Token and a
+        Refresh Token will be returned. 
+
+          Sample username and password to use on ```/api/login``` endpoint: ```rodringRN``` / ```pass1234```
+      type: http
+      scheme: bearer
+    OpenID:
+      type: openIdConnect
+      openIdConnectUrl: https://example.com/.well-known/openid-configuration
