@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  db:
+    image: yobasystems/alpine-mariadb:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: mediapp_dev
+    ports:
+      - 3306:3306
+    volumes:
+      - dbdata:/var/lib/mysql
+volumes:
+  dbdata:
