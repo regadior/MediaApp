@@ -1,5 +1,6 @@
 import express from "express";
 import path from "path";
+import "reflect-metadata";
 import { AppDataSource, initializeAppDataSource } from "./db/database"; // importa la conexión desde el archivo database.ts
 import { UserController } from "./user/api_rest/controller/UserController";
 // Create Express server
