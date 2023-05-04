@@ -1,0 +1,53 @@
+Terminar swagger specify
+colocar bien arquitectura hexagonal 
+
+css specify graph Generator
+
+404 si un recurso no existe.
+400 si recibimos una request mal formada.
+401 si no esta autorizado para hacer la request.
+500 si algo rompe de forma inesperada.
+
+en el post devolvemos el recurso en lugar del location
+Los patch no devuelven el recurso patcheado
+En un put se devuelve No Content
+si el delete no se ha ejecutado devolver un 202 y si se ejecuta un 204
+No usar CammelCAse usar -
+
+@dataclass en python se usa como l dependencia lombok en java es decir generar getters y setters
+Intalar attr para mapperar/convertir objetos de una clase a otra 
+La capa de application trabaja con entities
+se recibe un dto se convierte a una entidad se hace logica de negocio con esa y despues se pasa a modelo que interactua con la base de datos
+Pydantic es una librería de Python que se utiliza para la validación y serialización de datos.
+
+No voy a usar Django porque no es tan flexible con la estructura para crear una estructura hexagonal
+
+Proyecto backend con nodejs Express y typscript Base de datos usada mariadb
+modulos usados:
+No puedo usar prisma porque estoy desarrolando desde una RSP4 y tiene arquitectura arm7
+Prisma: Se va a usar de ORM (Similar a jpa) npm install @prisma / npm install @prisma/client para poder ejecutarlo en typscript // npm install @prisma/mariadb-client --save-dev // npx prisma generate
+
+TypeORM: Se va a usar de ORM npm install typeorm mariadb
+
+
+Mariadb: para la base de datos
+
+La aplicacion esta dockerizada usando docker y docker-compose
+
+
+ME encontre con un problema usando typscript porque tenia que configurar con: "experimentalDecorators": true
+Problema para implementar la interfaz de userRepository
+
+Para generar constructores getters y setters: 
+
+
+Usar npm install ts-mapstruct para mapear objetos
+
+Para cerrar puerto: sudo fuser -k 8000/tcp
+
+
+Para actualizar ultima version de las dependencias: npm install -g npm-check-updates // ncu -u // npm install
+
+
+
+
