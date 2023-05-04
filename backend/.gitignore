@@ -2,7 +2,7 @@
 .env
 
 # Dependency directory
-node_modules
+/node_modules
 
 # Ignore built ts files
 dist
