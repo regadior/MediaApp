@@ -1,7 +1,6 @@
 import { Repository } from "typeorm";
 import { User } from "../orm/User";
 import { AppDataSource } from "../../../db/database";
-
 export class UserOrmRepository{
     private repository: Repository<User>;
     constructor() {

@@ -1,5 +1,4 @@
 import { UserRolEntity } from "./UserRolEntity";
-
 export class UserEntity {
   userId: number;
   name: string;
