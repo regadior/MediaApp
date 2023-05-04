@@ -42,3 +42,12 @@ Para generar constructores getters y setters:
 
 
 Usar npm install ts-mapstruct para mapear objetos
+
+Para cerrar puerto: sudo fuser -k 8000/tcp
+
+
+Para actualizar ultima version de las dependencias: npm install -g npm-check-updates // ncu -u // npm install
+
+
+
+
