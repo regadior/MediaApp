@@ -1,29 +1,27 @@
-#security:
- # - BearerAuth: [] para añadir sec a los endpoints
- #que endpoints hay que crear en una aplicacion para poder tener una barra de buscar usuarios por nombre  en la app donde los enpoint Rest estan creados con Django
 openapi: 3.0.3
 info:
-  title: Swagger MediApp - OpenAPI 3.0
+  title: Swagger Book Swap - OpenAPI 3.0
   description: >-
-    Descripción
+    BookSwapHub is an online platform that unites book enthusiasts for
+    exchanging physical or digital books. With an engaging interface, it
+    encourages reading and collaboration through book searches, swap requests,
+    and a community space for sharing insights and reviews. BookSwapHub turns
+    discovering your next favorite read into a social adventure.
   version: 1.0.0
   x-app-version: 1.0.0
 servers:
-  - url: http://localhost:8000/    # The "url: " prefix is required
-security:
-  - BearerAuth: []    
+  - url: http://localhost:8080/
 tags:
   - name: Authentication
     description: Login and register users
-  - name: Healt
-    description: Status and health check
   - name: User
-    description: User management for a user
-  - name: Games Saved
-    description: Games Saved management for a User
+    description: User management
+  - name: Book
+    description: Book management
+  - name: Swap
+    description: Swap management
 paths:
-#Authend
-  /api/auth/register:
+  /api/register:
     post:
       tags:
         - Authentication
@@ -43,14 +41,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserSuccessfullyAuth'
+                $ref: '#/components/schemas/User'
         '400':
           description: Bad Request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExceptionResponse'
-  /api/auth/login:
+  /api/login:
     post:
       tags:
         - Authentication
@@ -62,7 +60,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserCredentials'
+              $ref: '#/components/schemas/Credentials'
         required: true
       responses:
         '200':
@@ -70,8 +68,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserSuccessfullyAuth'
-
+               $ref: '#/components/schemas/UserSuccessfullyLogged'
         '400':
           description: Bad Request
           content:
@@ -84,62 +81,102 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExceptionResponse'
-#Userend
-  /api/users/{userId}:
+  /api/users:
     get:
-      tags:
-        - User
-      summary: Get User data by userId
-      description: Endpoint to perform a user data search
-      operationId: GetUserByUsername
       security:
         - BearerAuth: []
+      summary: Get a user by query
+      tags:
+        - User
       parameters:
-        - in: path
-          name: userId
-          description: Numeric ID of the user who owns the book
+        - in: query
+          name: username
+          description: Username of the user to get
           schema:
-            type: integer
-          required: true
+            type: string
       responses:
         '200':
-          description: Ok
+          description: Returns the user
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AuthenticatedUserData'
-
-        '400':
-          description: Bad Request
+                $ref: '#/components/schemas/User'
+        '401':
+          description: Unauthorized - sessionToken incorrecta
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExceptionResponse'
+        '404':
+          description: NotFound - User or book does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+  /api/users/{userId}:
+    get:
+      security:
+        - BearerAuth: []
+      tags:
+        - User
+      summary: Obtain user by Id
+      description: Endpoint to obtain a user by Id
+      operationId: getUsersById
+      parameters:
+        - name: userId
+          in: path
+          description: Id of user to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1346984104
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '404':
+          description: Not Found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExceptionResponse'
     put:
-      tags:
-        - User
-      summary: Update own User
-      description: Endpoint to perform a user update
-      operationId: UpdateOwnUser
       security:
         - BearerAuth: []
+      tags:
+        - User
+      summary: Update a user by Id
+      description: Endpoint to update a user by Id
+      operationId: updateUserById
       parameters:
-        - in: path
-          name: userId
-          description: Numeric ID of the user who owns the book
+        - name: userId
+          in: path
+          description: Id of user to update
+          required: true
           schema:
             type: integer
-          required: true
+            format: int64
+            example: 1346984104
+      requestBody:
+        description: User updated
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
       responses:
         '204':
           description: No Content
-
         '400':
           description: Bad Request
           content:
@@ -152,12 +189,273 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExceptionResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
     patch:
-      summary: Update a User field
-      tags:
-        - User
       security:
         - BearerAuth: []
+      tags:
+        - User
+      summary: Update a user by Id
+      description: Endpoint to make a partial update of the user by Id
+      operationId: partialUpdateUserById
+      parameters:
+        - name: userId
+          in: path
+          description: Id of user to update
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1346984104
+      requestBody:
+        description: User updated
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/PatchOperation'
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+    delete:
+      security:
+        - BearerAuth: []
+      tags:
+        - User
+      summary: Delete a user bu Id
+      description: Endpoint to delete a user by id
+      operationId: deleteUserById
+      parameters:
+        - name: userId
+          in: path
+          description: Id of user to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1346984104
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+  /api/users/{userId}/books:
+    post:
+      security:
+        - BearerAuth: []
+      summary: Create a new book
+      tags:
+        - Book
+      parameters:
+        - in: path
+          name: userId
+          description: Numeric ID of the user to get
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Book'
+      responses:
+        '201':
+          description: Book created successfully
+          content:
+            application/json:
+              schema:
+                 $ref: '#/components/schemas/Book'
+        '400':
+          description: Bad Request - Missing or incorrect parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '401':
+          description: Unauthorized - Invalid sessionToken
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '404':
+          description: NotFound - User ID does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+    get:
+      security:
+        - BearerAuth: []
+      summary: Get all the books of a user
+      tags:
+        - Book
+      parameters:
+        - in: path
+          name: userId
+          description: Numeric ID of the user to get
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Returns a list of books from the user
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Book'
+        '400':
+          description: Bad Request - Missing or incorrect parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '401':
+          description: Unauthorized - Invalid sessionToken
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '404':
+          description: NotFound - User ID does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+  /api/users/{userId}/books/{bookId}:
+    get:
+      security:
+        - BearerAuth: []
+      summary: Get a book from a user
+      tags:
+        - Book
+      parameters:
+        - in: path
+          name: userId
+          description: Numeric ID of the user
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: bookId
+          description: ID of the book to get
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Returns the book
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+        '401':
+          description: Unauthorized - sessionToken incorrecta
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '404':
+          description: NotFound - User or book does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+    put:
+      security:
+        - BearerAuth: []
+      summary: Update a book for a user
+      tags:
+        - Book
+      parameters:
+        - in: path
+          name: userId
+          description: Numeric ID of the user
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: bookId
+          description: ID of the book to get
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        description: Book updated
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Book'
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request - Missing or incorrect parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '401':
+          description: Unauthorized - Invalid sessionToken
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '404':
+          description: NotFound - User or book does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+    patch:
+      security:
+        - BearerAuth: []
+      summary: Update a book field for a User
+      tags:
+        - Book
       parameters:
         - in: path
           name: userId
@@ -165,9 +463,15 @@ paths:
           required: true
           schema:
             type: integer
+        - in: path
+          name: bookId
+          description: ID of the book to delete
+          required: true
+          schema:
+            type: integer
       requestBody:
         required: true
-        description: Credentials to update a User field
+        description: Book updated
         content:
           application/json:
             schema:
@@ -195,98 +499,149 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExceptionResponse'
-  /api/users/search:
-    get:
-      tags:
-        - User
-      summary: Get User data by querry parameter
-      description: Endpoint to perform a user data search
-      operationId: GetUserByQuerry
+    delete:
       security:
         - BearerAuth: []
+      summary: Delete a book from a user
+      tags:
+        - Book
       parameters:
-        - name: query
-          in: query
-          description: Parameter to search Users
+        - in: path
+          name: userId
+          description: Numeric ID of the user who owns the book
           required: true
           schema:
-            type: string
+            type: integer
+        - in: path
+          name: bookId
+          description: ID of the book to delete
+          required: true
+          schema:
+            type: integer
       responses:
-        '200':
-          description: Ok
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SearchUser'
-
+        '204':
+          description: No Content
         '400':
-          description: Bad Request
+          description: Bad Request - Missing or incorrect parameters
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExceptionResponse'
         '401':
-          description: Unauthorized
+          description: Unauthorized - sessionToken incorrecta
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExceptionResponse'
-#Gameend
-  /api/users/{userId}/games/{gameId}/savegame:
+        '404':
+          description: NotFound - User or book does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+  /api/books:
+    get:
+      security:
+        - BearerAuth: []
+      summary: Get a book by querys
+      tags:
+        - Book
+      parameters:
+        - in: query
+          name: tittle
+          description: Tittle of the book to get
+          schema:
+            type: string
+        - in: query
+          name: author
+          description: Author of the book to get
+          schema:
+            type: string
+        - in: query
+          name: isbn
+          description: Isbn of the book to get
+          schema:
+            type: string
+        - in: query
+          name: editorial
+          description: Editorial of the book to get
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Returns the book
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookResponseFilter'
+        '401':
+          description: Unauthorized - sessionToken incorrecta
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '404':
+          description: NotFound - User or book does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+  /users/{userOriginId}/swaps:
     post:
-      tags:
-        - Games Saved
-      summary: Create a SaveGame
-      description: Endpoint to Create a SaveGame
-      operationId: AddSaveGame
       security:
         - BearerAuth: []
+      summary: Create a Swap
+      tags:
+        - Swap
       parameters:
         - in: path
-          name: userId
-          description: Numeric ID of the user who is going to store the game
-          required: true
-          schema:
-            type: integer
-        - in: path
-          name: gameId
-          description: Numeric ID of the game you want to store
+          name: userOriginId
+          description: Numeric ID of the user to get
           required: true
           schema:
             type: integer
       requestBody:
-        description: Add SaveGame
+        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserSavegameNoId'
-        required: true
+              $ref: '#/components/schemas/SwapPost'
       responses:
         '201':
-          description: Created
+          description: Book created successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserSavegame'
+                $ref: '#/components/schemas/Swap'
         '400':
-          description: Bad Request
+          description: Bad Request - Missing or incorrect parameters
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExceptionResponse'
-  /api/users/{userId}/savegames:
+        '401':
+          description: Unauthorized - Invalid sessionToken
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '404':
+          description: NotFound - User ID does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+  /users/{userId}/swaps:        
     get:
-      tags:
-        - Games Saved
-      summary: Get all User SaveGames By userId
-      description: Endpoint to Get all User SaveGames
-      operationId: GetAllSaveGames
       security:
         - BearerAuth: []
+      summary: Get all Swap for a user
+      tags:
+        - Swap
       parameters:
         - in: path
           name: userId
-          description: Numerical ID of the user who wants to get All savagames
+          description: Numeric ID of the user to get
           required: true
           schema:
             type: integer
@@ -296,26 +651,44 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AllUserSavegame'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Swap'
         '400':
-          description: Bad Request
+          description: Bad Request - Missing or incorrect parameters
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExceptionResponse'
-  /api/games/{gameId}/savegames:
+        '401':
+          description: Unauthorized - Invalid sessionToken
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '404':
+          description: NotFound - User ID does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+  /users/{userId}/swaps/{swapId}:
     get:
-      tags:
-        - Games Saved
-      summary: Get details User SaveGame By gameId
-      description: Endpoint to Get details for a User SaveGame By gameId
-      operationId: GetSaveGameByGameId
       security:
         - BearerAuth: []
+      summary: Get all Swap for a user
+      tags:
+        - Swap
       parameters:
         - in: path
-          name: gameId
-          description: Numeric ID of the game you want to get
+          name: userId
+          description: Numeric ID of the user to get
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: swapId
+          description: Numeric ID of the swap to get
           required: true
           schema:
             type: integer
@@ -325,323 +698,117 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserSavegame'
+                $ref: '#/components/schemas/Swap'
         '400':
-          description: Bad Request
+          description: Bad Request - Missing or incorrect parameters
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExceptionResponse'
-  /api/users/{userId}/games/{gameId}/savegame/{savegameId}:
-    put:
-      tags:
-        - Games Saved
-      summary: Update a SaveGame
-      description: Endpoint to Update a SaveGame
-      operationId: UpdateSaveGame
-      security:
-        - BearerAuth: []
-      parameters:
-        - in: path
-          name: userId
-          description: Numeric ID of the user who is going to store the game
-          required: true
-          schema:
-            type: integer
-        - in: path
-          name: gameId
-          description: Numeric ID of the game you want to store
-          required: true
-          schema:
-            type: integer
-        - in: path
-          name: savegameId
-          description: Numeric ID of the savegame you nedd to update
-          required: true
-          schema:
-            type: integer
-      requestBody:
-        description: Update SaveGame
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/SaveUserSavegame'
-        required: true
-      responses:
-        '201':
-          description: Created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserSavegame'
-        '400':
-          description: Bad Request
+        '401':
+          description: Unauthorized - Invalid sessionToken
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExceptionResponse'
-  /api/users/{userId}/games/{gameId}/wishlist:
+        '404':
+          description: NotFound - User ID or Swap ID does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+  /users/{userTargetId}/swaps/{swapId}:
     patch:
-      tags:
-        - Games Saved
-      summary: Modify if the game is on the wishlist
-      description: Endpoint to modify if the game is wishlisted, true is add and false is remove
-      operationId: AddGameToWishlist
       security:
         - BearerAuth: []
+      summary: Change the state of the swap
+      tags:
+        - Swap
       parameters:
         - in: path
-          name: userId
-          description: Numeric ID of the user who is going to store the game
+          name: userTargetId
+          description: Numeric ID of the user(acept)
           required: true
           schema:
             type: integer
         - in: path
-          name: gameId
-          description: Numeric ID of the game you want to store
+          name: swapId
+          description: Numeric ID of the swap to acept
           required: true
           schema:
             type: integer
-      requestBody:
-        description: Add Game to wishlist
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchOperationGameWishlist'
-        required: true
       responses:
         '204':
           description: No Content
         '400':
-          description: Bad Request
+          description: Bad Request - Missing or incorrect parameters
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExceptionResponse'
-  /api/users/{userId}/games/{gameId}/favorites:
-    patch:
-      tags:
-        - Games Saved
-      summary: Modify if the game is in favorites
-      description: Endpoint to if the game is in favorites, true is yes and false is no
-      operationId: AddGameToFavorites
-      security:
-        - BearerAuth: []
-      parameters:
-        - in: path
-          name: userId
-          description: Numeric ID of the user who is going to store the game
-          required: true
-          schema:
-            type: integer
-        - in: path
-          name: gameId
-          description: Numeric ID of the game you want to store
-          required: true
-          schema:
-            type: integer
-      requestBody:
-        description: Add Game to favorites
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchOperationGameFavorites'
-        required: true
-      responses:
-        '204':
-          description: No Content
-        '400':
-          description: Bad Request
+        '401':
+          description: Unauthorized - Invalid sessionToken
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExceptionResponse'
-  /api/users/{userId}/games/{gameId}/punctuation:
-    patch:
-      tags:
-        - Games Saved
-      summary: Modify game punctuation
-      description: Endpoint to modify game punctuation min 0.00 max 10.00
-      operationId: AddGameGameScore
-      security:
-        - BearerAuth: []
-      parameters:
-        - in: path
-          name: userId
-          description: Numeric ID of the user who is going to store the game
-          required: true
-          schema:
-            type: integer
-        - in: path
-          name: gameId
-          description: Numeric ID of the game you want to store
-          required: true
-          schema:
-            type: integer
-      requestBody:
-        description: Add Game Punctuation
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchOperationGamePunctuation'
-        required: true
-      responses:
-        '204':
-          description: No Content
-        '400':
-          description: Bad Request
+        '404':
+          description: NotFound - User ID or Swap ID does not exist
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExceptionResponse'
 components:
   schemas:
+    UserSuccessfullyLogged:
+      type: object
+      properties:
+        Authorization:
+          type: string
     UserRegister:
       type: object
       properties:
+        username:
+          type: string
         name:
           type: string
-        surenames:
-          type: string
-        username:
+        surnames:
           type: string
         email:
           type: string
           format: email
-        password1:
+        password:
+          type: integer
+        birthdate:
           type: string
-        password2:
+          format: date
+        description:
           type: string
-    UserSuccessfullyAuth:
+    User:
       type: object
       properties:
-        userId:
+        id:
           type: integer
-          format: integer
+          format: int64
+        username:
+          type: string
         name:
           type: string
-        surenames:
-          type: string
-        username:
+        surnames:
           type: string
         email:
           type: string
           format: email
-        rol:
-          type: array
-          items:
-            type: string
-            enum: ["user", "mod", "admin"]
-    AuthenticatedUserData:
-      type: object
-      properties:
-        userId:
-          type: integer
-          format: integer
-        name:
-          type: string
-        surenames:
-          type: string
-        username:
-          type: string
-        email:
-          type: string
-          format: email
-        description:
-          type: string
-        rol:
-          type: array
-          items:
-            type: string
-            enum: ["user", "mod", "admin"]
-        singUpDate:
+        birthdate:
           type: string
           format: date
-        imgprofile:
-          type: string
-        imgbanner:
-          type: string
-    SearchUser:
-      type: object
-      properties:
-        wishlist:
-          type: boolean
-        username:
-          type: string
-        email:
-          type: string
-          format: email
-        imgprofile:
-          type: string
-        imgbanner:
-          type: string
-    SaveUserSavegame:
-      type: object
-      properties:
-        savegameName:
-          type: string
-        saveDate:
+        signUpDate:
           type: string
           format: date
-        gameStateId:
-          type: integer
+
         description:
           type: string
-    AllUserSavegame:
-      type: array
-      items:
-        type: object
-        properties:
-          userGameSave_id:
-            type: integer
-          userId:
-            type: integer
-          gameId:
-            type: integer
-          savegameName:
-            type: string
-          saveDate:
-            type: string
-            format: date
-          gameStateId:
-            type: integer
-          description:
-            type: string
-    UserSavegame:
-      type: object
-      properties:
-        userGameSave_id:
-          type: integer
-        userId:
-          type: integer
-        gameId:
-          type: integer
-        savegameName:
-          type: string
-        saveDate:
-          type: string
-          format: date
-        gameStateId:
-          type: integer
-        description:
-          type: string
-    UserSavegameNoId:
-      type: object
-      properties:
-        userId:
-          type: integer
-        gameId:
-          type: integer
-        savegameName:
-          type: string
-        saveDate:
-          type: string
-          format: date
-        gameStateId:
-          type: integer
-        description:
-          type: string
-    UserCredentials:
+    Credentials:
       type: object
       properties:
         username:
@@ -649,7 +816,7 @@ components:
           example: prueba1
         password:
           type: string
-          example: 12345678
+          example: 1234567
     PatchOperation:
       type: object
       properties:
@@ -658,46 +825,79 @@ components:
           example: replace
         path:
           type: string
-          example: /name
+          example: /target
         value:
           type: string
-          example: prueba2
-    PatchOperationGameWishlist:
+          example: aswd
+    Book:
       type: object
       properties:
-        op:
+        id:
+          type: integer
+          format: int64
+        title:
           type: string
-          example: replace
-        path:
+        author:
           type: string
-          example: /wishlist
-        value:
+        editorial:
           type: string
-          example: true
-    PatchOperationGameFavorites:
+        isbn:
+          type: integer
+    BookResponseFilter:
       type: object
       properties:
-        op:
+        id:
+          type: integer
+          format: int64
+        title:
           type: string
-          example: replace
-        path:
+        author:
           type: string
-          example: /favorites
-        value:
+        editorial:
           type: string
-          example: true
-    PatchOperationGamePunctuation:
+        isbn:
+          type: integer
+        userId:
+          type: integer
+    Swap:
       type: object
       properties:
-        op:
+        id:
+          type: integer
+          format: int64
+        userOrigin: 
+            $ref: '#/components/schemas/User'
+        userTarget:
+            $ref: '#/components/schemas/User'
+        booksOrigin:
+            type: array
+            items:
+              $ref: '#/components/schemas/Book'
+        booksTarget:
+            type: array
+            items:
+              $ref: '#/components/schemas/Book'
+        state:
           type: string
-          example: replace
-        path:
-          type: string
-          example: /punctuation
-        value:
-          type: string
-          example: true
+          enum:
+            - pending
+            - accepted
+            - rejected
+          description: The state of the swap request (pending, accepted, or rejected)
+    SwapPost:
+      type: object
+      properties:
+        userTargetId:
+          type: integer
+          format: int64
+        booksOriginId:
+            type: array
+            items: 
+              type: integer
+        booksTargetId:
+            type: array
+            items: 
+              type: integer
     ExceptionResponse:
       type: object
       properties:
@@ -779,7 +979,7 @@ components:
         endpoint. If the authentication is successful, an Access Token and a
         Refresh Token will be returned. 
 
-          Sample username and password to use on ```/api/login``` endpoint: ```rodringRN``` / ```pass1234```
+          Sample username and password to use on ```/api/login``` endpoint: ```prueba1``` / ```1234567```
       type: http
       scheme: bearer
     OpenID:
