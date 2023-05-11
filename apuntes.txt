@@ -48,6 +48,33 @@ Para cerrar puerto: sudo fuser -k 8000/tcp
 
 Para actualizar ultima version de las dependencias: npm install -g npm-check-updates // ncu -u // npm install
 
+Uso de la libreria @tsed/common para anotaciones como @RestController  :  La librería @tsed/common es una librería de decoradores para TypeScript que se utiliza para construir aplicaciones Node.js escalables y mantenibles. 
 
 
+import cookieParser from "cookie-parser";
+import compress from "compression";
+import methodOverride from "method-override";
+
+@tsed/schema para decoradores como Email, Enum
+
+usando framework tsed
+
+
+
+npm install http-status-codes para los codigos de estado (OK, CONFLICT ...)
+
+
+
+
+npm run barrels && 
+
+
+
+Bien, ahora asegúrate de que en tu archivo services.ts has agregado la clase UserOrmRepository como proveedor para la interfaz UserRepository. Debe verse así:
+
+
+Error de provider no lo doi solucionado llevo una semana con el
+
+
+Dependencia builder-pattern que sirve como lombok en java para poner decoradoires de @Data etc
 
