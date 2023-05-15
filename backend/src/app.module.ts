@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { TicketModule } from './ticket/ticket.module';
 import { UserModule } from './user/user.module';
+import { UserEntity } from './user/infrastructure/entity/user.entity';
+import { UserRolEntity } from './user/infrastructure/entity/user.rol.entity';
 
 @Module({
   imports: [
@@ -14,13 +14,11 @@ import { UserModule } from './user/user.module';
       username: 'root',
       password: '1234',
       database: 'mediapp_dev',
-      entities: [],
+      entities: [UserEntity, UserRolEntity],
       synchronize: true,
     }),
     TicketModule,
     UserModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}

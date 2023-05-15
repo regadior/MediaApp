@@ -1,16 +1,15 @@
-import { RestUserMapper } from './../mapper/rest.user.mapper';
-import { Inject } from '@nestjs/common';
+import { UserRolModel } from './../../domain/model/user.rol.model';
+import { Inject, Injectable } from '@nestjs/common';
 import { UserRepository } from 'src/user/domain/repository/user.repository';
-import { UserRegisterDto } from '../dto/user.register.dto';
-import { UsernameNotFoundException } from 'src/user/domain/exception/username.notfound.exception';
-
+import { UserModel } from 'src/user/domain/model/user.model';
+@Injectable()
 export class CreateUserUseCase {
   constructor(
+    // private readonly restUserMapper: RestUserMapper,
     @Inject(UserRepository)
     private readonly userRepository: UserRepository,
-    private readonly restUserMapper: RestUserMapper,
   ) {}
-  public async createUser(userRegister: UserRegisterDto): Promise<string> {
+  public async createUser(userModel: UserModel): Promise<UserModel> {
     // const existingUsername = await this.userRepository.findByUsername(userRegister.username);
     // if (existingUsername) {
     //   throw new UsernameNotFoundException(`User with username ${userRegister.username} already exists`);
@@ -19,11 +18,13 @@ export class CreateUserUseCase {
     // if (existingEmail) {
     //   throw new UsernameNotFoundException(`User with email ${userRegister.username} already exists`);
     // }
-    console.log(this.restUserMapper.registerDtoToModel(userRegister));
-    return 'funciona';
-  }
-
-  public async reponder(mensaje: string): Promise<string> {
-    return this.userRepository.responder(mensaje);
+    // https://imagen-ai.com/wp-content/uploads/2022/07/open-graph-default.jpg
+    userModel.description = 'Write here your description';
+    userModel.imgBanner = 'https://imagen-ai.com/wp-content/uploads/2022/07/open-graph-default.jpg';
+    userModel.imgPerfil = 'https://imagen-ai.com/wp-content/uploads/2022/07/open-graph-default.jpg';
+    const userRolModel: UserRolModel = new UserRolModel(1, 'user', 'Normal user');
+    userModel.rol = userRolModel;
+    const user = this.userRepository.createUser(userModel);
+    return user;
   }
 }

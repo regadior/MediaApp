@@ -1,14 +1,14 @@
-import { UserRegisterDto } from 'src/user/application/dto/user.register.dto';
+import { RestUserMapper } from 'src/user/api_rest/mapper/rest.user.mapper';
+import { UserRegisterDto } from 'src/user/domain/dto/user.register.dto';
 import { CreateUserUseCase } from './../../application/use_case/create.user.use.case';
 import { Body, Controller, Post } from '@nestjs/common';
-
+import { UserRegisterResponseDto } from 'src/user/domain/dto/user.register.response.dto';
 @Controller('/api/auth')
 export class UserRegisterController {
-  constructor(private createUserUseCase: CreateUserUseCase) {}
+  constructor(private readonly createUserUseCase: CreateUserUseCase, private readonly restUserMapper: RestUserMapper) {}
   @Post('/register')
-  public async register(@Body() userRegisterDto: UserRegisterDto): Promise<string> {
-    console.log(userRegisterDto);
-    // await this.createUserUseCase.createUser();
-    return this.createUserUseCase.createUser(userRegisterDto);
+  public async register(@Body() userRegisterDto: UserRegisterDto): Promise<UserRegisterResponseDto> {
+    const userModel = await this.createUserUseCase.createUser(this.restUserMapper.registerDtoToUserModel(userRegisterDto));
+    return this.restUserMapper.UserModelToRegisterResponseDto(userModel);
   }
 }

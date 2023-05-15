@@ -1,7 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, BaseEntity, OneToOne, JoinColumn } from 'typeorm';
 import { UserRolEntity } from './user.rol.entity';
 @Entity()
-export class UserEntity {
+export class UserEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   userId: number;
   @Column({ nullable: false })
@@ -25,5 +25,7 @@ export class UserEntity {
   createdAt: Date;
   @UpdateDateColumn()
   updatedAt: Date;
+  @OneToOne(() => UserRolEntity)
+  @JoinColumn()
   rol: UserRolEntity;
 }
