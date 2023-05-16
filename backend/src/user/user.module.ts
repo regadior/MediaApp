@@ -7,11 +7,9 @@ import { CreateUserUseCase } from './application/use_case/create.user.use.case';
 import { RestUserMapper } from './api_rest/mapper/rest.user.mapper';
 import { UserMapper } from './infrastructure/mapper/UserMapper';
 import { UserTypeOrmRepositoryImpl } from './infrastructure/repository/user.typeorm.repository.impl';
-import { UserRolEntity } from './infrastructure/entity/user.rol.entity';
 import { UserRolInitializer } from './infrastructure/initializer/user.rol.entity.initializer';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UserEntity, UserRolEntity])],
   controllers: [UserRegisterController],
   providers: [
     CreateUserUseCase,

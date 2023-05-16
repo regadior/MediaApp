@@ -1,7 +1,7 @@
 import { UserRegisterDto } from 'src/user/domain/dto/user.register.dto';
 import { UserRegisterResponseDto } from 'src/user/domain/dto/user.register.response.dto';
+import { UserRolResponseDto } from 'src/user/domain/dto/user.rol.response.dto';
 import { UserModel } from 'src/user/domain/model/user.model';
-import { UserRolModel } from 'src/user/domain/model/user.rol.model';
 
 export class RestUserMapper {
   registerDtoToUserModel(userRegisterDto: UserRegisterDto): UserModel {
@@ -21,7 +21,7 @@ export class RestUserMapper {
     userRegisterResponseDto.username = userModel.username;
     userRegisterResponseDto.surenames = userModel.surenames;
     userRegisterResponseDto.email = userModel.email;
-    userRegisterResponseDto.rol = new UserRolModel(userModel.rol.userRolId, userModel.rol.name, userModel.rol.description);
+    userRegisterResponseDto.rol = new UserRolResponseDto(userModel.rol.name, userModel.rol.description);
     return userRegisterResponseDto;
   }
 }

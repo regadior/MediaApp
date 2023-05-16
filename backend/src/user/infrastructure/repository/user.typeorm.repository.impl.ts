@@ -6,12 +6,7 @@ import { UserRepository } from 'src/user/domain/repository/user.repository';
 @Injectable()
 export class UserTypeOrmRepositoryImpl implements UserRepository {
   constructor(private readonly userMapper: UserMapper) {}
-
   async createUser(userModel: UserModel): Promise<UserModel | null> {
-    console.log('Entra en el create de repo', userModel);
-    const userEntity = await this.userMapper.UserModelToUserEntity(userModel);
-    await userEntity.save();
-    console.log('La Entidad guardada', userEntity);
-    return this.userMapper.UserEntityToUserModel(userEntity);
+    return this.userMapper.UserEntityToUserModel(await this.userMapper.UserModelToUserEntity(userModel).save());
   }
 }

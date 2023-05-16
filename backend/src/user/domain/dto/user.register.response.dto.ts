@@ -1,10 +1,9 @@
-import { UserRolModel } from '../model/user.rol.model';
-
+import { UserRolResponseDto } from './user.rol.response.dto';
 export class UserRegisterResponseDto {
   userId: number;
   name: string;
   surenames: string;
   username: string;
   email: string;
-  rol: UserRolModel;
+  rol: UserRolResponseDto;
 }

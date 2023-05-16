@@ -7,17 +7,17 @@ export class UserRolInitializer implements OnModuleInit {
     await this.createDefaultUserRoles();
   }
   async createDefaultUserRoles() {
+    //Initialize rol User
     const userRolEntity1 = new UserRolEntity();
     userRolEntity1.userRolId = 0;
     userRolEntity1.name = 'user';
     userRolEntity1.description = 'Normal User';
-    console.log(userRolEntity1);
     userRolEntity1.save();
+    //Initialize rol Admin
     const userRolEntity2 = new UserRolEntity();
     userRolEntity2.userRolId = 0;
     userRolEntity2.name = 'admin';
     userRolEntity2.description = 'User with all permissions';
-    console.log(userRolEntity2);
     userRolEntity2.save();
   }
 }
