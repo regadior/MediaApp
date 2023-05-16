@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, BaseEntity, OneToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, BaseEntity, JoinColumn, ManyToOne } from 'typeorm';
 import { UserRolEntity } from './user.rol.entity';
 @Entity()
 export class UserEntity extends BaseEntity {
@@ -25,7 +25,7 @@ export class UserEntity extends BaseEntity {
   createdAt: Date;
   @UpdateDateColumn()
   updatedAt: Date;
-  @OneToOne(() => UserRolEntity)
+  @ManyToOne(() => UserRolEntity)
   @JoinColumn()
   rol: UserRolEntity;
 }

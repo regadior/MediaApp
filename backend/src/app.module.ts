@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TicketModule } from './ticket/ticket.module';
 import { UserModule } from './user/user.module';
 import { UserEntity } from './user/infrastructure/entity/user.entity';
 import { UserRolEntity } from './user/infrastructure/entity/user.rol.entity';
@@ -18,7 +17,6 @@ import { AuthModule } from './auth/auth.module';
       entities: [UserEntity, UserRolEntity],
       synchronize: true,
     }),
-    TicketModule,
     UserModule,
     AuthModule,
   ],
