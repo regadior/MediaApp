@@ -1,5 +1,5 @@
 import { UserRolResponseDto } from './user.rol.response.dto';
-export class UserRegisterResponseDto {
+export class UserBasicResponseDto {
   userId: number;
   name: string;
   surenames: string;

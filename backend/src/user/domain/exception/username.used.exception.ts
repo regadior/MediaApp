@@ -1,4 +1,4 @@
-export class UsernameNotFoundException extends Error {
+export class UsernameUsedException extends Error {
   constructor(message?: string) {
     super(message);
   }

@@ -1,4 +1,4 @@
-export class EmailNotFoundException extends Error {
+export class EmailUsedException extends Error {
   constructor(message?: string) {
     super(message);
   }
