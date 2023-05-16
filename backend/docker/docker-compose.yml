@@ -1,14 +1,20 @@
-version: '3.8'
+version: '3.9'
+volumes:
+  mediapp_data:
 services:
-  db:
-    image: yobasystems/alpine-mariadb:latest
+  db_mediapp:
     restart: always
+    image: yobasystems/alpine-mariadb
     environment:
       MYSQL_ROOT_PASSWORD: 1234
       MYSQL_DATABASE: mediapp_dev
-    ports:
-      - 3306:3306
+      MYSQL_USER: roi
+      MYSQL_PASSWORD: 1234
     volumes:
-      - dbdata:/var/lib/mysql
-volumes:
-  dbdata:
+      - mediapp_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+
+      #sudo lsof -i :3306
+      #sudo kill <PID>
