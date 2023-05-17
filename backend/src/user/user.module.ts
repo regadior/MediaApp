@@ -13,6 +13,7 @@ import { LogUserUseCase } from './application/use_case/log.user.use.case';
 import { APP_FILTER } from '@nestjs/core';
 import { ConflictExceptionFilter } from './api_rest/exception/conflict.exception.handler';
 import { NotFoundExceptionFilter } from './api_rest/exception/notfound.exception.handler';
+import { BadRequestExceptionFilter } from './api_rest/exception/badrequest.exception.handler';
 @Module({
   imports: [TypeOrmModule.forFeature([UserEntity])],
   controllers: [UserRegisterController, UserLoginController],
@@ -35,6 +36,11 @@ import { NotFoundExceptionFilter } from './api_rest/exception/notfound.exception
       //To create the exception handler
       provide: APP_FILTER, //Exception filter provider of app
       useClass: NotFoundExceptionFilter, //Filter type (exceptions)
+    },
+    {
+      //To create the exception handler
+      provide: APP_FILTER, //Exception filter provider of app
+      useClass: BadRequestExceptionFilter, //Filter type (exceptions)
     },
   ],
 })

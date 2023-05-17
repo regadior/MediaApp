@@ -15,7 +15,7 @@ export class ConflictExceptionFilter implements ExceptionFilter {
 
     response.status(status).json({
       statusCode: status,
-      errorName: errorName,
+      error: errorName,
       message: message,
     });
   }
