@@ -25,6 +25,17 @@ export class RestUserMapper {
     userBasicResponseDto.rol = new UserRolResponseDto(userModel.rol.name, userModel.rol.description);
     return userBasicResponseDto;
   }
+  UserModelToUserBasicTokenResponseDto(userModel: UserModel): UserBasicResponseDto {
+    const userBasicResponseDto = new UserBasicResponseDto();
+    userBasicResponseDto.userId = userModel.userId;
+    userBasicResponseDto.name = userModel.name;
+    userBasicResponseDto.username = userModel.username;
+    userBasicResponseDto.surenames = userModel.surenames;
+    userBasicResponseDto.email = userModel.email;
+    userBasicResponseDto.rol = new UserRolResponseDto(userModel.rol.name, userModel.rol.description);
+    userBasicResponseDto.accessToken = userModel.accessToken;
+    return userBasicResponseDto;
+  }
   UserLoginDtoToUserModel(userLoginDto: UserLoginDto): UserModel {
     const userModel = new UserModel();
     userModel.username = userLoginDto.username;

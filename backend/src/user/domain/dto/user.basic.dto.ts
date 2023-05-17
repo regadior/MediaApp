@@ -6,4 +6,5 @@ export class UserBasicResponseDto {
   username: string;
   email: string;
   rol: UserRolResponseDto;
+  accessToken: string;
 }

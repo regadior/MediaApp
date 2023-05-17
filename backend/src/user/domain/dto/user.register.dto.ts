@@ -1,4 +1,4 @@
-import { Equals, IsEmail, IsNotEmpty } from 'class-validator';
+import { IsEmail, IsNotEmpty } from 'class-validator';
 
 export class UserRegisterDto {
   @IsNotEmpty({ message: 'The name field cannot be empty.' })
@@ -12,6 +12,5 @@ export class UserRegisterDto {
   @IsNotEmpty({ message: 'The password1 field cannot be empty.' })
   password1: string;
   @IsNotEmpty({ message: 'The password2 field cannot be empty.' })
-  @Equals('password1', { message: 'The passwords do not match.' })
   password2: string;
 }

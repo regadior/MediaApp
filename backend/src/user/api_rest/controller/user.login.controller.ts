@@ -10,6 +10,6 @@ export class UserLoginController {
   @HttpCode(HttpStatus.OK)
   @UsePipes(new ValidationPipe({ transform: true }))
   public async login(@Body() userLoginDto: UserLoginDto): Promise<UserBasicResponseDto> {
-    return this.restUserMapper.UserModelToUserBasicResponseDto(await this.logUserUseCase.logUser(this.restUserMapper.UserLoginDtoToUserModel(userLoginDto)));
+    return this.restUserMapper.UserModelToUserBasicTokenResponseDto(await this.logUserUseCase.logUser(this.restUserMapper.UserLoginDtoToUserModel(userLoginDto)));
   }
 }

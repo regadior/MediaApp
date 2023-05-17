@@ -13,5 +13,6 @@ export class UserModel {
   imgBanner: string;
   createdAt: Date;
   updatedAt: Date;
+  accessToken: string;
   rol: UserRolModel;
 }
