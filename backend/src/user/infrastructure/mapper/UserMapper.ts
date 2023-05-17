@@ -19,9 +19,7 @@ export class UserMapper {
     userRolEntity.userRolId = userModel.rol.userRolId;
     userRolEntity.name = userModel.rol.name;
     userRolEntity.description = userModel.rol.description;
-
     userEntity.rol = userRolEntity;
-
     return userEntity;
   }
   UserEntityToUserModel(userEntity: UserEntity): UserModel {
@@ -38,7 +36,11 @@ export class UserMapper {
     userModel.createdAt = userEntity.createdAt;
     userModel.updatedAt = userEntity.updatedAt;
     // Assign values to userModel.rol properties
-    userModel.rol = new UserRolModel(userEntity.rol.userRolId, userEntity.rol.name, userEntity.rol.description);
+    const userRolModel = new UserRolModel();
+    userRolModel.userRolId = userEntity.rol.userRolId;
+    userRolModel.name = userEntity.rol.name;
+    userRolModel.description = userEntity.rol.description;
+    userModel.rol = userRolModel;
     return userModel;
   }
 }

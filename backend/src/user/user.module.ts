@@ -14,8 +14,12 @@ import { APP_FILTER } from '@nestjs/core';
 import { ConflictExceptionFilter } from './api_rest/exception/conflict.exception.handler';
 import { NotFoundExceptionFilter } from './api_rest/exception/notfound.exception.handler';
 import { BadRequestExceptionFilter } from './api_rest/exception/badrequest.exception.handler';
+import { UserRolEntity } from './infrastructure/entity/user.rol.entity';
+import { UserRolRepository } from './domain/repository/user.rol.repository';
+import { UserRolTypeOrmRepositoryImpl } from './infrastructure/repository/user.rol.typeorm.repository.impl';
+import { UserRolMapper } from './infrastructure/mapper/user.rol.mapper';
 @Module({
-  imports: [TypeOrmModule.forFeature([UserEntity])],
+  imports: [TypeOrmModule.forFeature([UserEntity, UserRolEntity])],
   controllers: [UserRegisterController, UserLoginController],
   providers: [
     CreateUserUseCase,
@@ -24,8 +28,13 @@ import { BadRequestExceptionFilter } from './api_rest/exception/badrequest.excep
       provide: UserRepository,
       useClass: UserTypeOrmRepositoryImpl,
     },
+    {
+      provide: UserRolRepository,
+      useClass: UserRolTypeOrmRepositoryImpl,
+    },
     RestUserMapper,
     UserMapper,
+    UserRolMapper,
     UserRolInitializer,
     {
       //To create the exception handler
