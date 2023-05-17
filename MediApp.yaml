@@ -43,7 +43,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserSuccessfullyAuth'
+                $ref: '#/components/schemas/UserSuccessfullyReg'
         '400':
           description: Bad Request
           content:
@@ -512,7 +512,7 @@ components:
           type: string
         password2:
           type: string
-    UserSuccessfullyAuth:
+    UserSuccessfullyReg:
       type: object
       properties:
         userId:
@@ -520,9 +520,9 @@ components:
           format: integer
         name:
           type: string
-        surenames:
-          type: string
         username:
+          type: string
+        surenames:
           type: string
         email:
           type: string
@@ -532,6 +532,28 @@ components:
           items:
             type: string
             enum: ["user", "mod", "admin"]
+    UserSuccessfullyAuth:
+      type: object
+      properties:
+        userId:
+          type: integer
+          format: integer
+        name:
+          type: string
+        username:
+          type: string
+        surenames:
+          type: string
+        email:
+          type: string
+          format: email
+        rol:
+          type: array
+          items:
+            type: string
+            enum: ["user", "mod", "admin"]
+        accessToken:
+          type: string
     AuthenticatedUserData:
       type: object
       properties:
@@ -647,7 +669,10 @@ components:
         username:
           type: string
           example: prueba1
-        password:
+        password1:
+          type: string
+          example: 12345678
+        password2:
           type: string
           example: 12345678
     PatchOperation:
