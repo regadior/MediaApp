@@ -1,3 +1,4 @@
+import { TokenUtils } from '../../../auth/application/use_case/token.utils';
 import { Inject, Injectable } from '@nestjs/common';
 import { UserRepository } from 'src/user/domain/repository/user.repository';
 import { UserModel } from 'src/user/domain/model/user.model';
@@ -8,6 +9,7 @@ export class LogUserUseCase {
   constructor(
     @Inject(UserRepository)
     private readonly userRepository: UserRepository,
+    private readonly tokenUtils: TokenUtils,
   ) {}
   public async logUser(userModel: UserModel): Promise<UserModel> {
     const existingUser = await this.userRepository.findOneByUsername(userModel.username);
@@ -17,8 +19,8 @@ export class LogUserUseCase {
     if (existingUser.password1 != userModel.password1) {
       throw new PassNotMatchException(`Incorrect password for user: ${userModel.username}`);
     }
-    const session_token = 'a';
-    existingUser.accessToken = session_token;
-    return existingUser;
+    const userToken = await this.tokenUtils.generateToken(existingUser);
+
+    return userToken;
   }
 }
