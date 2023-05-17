@@ -13,7 +13,8 @@
 <a href="#ℹ️-about">ℹ️ About</a> •
 <a href="#-backend"> 🔒 Backend</a> •
 <a href="#-frontend"> 🔑 Frontend</a> •
-<a href="#-features">📋 Features</a>
+<a href="#-features">📋 Features</a> •
+ <a href="#-actions">🌚 Actions</a>
 
 </div>
 
@@ -32,9 +33,9 @@ This project consists of a web made with ` React.js ` and `Nestjs`, using the cl
 
 ## 📋 Features
 
-###  🌚 ACTIONS
+## 🌚 Actions
 
-###### USER
+##### USER
 
 - You can register users.
 
