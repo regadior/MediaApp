@@ -1,3 +1,4 @@
+import { JwtService } from '@nestjs/jwt';
 import { Module } from '@nestjs/common';
 import { UserRepository } from './domain/repository/user.repository';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -18,6 +19,7 @@ import { UserRolEntity } from './infrastructure/entity/user.rol.entity';
 import { UserRolRepository } from './domain/repository/user.rol.repository';
 import { UserRolTypeOrmRepositoryImpl } from './infrastructure/repository/user.rol.typeorm.repository.impl';
 import { UserRolMapper } from './infrastructure/mapper/user.rol.mapper';
+import { TokenUtils } from 'src/auth/application/use_case/token.utils';
 @Module({
   imports: [TypeOrmModule.forFeature([UserEntity, UserRolEntity])],
   controllers: [UserRegisterController, UserLoginController],
@@ -51,6 +53,8 @@ import { UserRolMapper } from './infrastructure/mapper/user.rol.mapper';
       provide: APP_FILTER, //Exception filter provider of app
       useClass: BadRequestExceptionFilter, //Filter type (exceptions)
     },
+    TokenUtils,
+    JwtService,
   ],
 })
 export class UserModule {}
