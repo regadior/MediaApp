@@ -1,7 +1,8 @@
+import { UserBasicResponseDto } from 'src/user/domain/dto/user.basic.dto';
+import { UserLoginDto } from './../../domain/dto/user.login.dto';
 import { UserRegisterDto } from 'src/user/domain/dto/user.register.dto';
-import { UserRegisterResponseDto } from 'src/user/domain/dto/user.register.response.dto';
+import { UserRolResponseDto } from 'src/user/domain/dto/user.rol.response.dto';
 import { UserModel } from 'src/user/domain/model/user.model';
-import { UserRolModel } from 'src/user/domain/model/user.rol.model';
 
 export class RestUserMapper {
   registerDtoToUserModel(userRegisterDto: UserRegisterDto): UserModel {
@@ -14,14 +15,32 @@ export class RestUserMapper {
     userModel.password2 = userRegisterDto.password2;
     return userModel;
   }
-  UserModelToRegisterResponseDto(userModel: UserModel): UserRegisterResponseDto {
-    const userRegisterResponseDto = new UserRegisterResponseDto();
-    userRegisterResponseDto.userId = userModel.userId;
-    userRegisterResponseDto.name = userModel.name;
-    userRegisterResponseDto.username = userModel.username;
-    userRegisterResponseDto.surenames = userModel.surenames;
-    userRegisterResponseDto.email = userModel.email;
-    userRegisterResponseDto.rol = new UserRolModel(userModel.rol.userRolId, userModel.rol.name, userModel.rol.description);
-    return userRegisterResponseDto;
+  UserModelToUserBasicResponseDto(userModel: UserModel): UserBasicResponseDto {
+    const userBasicResponseDto = new UserBasicResponseDto();
+    userBasicResponseDto.userId = userModel.userId;
+    userBasicResponseDto.name = userModel.name;
+    userBasicResponseDto.username = userModel.username;
+    userBasicResponseDto.surenames = userModel.surenames;
+    userBasicResponseDto.email = userModel.email;
+    userBasicResponseDto.rol = new UserRolResponseDto(userModel.rol.name, userModel.rol.description);
+    return userBasicResponseDto;
+  }
+  UserModelToUserBasicTokenResponseDto(userModel: UserModel): UserBasicResponseDto {
+    const userBasicResponseDto = new UserBasicResponseDto();
+    userBasicResponseDto.userId = userModel.userId;
+    userBasicResponseDto.name = userModel.name;
+    userBasicResponseDto.username = userModel.username;
+    userBasicResponseDto.surenames = userModel.surenames;
+    userBasicResponseDto.email = userModel.email;
+    userBasicResponseDto.rol = new UserRolResponseDto(userModel.rol.name, userModel.rol.description);
+    userBasicResponseDto.accessToken = userModel.accessToken;
+    return userBasicResponseDto;
+  }
+  UserLoginDtoToUserModel(userLoginDto: UserLoginDto): UserModel {
+    const userModel = new UserModel();
+    userModel.username = userLoginDto.username;
+    userModel.password1 = userLoginDto.password1;
+    userModel.password2 = userLoginDto.password2;
+    return userModel;
   }
 }

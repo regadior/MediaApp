@@ -78,3 +78,5 @@ Error de provider no lo doi solucionado llevo una semana con el
 
 Dependencia builder-pattern que sirve como lombok en java para poner decoradoires de @Data etc
 
+@InjectRepository(UserEntity) private readonly userRepository: Repository<UserEntity>
+Esto para inyectar el repository
