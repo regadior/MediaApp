@@ -10,10 +10,11 @@
   🚀 Application to save multimedia data
 </h4>
 
-<a href="#ℹ️-about">ℹ️ About</a> •
-<a href="#-backend"> 🔒 Backend</a> •
-<a href="#-frontend"> 🔑 Frontend</a> •
-<a href="#-features">📋 Features</a> •
+ <a href="#ℹ️-about">ℹ️ About</a> •
+ <a href="#-backend"> 🔒 Backend</a> •
+ <a href="#-backend-features"> 📋 Backend-Features</a> •
+ <a href="#-frontend"> 🔑 Frontend</a> •
+ <a href="#-frontend-features"> 📋 Frontend-Features</a> •
  <a href="#-actions">🌚 Actions</a>
 
 </div>
