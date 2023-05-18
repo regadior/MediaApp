@@ -29,7 +29,7 @@ This project consists of a web made with ` React.js `, `Nestjs` and `Typescript`
 ## ⚒ General-App-Features
 - Branching strategy using *git-flow*
 - Commit messages are made using *git-cz*, to make them prettier
-- Technologies:
+- Technologies and tools:
   - ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?&logo=typescript&logoColor=white)
   - ![NestJS](https://img.shields.io/badge/nestjs-%23E0234E.svg?&logo=nestjs&logoColor=white)
   - ![React](https://img.shields.io/badge/react-%2320232a.svg?&logo=react&logoColor=%2361DAFB)
