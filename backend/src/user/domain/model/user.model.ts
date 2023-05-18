@@ -6,8 +6,7 @@ export class UserModel {
   surenames: string;
   username: string;
   email: string;
-  password1: string;
-  password2: string;
+  password: string;
   description: string;
   imgPerfil: string;
   imgBanner: string;

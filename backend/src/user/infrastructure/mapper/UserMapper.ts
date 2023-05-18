@@ -10,7 +10,7 @@ export class UserMapper {
     userEntity.surenames = userModel.surenames;
     userEntity.username = userModel.username;
     userEntity.email = userModel.email;
-    userEntity.password = userModel.password1;
+    userEntity.password = userModel.password;
     userEntity.description = userModel.description;
     userEntity.imgPerfil = userModel.imgPerfil;
     userEntity.imgBanner = userModel.imgBanner;
@@ -29,7 +29,7 @@ export class UserMapper {
     userModel.surenames = userEntity.surenames;
     userModel.username = userEntity.username;
     userModel.email = userEntity.email;
-    userModel.password1 = userEntity.password;
+    userModel.password = userEntity.password;
     userModel.description = userEntity.description;
     userModel.imgPerfil = userEntity.imgPerfil;
     userModel.imgBanner = userEntity.imgBanner;

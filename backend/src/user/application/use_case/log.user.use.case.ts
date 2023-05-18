@@ -16,7 +16,7 @@ export class LogUserUseCase {
     if (existingUser == null) {
       throw new UserNotFoundException(`User with username ${userModel.username} not found`);
     }
-    if (existingUser.password1 != userModel.password1) {
+    if (existingUser.password != userModel.password) {
       throw new PassNotMatchException(`Incorrect password for user: ${userModel.username}`);
     }
     const userToken = await this.tokenUtils.generateToken(existingUser);

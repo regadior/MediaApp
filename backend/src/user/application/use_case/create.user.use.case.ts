@@ -4,7 +4,6 @@ import { UserModel } from 'src/user/domain/model/user.model';
 import { UsernameUsedException } from 'src/user/domain/exception/username.used.exception';
 import { EmailUsedException } from 'src/user/domain/exception/email.used.exception';
 import { UserRolRepository } from 'src/user/domain/repository/user.rol.repository';
-import { PassNotMatchException } from 'src/user/domain/exception/pass.not.match.exception';
 @Injectable()
 export class CreateUserUseCase {
   constructor(
@@ -21,9 +20,6 @@ export class CreateUserUseCase {
     const existingEmail = await this.userRepository.findOneByEmail(userModel.email);
     if (existingEmail != null) {
       throw new EmailUsedException(`User with email ${userModel.email} already exists`);
-    }
-    if (userModel.password1 != userModel.password2) {
-      throw new PassNotMatchException(`Passwords do not match`);
     }
     userModel.description = 'Write here your description';
     userModel.imgBanner = 'https://imagen-ai.com/wp-content/uploads/2022/07/open-graph-default.jpg';

@@ -9,8 +9,6 @@ export class UserRegisterDto {
   username: string;
   @IsEmail()
   email: string;
-  @IsNotEmpty({ message: 'The password1 field cannot be empty.' })
-  password1: string;
-  @IsNotEmpty({ message: 'The password2 field cannot be empty.' })
-  password2: string;
+  @IsNotEmpty({ message: 'The password field cannot be empty.' })
+  password: string;
 }
