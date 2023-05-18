@@ -12,6 +12,7 @@
 
  <a href="#ℹ️-about">ℹ️ About</a> •
  <a href="#-backend"> 🔒 Backend</a> •
+ <a href="#-general-app-features"> ⚒ General-App-Features</a> •
  <a href="#-backend-features"> 📋 Backend-Features</a> •
  <a href="#-frontend"> 🔑 Frontend</a> •
  <a href="#-frontend-features"> 📋 Frontend-Features</a> •
@@ -25,6 +26,9 @@
 
 This project consists of a web made with ` React.js `, `Nestjs` and `Typescript`, using the client-server architecture. The main idea of this website is to store the multimedia game content consumed (movies and series in future).
 
+## ⚒ General-App-Features
+- branching strategy using *git-flow*
+- Commit messages are made using *git-cz*, to make them prettier
 ## 🔒 Backend
 ### 📋 Backend-Features
 - Built using **SOLID** principles.
@@ -38,7 +42,7 @@ This project consists of a web made with ` React.js `, `Nestjs` and `Typescript`
 - Formatting with Prettier
 - Containerised using Docker and Docker Compose
 - GitHub Actions
-- Commit messages are made using git cz, to make them prettier
+
 
 ## 🔑 Frontend
 
