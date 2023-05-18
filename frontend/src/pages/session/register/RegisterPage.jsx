@@ -74,13 +74,12 @@ export default function RegisterPage() {
       return;
     }
     try {
-      await axios.post('http://localhost:8000/api/user/register', { //post al endpoint de register
-        name,
-        apells,
-        nick,
-        email,
-        pass1,
-        pass2,
+      await axios.post('http://localhost:8000/api/auth/register', { //post al endpoint de register
+        name: name,
+        surenames: apells,
+        username: nick,
+        email: email,
+        password: pass1,
       });
       navigate("/login"); //Redirigir a /login
     } catch (err) {

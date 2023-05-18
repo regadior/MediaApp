@@ -37,10 +37,10 @@ export default function LoginPage() {
       return;
     }
     try {
-      const res = await axios.post("http://localhost:8000/api/user/login", {
+      const res = await axios.post("http://localhost:8000/api/auth/login", {
         //post al endpoint de login
-        nick,
-        pass1,
+        username: nick,
+        password: pass1,
       });
       window.localStorage.setItem("session_token", res.data.session_token); //Se almacena el token de sesion en el localstorage
       window.localStorage.setItem("user_id", res.data.user_id);
