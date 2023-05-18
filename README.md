@@ -50,13 +50,29 @@ This project consists of a web made with ` React.js `, `Nestjs` and `Typescript`
 
 
 ## 🌚 Actions
-
+(*~~example~~ it means that it is in process*)
 ##### USER
 
 - You can register users.
 
 - You can login users.
 
+- ~~You can search users~~.
+
+- ~~You can follow users~~.
+
+- ~~You can update your users~~.
+
+- ~~You can delete your users~~.
+
+##### GAME
+- ~~You can search games~~.
+
+- ~~You can rate games~~.
+
+- ~~You can add games to favorites~~.
+
+- ~~You can store your information about the game(state, description ...)~~.
 
 ### ⭐ Stargazers
 
