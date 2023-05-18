@@ -60,7 +60,7 @@ This project consists of a web made with ` React.js `, `Nestjs` and `Typescript`
 ## 🔑 Frontend
 
 ### 📋 Frontend-Features
-
+- Built using **React**: Is an open source Javascript library designed to create user interfaces to facilitate the development of single page applications.
 
 ## 🌚 Actions
 (*~~example~~ it means that it is in process*)
