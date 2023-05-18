@@ -30,12 +30,17 @@ This project consists of a web made with ` React.js `, `Nestjs` and `Typescript`
 - Branching strategy using *git-flow*
 - Commit messages are made using *git-cz*, to make them prettier
 - Technologies:
-  - ![MariaDB](https://img.shields.io/badge/MariaDB-003545?&logo=mariadb&logoColor=white)
+  - ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?&logo=typescript&logoColor=white)
+  - ![NestJS](https://img.shields.io/badge/nestjs-%23E0234E.svg?&logo=nestjs&logoColor=white)
+  - ![React](https://img.shields.io/badge/react-%2320232a.svg?&logo=react&logoColor=%2361DAFB)
+  - ![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?&logo=visual-studio-code&logoColor=white)
   - ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?&logo=docker&logoColor=white)
+  - ![MariaDB](https://img.shields.io/badge/MariaDB-003545?&logo=mariadb&logoColor=white)
   - ![JWT](https://img.shields.io/badge/JWT-black?&logo=JSON%20web%20tokens)
   - ![Git-flow](https://img.shields.io/badge/gitFlow-%23F05033.svg?&logo=git&logoColor=white)
   - ![GitHub](https://img.shields.io/badge/github-%23121011.svg?&logo=github&logoColor=white)
   - ![GitHub Actions](https://img.shields.io/badge/github%20actions-%232671E5.svg?&logo=githubactions&logoColor=white)
+  - ![Postman](https://img.shields.io/badge/Postman-FF6C37?&logo=postman&logoColor=white)
   - ![Swagger](https://img.shields.io/badge/-Swagger-%23Clojure?&logo=swagger&logoColor=white)
 ## 🔒 Backend
 ### 📋 Backend-Features
