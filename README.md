@@ -27,8 +27,16 @@
 This project consists of a web made with ` React.js `, `Nestjs` and `Typescript`, using the client-server architecture. The main idea of this website is to store the multimedia game content consumed (movies and series in future).
 
 ## ⚒ General-App-Features
-- branching strategy using *git-flow*
+- Branching strategy using *git-flow*
 - Commit messages are made using *git-cz*, to make them prettier
+- Technologies:
+  - ![MariaDB](https://img.shields.io/badge/MariaDB-003545?&logo=mariadb&logoColor=white)
+  - ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?&logo=docker&logoColor=white)
+  - ![JWT](https://img.shields.io/badge/JWT-black?&logo=JSON%20web%20tokens)
+  - ![Git-flow](https://img.shields.io/badge/gitFlow-%23F05033.svg?&logo=git&logoColor=white)
+  - ![GitHub](https://img.shields.io/badge/github-%23121011.svg?&logo=github&logoColor=white)
+  - ![GitHub Actions](https://img.shields.io/badge/github%20actions-%232671E5.svg?&logo=githubactions&logoColor=white)
+  - ![Swagger](https://img.shields.io/badge/-Swagger-%23Clojure?&logo=swagger&logoColor=white)
 ## 🔒 Backend
 ### 📋 Backend-Features
 - Built using **SOLID** principles.
