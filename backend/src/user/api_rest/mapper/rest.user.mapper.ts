@@ -11,8 +11,7 @@ export class RestUserMapper {
     userModel.surenames = userRegisterDto.surenames;
     userModel.username = userRegisterDto.username;
     userModel.email = userRegisterDto.email;
-    userModel.password1 = userRegisterDto.password1;
-    userModel.password2 = userRegisterDto.password2;
+    userModel.password = userRegisterDto.password;
     return userModel;
   }
   UserModelToUserBasicResponseDto(userModel: UserModel): UserBasicResponseDto {
@@ -39,8 +38,8 @@ export class RestUserMapper {
   UserLoginDtoToUserModel(userLoginDto: UserLoginDto): UserModel {
     const userModel = new UserModel();
     userModel.username = userLoginDto.username;
-    userModel.password1 = userLoginDto.password1;
-    userModel.password2 = userLoginDto.password2;
+    userModel.password = userLoginDto.password;
+
     return userModel;
   }
 }
