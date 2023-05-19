@@ -4,6 +4,7 @@ import { UserModule } from './user/user.module';
 import { UserEntity } from './user/infrastructure/entity/user.entity';
 import { UserRolEntity } from './user/infrastructure/entity/user.rol.entity';
 import { AuthModule } from './auth/auth.module';
+import { GameModule } from './game/game.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { AuthModule } from './auth/auth.module';
     }),
     UserModule,
     AuthModule,
+    GameModule,
   ],
 })
 export class AppModule {}
