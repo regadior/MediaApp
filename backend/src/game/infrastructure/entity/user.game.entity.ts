@@ -8,5 +8,9 @@ export class UserGameEntity extends BaseEntity {
   @Column({ nullable: false })
   gameId: number;
   @Column({ nullable: false })
+  userGameSavegameId: number;
+  score: number;
   whishlist: boolean;
+  @Column({ nullable: false })
+  state: string;
 }
