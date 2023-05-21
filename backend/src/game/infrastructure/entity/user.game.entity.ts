@@ -1,16 +1,23 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, JoinColumn, ManyToOne } from 'typeorm';
+import { UserGameSavegameEntity } from './user.game.savegame.entity';
+import { UserEntity } from 'src/user/infrastructure/entity/user.entity';
+import { GameStateEntity } from './game.state.entity';
 @Entity()
 export class UserGameEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   userGameId: number;
-  @Column({ nullable: false })
-  userId: number;
+  @ManyToOne(() => UserEntity)
+  @JoinColumn()
+  userEntity: UserEntity;
   @Column({ nullable: false })
   gameId: number;
-  @Column({ nullable: false })
-  userGameSavegameId: number;
+  @Column()
   score: number;
+  @Column()
   whishlist: boolean;
-  @Column({ nullable: false })
-  state: string;
+  @ManyToOne(() => GameStateEntity)
+  @JoinColumn({ name: 'gameStateId' })
+  gameState: GameStateEntity;
+  @OneToMany(() => UserGameSavegameEntity, (userGameSavegame) => userGameSavegame.userGame)
+  userGameSavegames: UserGameSavegameEntity[];
 }

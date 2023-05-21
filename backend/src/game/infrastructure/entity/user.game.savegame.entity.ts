@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne } from 'typeorm';
+import { UserGameEntity } from './user.game.entity';
 @Entity()
 export class UserGameSavegameEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
@@ -9,5 +10,8 @@ export class UserGameSavegameEntity extends BaseEntity {
   state: string;
   @Column({ nullable: false })
   description: string;
+  @Column()
   dateSave: Date;
+  @ManyToOne(() => UserGameEntity, (userGame) => userGame.userGameSavegames)
+  userGame: UserGameEntity;
 }
