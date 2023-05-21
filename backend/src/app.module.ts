@@ -6,7 +6,7 @@ import { UserRolEntity } from './user/infrastructure/entity/user.rol.entity';
 import { AuthModule } from './auth/auth.module';
 import { GameModule } from './game/game.module';
 import { UserGameEntity } from './game/infrastructure/entity/user.game.entity';
-import { UserGameSavegameEntity } from './game/infrastructure/entity/user.game.savegame';
+import { UserGameSavegameEntity } from './game/infrastructure/entity/user.game.savegame.entity';
 import { GameStateEntity } from './game/infrastructure/entity/game.state.entity';
 @Module({
   imports: [
