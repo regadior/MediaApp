@@ -1,9 +1,8 @@
+import { GetGamesDetailsService } from './../../infrastructure/service/rawg/get.games.details.service';
 import { Controller, Get, HttpCode, HttpStatus, Query } from '@nestjs/common';
-import * as qs from 'qs';
-import * as dotenv from 'dotenv';
-dotenv.config();
 @Controller('/api')
 export class RawgGameListController {
+  constructor(private readonly getGamesDetailsService: GetGamesDetailsService) {}
   @Get('/games')
   @HttpCode(HttpStatus.OK)
   public async getGameListFilter(
@@ -19,36 +18,24 @@ export class RawgGameListController {
     @Query('metacritic') metacritic?: number,
     @Query('ordering') ordering?: string,
   ) {
-    const apiKey = process.env.RAWG_API_KEY;
-    const queryParams = {
-      page_size,
-      search,
-      search_precise,
-      search_exact,
-      platforms,
-      developers,
-      genres,
-      tags,
-      dates,
-      metacritic,
-      ordering,
-    };
-    // Filtra los parámetros indefinidos
-    const filteredParams = Object.entries(queryParams)
-      .filter(([value]) => value !== undefined)
-      .reduce((obj, [key, value]) => {
-        obj[key] = value;
-        return obj;
-      }, {});
-    const queryString = qs.stringify(filteredParams);
-    const apiUrl = `https://api.rawg.io/api/games?key=${apiKey}&${queryString}`;
     try {
-      const response = await fetch(apiUrl);
-      const games = await response.json();
+      const games = await this.getGamesDetailsService.gameDetails(
+        page_size,
+        search,
+        search_precise,
+        search_exact,
+        platforms,
+        developers,
+        genres,
+        tags,
+        dates,
+        metacritic,
+        ordering,
+      );
       return games;
     } catch (error) {
-      console.error('Error making rawg API request:', error);
-      return 'Error making rawg API request:';
+      console.error('Error:', error);
+      return 'Error occurred while fetching game details.';
     }
   }
 }

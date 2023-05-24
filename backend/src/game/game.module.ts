@@ -19,9 +19,28 @@ import { UserTypeOrmRepositoryImpl } from 'src/user/infrastructure/repository/us
 import { UserMapper } from 'src/user/infrastructure/mapper/UserMapper';
 import { UserEntity } from 'src/user/infrastructure/entity/user.entity';
 import { UserRolEntity } from 'src/user/infrastructure/entity/user.rol.entity';
+import { GetRawgGameGenreController } from './api_rest/controller/get.rawg.game.genre.controller';
+import { GetRawgGamePaltformController } from './api_rest/controller/get.rawg.game.patform.controller';
+import { GetRawgGamePublisherController } from './api_rest/controller/get.rawg.game.publisher.controller';
+import { GetRawgGameStoresontroller } from './api_rest/controller/get.rawg.game.stores.controller';
+import { GetGamesDetailsService } from './infrastructure/service/rawg/get.games.details.service';
+import { GetGenresService } from './infrastructure/service/rawg/get.genres.service';
+import { GetPlatformService } from './infrastructure/service/rawg/get.platform.service';
+import { GetPublisherService } from './infrastructure/service/rawg/get.publishers.service';
+import { GetStoresService } from './infrastructure/service/rawg/get.stores.service';
+import { NotFoundExceptionFilter } from 'src/user/api_rest/exception/notfound.exception.handler';
+import { APP_FILTER } from '@nestjs/core';
+import { UserModule } from 'src/user/user.module';
 @Module({
-  imports: [TypeOrmModule.forFeature([UserGameEntity, UserGameSavegameEntity, GameStateEntity, UserEntity, UserRolEntity])],
-  controllers: [RawgGameListController, PatchGameForUserController],
+  imports: [TypeOrmModule.forFeature([UserGameEntity, UserGameSavegameEntity, GameStateEntity, UserEntity, UserRolEntity]), UserModule],
+  controllers: [
+    RawgGameListController,
+    PatchGameForUserController,
+    GetRawgGameGenreController,
+    GetRawgGamePaltformController,
+    GetRawgGamePublisherController,
+    GetRawgGameStoresontroller,
+  ],
   providers: [
     UpdateGameForUserUseCase,
     UserGameStateInitializer,
@@ -41,6 +60,16 @@ import { UserRolEntity } from 'src/user/infrastructure/entity/user.rol.entity';
       provide: UserRepository,
       useClass: UserTypeOrmRepositoryImpl,
     },
+    {
+      //To create the exception handler
+      provide: APP_FILTER, //Exception filter provider of app
+      useClass: NotFoundExceptionFilter, //Filter type (exceptions)
+    },
+    GetGamesDetailsService,
+    GetGenresService,
+    GetPlatformService,
+    GetPublisherService,
+    GetStoresService,
   ],
 })
 export class GameModule {}
