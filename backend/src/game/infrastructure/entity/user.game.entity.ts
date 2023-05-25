@@ -16,7 +16,7 @@ export class UserGameEntity extends BaseEntity {
   @Column()
   whishlist: boolean;
   @ManyToOne(() => GameStateEntity)
-  @JoinColumn({ name: 'gameStateId' })
+  @JoinColumn()
   gameState: GameStateEntity;
   @OneToMany(() => UserGameSavegameEntity, (userGameSavegame) => userGameSavegame.userGame)
   userGameSavegames: UserGameSavegameEntity[];

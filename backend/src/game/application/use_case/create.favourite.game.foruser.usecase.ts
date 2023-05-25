@@ -2,10 +2,11 @@ import { UserGameRepository } from 'src/game/domain/repository/user.game.reposit
 import { UserGameModel } from './../../domain/model/user.game.model';
 import { Inject, Injectable } from '@nestjs/common';
 import { UserRepository } from 'src/user/domain/repository/user.repository';
+import { UserNotFoundException } from 'src/user/domain/exception/user.notfound.exception';
 import { GameStateRepository } from 'src/game/domain/repository/game.state.repository';
 import { UserGameNotFoundException } from 'src/game/domain/exception/user.game.notfound.exception';
 @Injectable()
-export class UpdateGameForUserUseCase {
+export class CreateFavouriteGameForUserUseCase {
   constructor(
     @Inject(UserGameRepository)
     private readonly userGameRepository: UserGameRepository,
@@ -14,16 +15,23 @@ export class UpdateGameForUserUseCase {
     @Inject(GameStateRepository)
     private readonly gameStateRepository: GameStateRepository,
   ) {}
-  public async UpdateGameForUserUseCase(userGameModel: UserGameModel, userGameId: number) {
-    const userGameExists = await this.userGameRepository.findOneGameUserByUserGameId(userGameId);
-    if (userGameExists == null) {
-      throw new UserGameNotFoundException(`UserGame with id ${userGameId} does not exists`);
+  public async saveFavoutiteGameForUserUseCase(userGameModel: UserGameModel, gameId: number, userId: number) {
+    const existingUsername = await this.userRepository.findOneById(userId);
+    if (existingUsername == null) {
+      throw new UserNotFoundException(`User with id ${userId} does not exists`);
     }
-    if (userGameModel.gameState.state == null) {
+    //TODO añadir comprobacion de juego
+    const existingUserGame = await this.userGameRepository.findOneGameUserByGameIdAndUserId(gameId, userId);
+    if (existingUserGame != null) {
+      throw new UserGameNotFoundException(`Game with id ${gameId} for user with id ${userId}   is currently in favorites`);
+    }
+    if (userGameModel.gameState == null || userGameModel.gameState.state == null) {
       const stateDef = await this.gameStateRepository.findOneByState('uncategorized');
       userGameModel.gameState = stateDef;
     }
-
+    userGameModel.gameId = gameId;
+    userGameModel.userModel = existingUsername;
+    userGameModel.score = 0;
     this.userGameRepository.updateGameUser(userGameModel);
   }
 }

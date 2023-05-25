@@ -20,11 +20,14 @@ import { UserRolRepository } from './domain/repository/user.rol.repository';
 import { UserRolTypeOrmRepositoryImpl } from './infrastructure/repository/user.rol.typeorm.repository.impl';
 import { UserRolMapper } from './infrastructure/mapper/user.rol.mapper';
 import { TokenUtils } from 'src/auth/application/use_case/token.utils';
+import { FindUserByIdUseCase } from './application/use_case/find.user.by.id.use.case';
+import { GetUserForUserIdController } from './api_rest/controller/get.user.for.userid.controller';
 @Module({
   imports: [TypeOrmModule.forFeature([UserEntity, UserRolEntity])],
-  controllers: [UserRegisterController, UserLoginController],
+  controllers: [UserRegisterController, UserLoginController, GetUserForUserIdController],
   providers: [
     CreateUserUseCase,
+    FindUserByIdUseCase,
     LogUserUseCase,
     {
       provide: UserRepository,

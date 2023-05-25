@@ -31,6 +31,14 @@ import { GetStoresService } from './infrastructure/service/rawg/get.stores.servi
 import { NotFoundExceptionFilter } from 'src/user/api_rest/exception/notfound.exception.handler';
 import { APP_FILTER } from '@nestjs/core';
 import { UserModule } from 'src/user/user.module';
+import { PostFavouriteGameForUserController } from './api_rest/controller/post.favourite.game.for.user.controller';
+import { CreateFavouriteGameForUserUseCase } from './application/use_case/create.favourite.game.foruser.usecase';
+import { ConflictExceptionFilter } from 'src/user/api_rest/exception/conflict.exception.handler';
+import { FindUserGameByIdUseCase } from './application/use_case/find.user.game.by.id.use.case';
+import { RestPatchGameUserMapper } from './api_rest/mapper/rest.patch.game.user.mapper';
+import { GetUserGameForUserController } from './api_rest/controller/get.usergame.for.user.controller';
+import { FindUserGameByIdAndUserIdUseCase } from './application/use_case/find.user.game.by.id.and.userid.use.case';
+import { PostUserGameSavegameForGameController } from './api_rest/controller/post.usergame.savegame.controller';
 @Module({
   imports: [TypeOrmModule.forFeature([UserGameEntity, UserGameSavegameEntity, GameStateEntity, UserEntity, UserRolEntity]), UserModule],
   controllers: [
@@ -40,14 +48,21 @@ import { UserModule } from 'src/user/user.module';
     GetRawgGamePaltformController,
     GetRawgGamePublisherController,
     GetRawgGameStoresontroller,
+    PostFavouriteGameForUserController,
+    GetUserGameForUserController,
+    PostUserGameSavegameForGameController,
   ],
   providers: [
     UpdateGameForUserUseCase,
+    CreateFavouriteGameForUserUseCase,
+    FindUserGameByIdUseCase,
+    FindUserGameByIdAndUserIdUseCase,
     UserGameStateInitializer,
     GameStateMapper,
     UserGameMapper,
     RestGameUserMapper,
     UserMapper,
+    RestPatchGameUserMapper,
     {
       provide: GameStateRepository,
       useClass: GameStateTypeOrmRepositoryImpl,
@@ -64,6 +79,11 @@ import { UserModule } from 'src/user/user.module';
       //To create the exception handler
       provide: APP_FILTER, //Exception filter provider of app
       useClass: NotFoundExceptionFilter, //Filter type (exceptions)
+    },
+    {
+      //To create the exception handler
+      provide: APP_FILTER, //Exception filter provider of app
+      useClass: ConflictExceptionFilter, //Filter type (exceptions)
     },
     GetGamesDetailsService,
     GetGenresService,

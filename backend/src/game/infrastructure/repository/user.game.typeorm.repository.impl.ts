@@ -9,6 +9,14 @@ import { UserGameMapper } from '../mapper/user.game.mapper';
 @Injectable()
 export class UserGameTypeOrmRepositoryImpl implements UserGameRepository {
   constructor(private readonly userGameMapper: UserGameMapper, @InjectRepository(UserGameEntity) private readonly userGameRepository: Repository<UserGameEntity>) {}
+  async findOneGameUserByUserGameIdAndUserId(userGameId: number, userId: number): Promise<UserGameModel> {
+    const gameUser = await this.userGameRepository.findOne({ where: { userGameId: userGameId, userEntity: { userId } }, relations: ['userEntity'] });
+    return gameUser ? this.userGameMapper.UserGameEntityToUserGameModel(gameUser) : null;
+  }
+  async findOneGameUserByGameIdAndUserId(gameId: number, userId: number): Promise<UserGameModel> {
+    const gameUser = await this.userGameRepository.findOne({ where: { gameId: gameId, userEntity: { userId: userId } }, relations: ['userEntity'] });
+    return gameUser ? this.userGameMapper.UserGameEntityToUserGameModel(gameUser) : null;
+  }
   async findOneGameUserByGameId(gameId: number): Promise<UserGameModel> {
     const gameUser = await this.userGameRepository.findOne({ where: { gameId: gameId } });
     return gameUser ? this.userGameMapper.UserGameEntityToUserGameModel(gameUser) : null;
@@ -17,7 +25,11 @@ export class UserGameTypeOrmRepositoryImpl implements UserGameRepository {
     const gameUser = await this.userGameRepository.findOne({ where: { userEntity: { userId } } });
     return gameUser ? this.userGameMapper.UserGameEntityToUserGameModel(gameUser) : null;
   }
+  async findOneGameUserByUserGameId(userGameId: number): Promise<UserGameModel> {
+    const gameUser = await this.userGameRepository.findOne({ where: { userGameId: userGameId }, relations: ['userEntity', 'gameState'] });
+    return gameUser ? this.userGameMapper.UserGameEntityToUserGameModel(gameUser) : null;
+  }
   async updateGameUser(userGameModel: UserGameModel) {
-    throw new Error('Method not implemented.');
+    await this.userGameRepository.save(this.userGameMapper.UserGameModelToUserGameEntity(userGameModel));
   }
 }
