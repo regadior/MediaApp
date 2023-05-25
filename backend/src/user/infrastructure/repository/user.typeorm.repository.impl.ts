@@ -9,6 +9,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 @Injectable()
 export class UserTypeOrmRepositoryImpl implements UserRepository {
   constructor(private readonly userMapper: UserMapper, @InjectRepository(UserEntity) private readonly userRepository: Repository<UserEntity>) {}
+  async findOneById(userId: number): Promise<UserModel> {
+    const user = await this.userRepository.findOne({ where: { userId: userId }, relations: ['rol'] });
+    return user ? this.userMapper.UserEntityToUserModel(user) : null;
+  }
   async createUser(userModel: UserModel): Promise<UserModel | null> {
     return this.userMapper.UserEntityToUserModel(await this.userMapper.UserModelToUserEntity(userModel).save());
   }
