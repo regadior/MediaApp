@@ -1,4 +1,3 @@
-import { GameSaveGameMapper } from './../mapper/game.savegame.mapper';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserGameModel } from 'src/game/domain/model/user.game.model';
@@ -6,6 +5,7 @@ import { UserGameSavegameModel } from 'src/game/domain/model/user.game.savegame.
 import { UserGameSavegameRepository } from 'src/game/domain/repository/user.game.savegame.repository';
 import { UserGameSavegameEntity } from '../entity/user.game.savegame.entity';
 import { Repository } from 'typeorm';
+import { GameSaveGameMapper } from '../mapper/game.savegame.mapper';
 
 @Injectable()
 export class UserGameSavegameTypeOrmRepositoryImpl implements UserGameSavegameRepository {
@@ -17,10 +17,8 @@ export class UserGameSavegameTypeOrmRepositoryImpl implements UserGameSavegameRe
     throw new Error('Method not implemented.');
   }
   async create(userGameSavegameModel: UserGameSavegameModel): Promise<UserGameSavegameModel> {
-    const saveGameEntity = this.gameSaveGameMapper.saveGameModelToSavaGameEntity(userGameSavegameModel);
-    const createdSaveGameEntity = await this.gameSaveGameRepository.save(saveGameEntity);
-
-    const a = this.gameSaveGameMapper.saveGameEntityToSavaGameModel(createdSaveGameEntity);
-    return a;
+    return this.gameSaveGameMapper.saveGameEntityToSavaGameModel(
+      await this.gameSaveGameRepository.save(this.gameSaveGameMapper.saveGameModelToSavaGameEntity(userGameSavegameModel)),
+    );
   }
 }
