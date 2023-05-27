@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, JoinColumn, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, JoinColumn, ManyToOne, ManyToMany } from 'typeorm';
 import { UserGameSavegameEntity } from './user.game.savegame.entity';
 import { UserEntity } from 'src/user/infrastructure/entity/user.entity';
 import { GameStateEntity } from './game.state.entity';
@@ -18,6 +18,6 @@ export class UserGameEntity extends BaseEntity {
   @ManyToOne(() => GameStateEntity)
   @JoinColumn()
   gameState: GameStateEntity;
-  @OneToMany(() => UserGameSavegameEntity, (userGameSavegame) => userGameSavegame.userGame)
-  userGameSavegames: UserGameSavegameEntity[];
+  @OneToMany(() => UserGameSavegameEntity, (saveGame) => saveGame.userGame)
+  saveGames: UserGameSavegameEntity[];
 }
