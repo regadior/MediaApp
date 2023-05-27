@@ -23,7 +23,7 @@ export class CreateFavouriteGameForUserUseCase {
     //TODO añadir comprobacion de juego
     const existingUserGame = await this.userGameRepository.findOneGameUserByGameIdAndUserId(gameId, userId);
     if (existingUserGame != null) {
-      throw new UserGameNotFoundException(`Game with id ${gameId} for user with id ${userId}   is currently in favorites`);
+      throw new UserGameNotFoundException(`Game with id ${gameId} for user with id ${userId} is currently in favorites`);
     }
     if (userGameModel.gameState == null || userGameModel.gameState.state == null) {
       const stateDef = await this.gameStateRepository.findOneByState('uncategorized');

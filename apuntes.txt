@@ -80,3 +80,5 @@ Dependencia builder-pattern que sirve como lombok en java para poner decoradoire
 
 @InjectRepository(UserEntity) private readonly userRepository: Repository<UserEntity>
 Esto para inyectar el repository
+
+Error haciuenod los thorw para que se coja la excepcion era necesario poner un await en la llamada de la excepcion
