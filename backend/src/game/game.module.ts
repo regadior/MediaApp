@@ -39,6 +39,11 @@ import { RestPatchGameUserMapper } from './api_rest/mapper/rest.patch.game.user.
 import { GetUserGameForUserController } from './api_rest/controller/get.usergame.for.user.controller';
 import { FindUserGameByIdAndUserIdUseCase } from './application/use_case/find.user.game.by.id.and.userid.use.case';
 import { PostUserGameSavegameForGameController } from './api_rest/controller/post.usergame.savegame.controller';
+import { CreateSavegameForUserGameUseCase } from './application/use_case/create.savegame.for.usergame.usecase';
+import { RestSaveGameMapper } from './api_rest/mapper/rest.save.game.mapper';
+import { UserGameSavegameTypeOrmRepositoryImpl } from './infrastructure/repository/user.game.savegame.typeorm.repository.impl';
+import { UserGameSavegameRepository } from './domain/repository/user.game.savegame.repository';
+import { GameSaveGameMapper } from './infrastructure/mapper/game.savegame.mapper';
 @Module({
   imports: [TypeOrmModule.forFeature([UserGameEntity, UserGameSavegameEntity, GameStateEntity, UserEntity, UserRolEntity]), UserModule],
   controllers: [
@@ -57,12 +62,15 @@ import { PostUserGameSavegameForGameController } from './api_rest/controller/pos
     CreateFavouriteGameForUserUseCase,
     FindUserGameByIdUseCase,
     FindUserGameByIdAndUserIdUseCase,
+    CreateSavegameForUserGameUseCase,
     UserGameStateInitializer,
     GameStateMapper,
     UserGameMapper,
     RestGameUserMapper,
     UserMapper,
     RestPatchGameUserMapper,
+    RestSaveGameMapper,
+    GameSaveGameMapper,
     {
       provide: GameStateRepository,
       useClass: GameStateTypeOrmRepositoryImpl,
@@ -74,6 +82,10 @@ import { PostUserGameSavegameForGameController } from './api_rest/controller/pos
     {
       provide: UserRepository,
       useClass: UserTypeOrmRepositoryImpl,
+    },
+    {
+      provide: UserGameSavegameRepository,
+      useClass: UserGameSavegameTypeOrmRepositoryImpl,
     },
     {
       //To create the exception handler

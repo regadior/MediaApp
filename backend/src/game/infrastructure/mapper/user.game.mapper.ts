@@ -1,3 +1,4 @@
+import { UserGameSavegameEntity } from './../entity/user.game.savegame.entity';
 import { UserEntity } from './../../../user/infrastructure/entity/user.entity';
 import { UserGameModel } from 'src/game/domain/model/user.game.model';
 import { UserGameEntity } from '../entity/user.game.entity';
@@ -12,7 +13,6 @@ export class UserGameMapper {
     userGameModel.score = userGameEntity.score;
     userGameModel.gameState = userGameEntity.gameState;
     userGameModel.whishlist = userGameEntity.whishlist;
-    userGameModel.userGameSavegames = userGameEntity.userGameSavegames;
     const userModel = new UserModel();
     userModel.userId = userGameEntity.userEntity.userId;
     userModel.username = userGameEntity.userEntity.username;
@@ -35,7 +35,6 @@ export class UserGameMapper {
     userEntity.username = userGameModel.userModel.username;
     userEntity.email = userGameModel.userModel.email;
     userGameEntity.userEntity = userEntity;
-    userGameEntity.userGameSavegames = userGameEntity.userGameSavegames;
     return userGameEntity;
   }
   favouriteUserGameModelToUserGameEntity(userGameModel: UserGameModel): UserGameEntity {

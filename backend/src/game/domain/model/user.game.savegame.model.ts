@@ -1,7 +1,11 @@
+import { GameStateModel } from "./game.state.model";
+import { UserGameModel } from "./user.game.model";
+
 export class UserGameSavegameModel {
   userGameSavegameId: number;
   name: string;
-  state: string;
+  state: GameStateModel;
   description: string;
-  dateSave: Date;
+  dateSave: string;
+  userGame: UserGameModel;
 }

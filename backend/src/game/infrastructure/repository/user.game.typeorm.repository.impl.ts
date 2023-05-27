@@ -30,6 +30,7 @@ export class UserGameTypeOrmRepositoryImpl implements UserGameRepository {
     return gameUser ? this.userGameMapper.UserGameEntityToUserGameModel(gameUser) : null;
   }
   async updateGameUser(userGameModel: UserGameModel) {
-    await this.userGameRepository.save(this.userGameMapper.UserGameModelToUserGameEntity(userGameModel));
+    const a = this.userGameMapper.UserGameEntityToUserGameModel(await this.userGameRepository.save(this.userGameMapper.UserGameModelToUserGameEntity(userGameModel)));
+    return a;
   }
 }
