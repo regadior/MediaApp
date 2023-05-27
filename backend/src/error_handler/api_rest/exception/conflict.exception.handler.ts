@@ -5,7 +5,7 @@ import { EmailUsedException } from 'src/user/domain/exception/email.used.excepti
 import { PassNotMatchException } from 'src/user/domain/exception/pass.not.match.exception';
 import { UsernameUsedException } from 'src/user/domain/exception/username.used.exception';
 
-@Catch(EmailUsedException, PassNotMatchException, UserGameExistsException)
+@Catch(EmailUsedException, PassNotMatchException, UserGameExistsException, UsernameUsedException)
 export class ConflictExceptionFilter implements ExceptionFilter {
   catch(exception: any, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
