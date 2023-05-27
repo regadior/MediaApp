@@ -23,7 +23,7 @@ export class UpdateGameForUserUseCase {
       const stateDef = await this.gameStateRepository.findOneByState('uncategorized');
       userGameModel.gameState = stateDef;
     }
-
+    console.log(userGameModel);
     this.userGameRepository.updateGameUser(userGameModel);
   }
 }

@@ -1,7 +1,7 @@
 import { Body, Controller, HttpCode, HttpStatus, Param, Patch, UsePipes, ValidationPipe } from '@nestjs/common';
 import { UpdateGameForUserUseCase } from 'src/game/application/use_case/update.game.for.user.usecase';
 import { FindUserGameByIdUseCase } from 'src/game/application/use_case/find.user.game.by.id.use.case';
-import { UserGamePatchDto } from 'src/game/domain/dto/user.game.patch.dto';
+import { UserGamePatchDto } from 'src/game/domain/dto/request/user.game.patch.dto';
 import { RestPatchGameUserMapper } from '../mapper/rest.patch.game.user.mapper';
 @Controller('/api/games')
 export class PatchGameForUserController {
