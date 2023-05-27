@@ -1,4 +1,4 @@
-import { UserGamePatchDto } from 'src/game/domain/dto/user.game.patch.dto';
+import { UserGamePatchDto } from 'src/game/domain/dto/request/user.game.patch.dto';
 import { UserGameModel } from 'src/game/domain/model/user.game.model';
 
 export class RestPatchGameUserMapper {
