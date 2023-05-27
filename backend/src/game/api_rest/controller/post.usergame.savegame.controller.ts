@@ -9,6 +9,6 @@ export class PostUserGameSavegameForGameController {
   @HttpCode(HttpStatus.CREATED)
   @UsePipes(new ValidationPipe({ transform: true }))
   public async postGameForUser(@Body() userGameSavegameDto: UserGameSavegameDto, @Param('gameId') gameId: number, @Param('userId') userId: number) {
-    this.createSavegameForUserGameUseCase.createSavegameForUserGameUseCase(userId, gameId, this.restSaveGameMapper.userSavegameDtoToSaveGameModel(userGameSavegameDto));
+    await this.createSavegameForUserGameUseCase.createSavegameForUserGameUseCase(userId, gameId, this.restSaveGameMapper.userSavegameDtoToSaveGameModel(userGameSavegameDto));
   }
 }

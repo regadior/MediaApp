@@ -9,6 +9,6 @@ export class PostFavouriteGameForUserController {
   @HttpCode(HttpStatus.CREATED)
   @UsePipes(new ValidationPipe({ transform: true }))
   public async postGameForUser(@Body() favouriteGameDto: FavouriteGameDto, @Param('gameId') gameId: number, @Param('userId') userId: number) {
-    this.createFavouriteGameForUserUseCase.saveFavoutiteGameForUserUseCase(this.restGameUserMapper.favouriteGameDtoToUserGameModel(favouriteGameDto), gameId, userId);
+    await this.createFavouriteGameForUserUseCase.saveFavoutiteGameForUserUseCase(this.restGameUserMapper.favouriteGameDtoToUserGameModel(favouriteGameDto), gameId, userId);
   }
 }

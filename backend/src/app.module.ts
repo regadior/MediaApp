@@ -8,6 +8,7 @@ import { GameModule } from './game/game.module';
 import { UserGameEntity } from './game/infrastructure/entity/user.game.entity';
 import { UserGameSavegameEntity } from './game/infrastructure/entity/user.game.savegame.entity';
 import { GameStateEntity } from './game/infrastructure/entity/game.state.entity';
+import { ErrorHandlerModule } from './error_handler/error_handler.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -20,9 +21,10 @@ import { GameStateEntity } from './game/infrastructure/entity/game.state.entity'
       entities: [UserEntity, UserRolEntity, UserGameEntity, UserGameSavegameEntity, GameStateEntity],
       synchronize: true,
     }),
+    GameModule,
     UserModule,
     AuthModule,
-    GameModule,
+    ErrorHandlerModule,
   ],
 })
 export class AppModule {}
