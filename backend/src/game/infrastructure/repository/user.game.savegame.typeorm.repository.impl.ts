@@ -13,8 +13,8 @@ export class UserGameSavegameTypeOrmRepositoryImpl implements UserGameSavegameRe
     private readonly gameSaveGameMapper: GameSaveGameMapper,
     @InjectRepository(UserGameSavegameEntity) private readonly gameSaveGameRepository: Repository<UserGameSavegameEntity>,
   ) {}
-  async findOneByUserGameSavegameId(savegameId: number): Promise<UserGameModel> {
-    throw new Error('Method not implemented.');
+  async findOneBySaveGameId(savegameId: number): Promise<UserGameSavegameModel> {
+    return this.gameSaveGameMapper.saveGameEntityToSavaGameModel(await this.gameSaveGameRepository.findOne({ where: { userGameSavegameId: savegameId } }));
   }
   async create(userGameSavegameModel: UserGameSavegameModel): Promise<UserGameSavegameModel> {
     return this.gameSaveGameMapper.saveGameEntityToSavaGameModel(
