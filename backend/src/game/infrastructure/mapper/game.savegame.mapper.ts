@@ -1,3 +1,4 @@
+import { UserGameModel } from 'src/game/domain/model/user.game.model';
 import { GameStateEntity } from '../entity/game.state.entity';
 import { UserGameEntity } from '../entity/user.game.entity';
 import { UserGameSavegameEntity } from '../entity/user.game.savegame.entity';
@@ -21,7 +22,7 @@ export class GameSaveGameMapper {
     userGameSavegameModel.name = userGameSavegameEntity.name;
     userGameSavegameModel.dateSave = userGameSavegameEntity.dateSave;
     userGameSavegameModel.description = userGameSavegameEntity.description;
-    // userGameSavegameModel.state = userGameSavegameEntity.saveState;
+    userGameSavegameModel.state = userGameSavegameEntity.saveState;
     return userGameSavegameModel;
   }
 }

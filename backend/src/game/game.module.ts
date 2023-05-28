@@ -44,6 +44,8 @@ import { UserGameSavegameRepository } from './domain/repository/user.game.savega
 import { GameSaveGameMapper } from './infrastructure/mapper/game.savegame.mapper';
 import { PostFavouriteGameForUserController } from './api_rest/controller/post.favourite.game.for.user.controller';
 import { CreateFavouriteGameForUserUseCase } from './application/use_case/create.favourite.game.foruser.usecase';
+import { FindSaveGameByIdForUserUseCase } from './application/use_case/find.savegame.by.id.for.user.usecase';
+import { GetGameSaveGameController } from './api_rest/controller/get.game.savegame.by.id.for.user.controller';
 @Module({
   imports: [TypeOrmModule.forFeature([UserGameEntity, UserGameSavegameEntity, GameStateEntity, UserEntity, UserRolEntity]), UserModule],
   controllers: [
@@ -56,6 +58,7 @@ import { CreateFavouriteGameForUserUseCase } from './application/use_case/create
     GetUserGameForUserController,
     PostUserGameSavegameForGameController,
     PostFavouriteGameForUserController,
+    GetGameSaveGameController,
   ],
   providers: [
     UpdateGameForUserUseCase,
@@ -63,6 +66,7 @@ import { CreateFavouriteGameForUserUseCase } from './application/use_case/create
     FindUserGameByIdAndUserIdUseCase,
     CreateSavegameForUserGameUseCase,
     CreateFavouriteGameForUserUseCase,
+    FindSaveGameByIdForUserUseCase,
     UserGameStateInitializer,
     GameStateMapper,
     UserGameMapper,
