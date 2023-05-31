@@ -1,0 +1,21 @@
+.game-cards-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.game-card {
+  width: 230px;
+  margin: 10px;
+  padding: 5px;
+  text-align: center;
+  border: 1px solid #fd0000;
+  border-radius: 4px;
+}
+.game-card img {
+  border-radius: 4px;
+  width: 100%;
+}
+.game-card p {
+  margin-top: 10px;
+}
