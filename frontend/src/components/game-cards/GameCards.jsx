@@ -1,28 +1,45 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import React, { useEffect, useState, useRef } from "react";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import "./GameCards.css";
 import NextButton from "../buttons-next-prev/next/NextButton";
 import PrevButton from "../buttons-next-prev/previous/PrevButton";
 import Load from "../load-element/Load";
-export default function GameCards() {
+import SearchGameBar from "../search-game-bar/SearchGameBar";
+export default function GameCards({ searchTerm }) {
+  const isFirstRender = useRef(true);
   const navigate = useNavigate();
+  const location = useLocation();
   const [isLoading, setIsLoading] = useState(false);
   const [gameData, setGameData] = useState(null);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(null);
+  const [search, setSearch] = useState("");
+  const [ordering, setOrdering] = useState("");
+  const [platforms, setPlatforms] = useState("5");
 
   useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const pageParam = searchParams.get("page");
+    const pageNumber = parseInt(pageParam) || 1;
+    setPage(pageNumber);
+    const searchParam = searchParams.get("search");
+    setSearch(searchParam);
+
+}, [location.pathname, location.search]);
+  useEffect(() => {
+    navigate(`?page=${1}&search=${searchTerm}`);
+  }, [searchTerm]);
+  useEffect(() => {
     fetchData();
-  }, [page]);
+  }, [page, search, ordering]);
 
   const fetchData = async () => {
     setIsLoading(true);
     try {
       const response = await fetch(
-        `http://localhost:8000/api/games?search_precise=true&page=${page}&page_size=${pageSize}`
+        `http://localhost:8000/api/games?search_precise=true&page=${page}&page_size=${pageSize}&ordering=${ordering}&search=${search}&`
       );
       const data = await response.json();
-      navigate(`?page=${page}`);
       setGameData(data);
     } catch (error) {
       console.error("Error al realizar la solicitud:", error);
@@ -30,13 +47,13 @@ export default function GameCards() {
     setIsLoading(false);
   };
   const handleNextClick = () => {
-    setPage(page + 1);
-    navigate(`?page=${page + 1}`);
+    if (gameData.next != null) {
+      navigate(`?page=${page + 1}&search=${search}`);
+    }
   };
   const handlePrevClick = () => {
-    if (page > 1) {
-      setPage(page - 1);
-      navigate(`?page=${page - 1}`);
+    if (gameData.previous != null) {
+      navigate(`?page=${page - 1}&search=${search}`);
     }
   };
   return (
@@ -49,16 +66,21 @@ export default function GameCards() {
         gameData && (
           <div>
             <div className="index_game-cards-container">
-              {gameData.results.map((game) => (
-                <div key={game.id} className="index_game-card">
-                  <img src={game.background_image} alt={game.name} />
-                  <div className="index_botton">
-                    <Link to={`/game/${game.slug}`} className="Link">
-                      <p>{game.name}</p>
-                    </Link>
+              {gameData.results.map((game) => {
+                if (!game.background_image) {
+                  return null; // Si no hay imagen, se omite el juego
+                }
+                return (
+                  <div key={game.id} className="index_game-card">
+                    <img src={game.background_image} alt={game.name} />
+                    <div className="index_botton">
+                      <Link to={`/game/${game.slug}`} className="Link">
+                        <p>{game.name}</p>
+                      </Link>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
             <div className="index_total_next_prev">
               <div className="index_next_prev">

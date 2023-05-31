@@ -6,6 +6,7 @@ export class RawgGameListController {
   @Get('/games')
   @HttpCode(HttpStatus.OK)
   public async getGameListFilter(
+    @Query('page') page?: number,
     @Query('page_size') page_size?: number,
     @Query('search') search?: string,
     @Query('search_precise') search_precise?: boolean,
@@ -20,6 +21,7 @@ export class RawgGameListController {
   ) {
     try {
       const games = await this.getGamesDetailsService.gameDetails(
+        page,
         page_size,
         search,
         search_precise,
