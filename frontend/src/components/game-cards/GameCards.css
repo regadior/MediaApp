@@ -19,3 +19,19 @@
 .game-card p {
   margin-top: 10px;
 }
+.index_loader{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+.index_total_next_prev{
+  display: flex;
+  justify-content: center;
+}
+.index_next_prev{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 10%;
+}
