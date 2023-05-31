@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate  } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "./GameCards.css";
 import NextButton from "../buttons-next-prev/next/NextButton";
 import PrevButton from "../buttons-next-prev/previous/PrevButton";
 import Load from "../load-element/Load";
 export default function GameCards() {
-  const navigate  = useNavigate();
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [gameData, setGameData] = useState(null);
   const [page, setPage] = useState(1);
@@ -48,11 +48,15 @@ export default function GameCards() {
       ) : (
         gameData && (
           <div>
-            <div className="game-cards-container">
+            <div className="index_game-cards-container">
               {gameData.results.map((game) => (
-                <div key={game.id} className="game-card">
+                <div key={game.id} className="index_game-card">
                   <img src={game.background_image} alt={game.name} />
-                  <p>{game.name}</p>
+                  <div className="index_botton">
+                    <Link to={`/game/${game.slug}`} className="Link">
+                      <p>{game.name}</p>
+                    </Link>
+                  </div>
                 </div>
               ))}
             </div>
