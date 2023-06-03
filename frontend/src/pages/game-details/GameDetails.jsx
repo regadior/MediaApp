@@ -1,11 +1,9 @@
 import React from 'react';
-import './Inicio.css'
+import './GameDetails.css'
 function Inicio() {
   return (
-    <div>
-      <div className='inicio_filtros'>
-        aaa
-      </div>
+    <div className='game_total'>
+
     </div>
   )
 }

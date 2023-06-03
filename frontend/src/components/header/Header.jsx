@@ -9,7 +9,6 @@ export default function Header() {
   let usuario = "regadior";
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.authUser.isLoggedIn);
-  console.log(isLoggedIn);
   const handleLogout = () => {
     dispatch(logout());
   };
@@ -17,7 +16,7 @@ export default function Header() {
     <header>
       <div className="header2">
         <div className="header_logo">
-          <Link className="header_Link" to="/">
+          <Link className="header_Link" to="/?page=1&search=">
             <img src={logo} alt="User avatar" />
           </Link>
         </div>
