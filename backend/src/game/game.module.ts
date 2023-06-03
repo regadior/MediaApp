@@ -18,15 +18,13 @@ import { UserTypeOrmRepositoryImpl } from 'src/user/infrastructure/repository/us
 import { UserMapper } from 'src/user/infrastructure/mapper/UserMapper';
 import { UserEntity } from 'src/user/infrastructure/entity/user.entity';
 import { UserRolEntity } from 'src/user/infrastructure/entity/user.rol.entity';
+import { GetRawgGameGenreController } from './api_rest/controller/rawg/get.rawg.game.genre.controller';
 import { GetGamesDetailsService } from './infrastructure/service/rawg/get.games.details.service';
 import { GetGenresService } from './infrastructure/service/rawg/get.genres.service';
 import { GetPlatformService } from './infrastructure/service/rawg/get.platform.service';
 import { GetPublisherService } from './infrastructure/service/rawg/get.publishers.service';
 import { GetStoresService } from './infrastructure/service/rawg/get.stores.service';
-import { NotFoundExceptionFilter } from 'src/user/api_rest/exception/notfound.exception.handler';
-import { APP_FILTER } from '@nestjs/core';
 import { UserModule } from 'src/user/user.module';
-import { ConflictExceptionFilter } from 'src/user/api_rest/exception/conflict.exception.handler';
 import { FindUserGameByIdUseCase } from './application/use_case/find.user.game.by.id.use.case';
 import { RestPatchGameUserMapper } from './api_rest/mapper/rest.patch.game.user.mapper';
 import { GetUserGameForUserController } from './api_rest/controller/get.usergame.for.user.controller';
@@ -41,6 +39,13 @@ import { PostFavouriteGameForUserController } from './api_rest/controller/post.f
 import { CreateFavouriteGameForUserUseCase } from './application/use_case/create.favourite.game.foruser.usecase';
 import { FindSaveGameByIdForUserUseCase } from './application/use_case/find.savegame.by.id.for.user.usecase';
 import { GetGameSaveGameController } from './api_rest/controller/get.game.savegame.by.id.for.user.controller';
+import { GetWhishlistGameForUserController } from './api_rest/controller/get.whishlist.game.for.user.controller';
+import { FindWhishlistGameForUserUseCase } from './application/use_case/find.whishlist.games.foruser.usecase';
+import { RawgGameListController } from './api_rest/controller/rawg/get.rawg.game.list.controller';
+import { GetRawgGamePaltformController } from './api_rest/controller/rawg/get.rawg.game.patform.controller';
+import { GetRawgGamePublisherController } from './api_rest/controller/rawg/get.rawg.game.publisher.controller';
+import { GetRawgGameStoresontroller } from './api_rest/controller/rawg/get.rawg.game.stores.controller';
+import { GetGameByIdService } from './infrastructure/service/rawg/get.game.by.id.service';
 import { GetGameViewService } from './infrastructure/service/rawg/get.game.view.service';
 import { RawgGameViewController } from './api_rest/controller/rawg/get.rawg.game.view.controller';
 import { GetRawgGameGenreController } from './api_rest/controller/rawg/get.rawg.game.genre.controller';
@@ -61,12 +66,14 @@ import { RawgGameListController } from './api_rest/controller/rawg/get.rawg.game
     PostUserGameSavegameForGameController,
     PostFavouriteGameForUserController,
     GetGameSaveGameController,
+    GetWhishlistGameForUserController,
     RawgGameViewController,
   ],
   providers: [
     UpdateGameForUserUseCase,
     FindUserGameByIdUseCase,
     FindUserGameByIdAndUserIdUseCase,
+    FindWhishlistGameForUserUseCase,
     CreateSavegameForUserGameUseCase,
     CreateFavouriteGameForUserUseCase,
     FindSaveGameByIdForUserUseCase,
@@ -99,6 +106,7 @@ import { RawgGameListController } from './api_rest/controller/rawg/get.rawg.game
     GetPlatformService,
     GetPublisherService,
     GetStoresService,
+    GetGameByIdService,
     GetGameViewService,
   ],
 })

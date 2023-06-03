@@ -19,6 +19,23 @@ export class UserGameMapper {
     userGameModel.userModel = userModel;
     return userGameModel;
   }
+  userGameEntityListToUserGameModelList(userGameEntities: UserGameEntity[]): UserGameModel[] {
+    const userGameModels: UserGameModel[] = [];
+    for (const userGameEntity of userGameEntities) {
+      const userGameModel = new UserGameModel();
+      userGameModel.userGameId = userGameEntity.userGameId;
+      userGameModel.gameId = userGameEntity.gameId;
+      userGameModel.score = userGameEntity.score;
+      userGameModel.gameState = userGameEntity.gameState;
+      userGameModel.whishlist = userGameEntity.whishlist;
+      const userModel = new UserModel();
+      userModel.userId = userGameEntity.userEntity.userId;
+      userModel.username = userGameEntity.userEntity.username;
+      userGameModel.userModel = userModel;
+      userGameModels.push(userGameModel);
+    }
+    return userGameModels;
+  }
   UserGameModelToUserGameEntity(userGameModel: UserGameModel): UserGameEntity {
     const userGameEntity = new UserGameEntity();
     userGameEntity.userGameId = userGameModel.userGameId;

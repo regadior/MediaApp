@@ -9,6 +9,10 @@ import { UserGameMapper } from '../mapper/user.game.mapper';
 @Injectable()
 export class UserGameTypeOrmRepositoryImpl implements UserGameRepository {
   constructor(private readonly userGameMapper: UserGameMapper, @InjectRepository(UserGameEntity) private readonly userGameRepository: Repository<UserGameEntity>) {}
+  async findAllByWhishlistTrueAndUserId(userId: number): Promise<UserGameModel[]> {
+    const gameUser = await this.userGameRepository.find({ where: { whishlist: true, userEntity: { userId } }, relations: ['userEntity'] });
+    return gameUser ? this.userGameMapper.userGameEntityListToUserGameModelList(gameUser) : null;
+  }
   async findOneGameUserByUserGameIdAndUserId(userGameId: number, userId: number): Promise<UserGameModel> {
     const gameUser = await this.userGameRepository.findOne({ where: { userGameId: userGameId, userEntity: { userId } }, relations: ['userEntity'] });
     return gameUser ? this.userGameMapper.UserGameEntityToUserGameModel(gameUser) : null;
