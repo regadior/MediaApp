@@ -1,0 +1,78 @@
+.game_info_total {
+  display: flex;
+  flex-direction: column;
+  color: white;
+}
+
+.game_info_loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
+.game_info_img_name {
+  border: 2px solid red;
+  display: flex;
+  padding: 50px 90px;
+}
+
+.game_info_img img {
+  width: 450px;
+  border-radius: 5px;
+}
+
+.game_info_name {
+  font-weight: bold;
+  font-size: 30px;
+  margin-left: 200px;
+}
+
+.game_info_botton {
+  border: 2px solid blue;
+  padding-top: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.game_info_about p {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.metacritic {
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.updated {
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.game_info_about {
+  width: 600px;
+  font-size: 14px;
+  /* width: 800px; */
+}
+
+.game_info_requirements {
+  width: 600px;
+  border: 1px solid wheat;
+}
+
+.game_info_favorites_score div {
+  border: 1px solid red;
+  display: flex;
+  flex-direction: row;
+}
+
+.game_info_favorites_button {
+  
+  font-size: 12px;
+  background-color: #2196f3;
+
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
