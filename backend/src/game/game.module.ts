@@ -41,14 +41,9 @@ import { FindSaveGameByIdForUserUseCase } from './application/use_case/find.save
 import { GetGameSaveGameController } from './api_rest/controller/get.game.savegame.by.id.for.user.controller';
 import { GetWhishlistGameForUserController } from './api_rest/controller/get.whishlist.game.for.user.controller';
 import { FindWhishlistGameForUserUseCase } from './application/use_case/find.whishlist.games.foruser.usecase';
-import { RawgGameListController } from './api_rest/controller/rawg/get.rawg.game.list.controller';
-import { GetRawgGamePaltformController } from './api_rest/controller/rawg/get.rawg.game.patform.controller';
-import { GetRawgGamePublisherController } from './api_rest/controller/rawg/get.rawg.game.publisher.controller';
-import { GetRawgGameStoresontroller } from './api_rest/controller/rawg/get.rawg.game.stores.controller';
 import { GetGameByIdService } from './infrastructure/service/rawg/get.game.by.id.service';
 import { GetGameViewService } from './infrastructure/service/rawg/get.game.view.service';
 import { RawgGameViewController } from './api_rest/controller/rawg/get.rawg.game.view.controller';
-import { GetRawgGameGenreController } from './api_rest/controller/rawg/get.rawg.game.genre.controller';
 import { GetRawgGamePaltformController } from './api_rest/controller/rawg/get.rawg.game.patform.controller';
 import { GetRawgGamePublisherController } from './api_rest/controller/rawg/get.rawg.game.publisher.controller';
 import { GetRawgGameStoresontroller } from './api_rest/controller/rawg/get.rawg.game.stores.controller';

@@ -3,11 +3,11 @@ import { GetGameViewService } from 'src/game/infrastructure/service/rawg/get.gam
 @Controller('/api')
 export class RawgGameViewController {
   constructor(private readonly getGameViewService: GetGameViewService) {}
-  @Get('/games/:name')
+  @Get('/users/:userId?/games/:name')
   @HttpCode(HttpStatus.OK)
-  public async getGameView(@Param('name') name: string) {
+  public async getGameView(@Param('name') name: string, @Param('userId') userId?: number) {
     try {
-      const game = await this.getGameViewService.gameDetails(name);
+      const game = await this.getGameViewService.gameDetails(name, userId);
       return game;
     } catch (error) {
       console.error('Error:', error);
