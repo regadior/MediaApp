@@ -14,11 +14,11 @@ export class UserGameTypeOrmRepositoryImpl implements UserGameRepository {
     return gameUser ? this.userGameMapper.userGameEntityListToUserGameModelList(gameUser) : null;
   }
   async findOneGameUserByUserGameIdAndUserId(userGameId: number, userId: number): Promise<UserGameModel> {
-    const gameUser = await this.userGameRepository.findOne({ where: { userGameId: userGameId, userEntity: { userId } }, relations: ['userEntity'] });
+    const gameUser = await this.userGameRepository.findOne({ where: { userGameId: userGameId, userEntity: { userId } }, relations: ['userEntity', 'gameState'] });
     return gameUser ? this.userGameMapper.UserGameEntityToUserGameModel(gameUser) : null;
   }
   async findOneGameUserByGameIdAndUserId(gameId: number, userId: number): Promise<UserGameModel> {
-    const gameUser = await this.userGameRepository.findOne({ where: { gameId: gameId, userEntity: { userId: userId } }, relations: ['userEntity'] });
+    const gameUser = await this.userGameRepository.findOne({ where: { gameId: gameId, userEntity: { userId: userId } }, relations: ['userEntity', 'gameState'] });
     return gameUser ? this.userGameMapper.UserGameEntityToUserGameModel(gameUser) : null;
   }
   async findOneGameUserByGameId(gameId: number): Promise<UserGameModel> {
