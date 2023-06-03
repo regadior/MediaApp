@@ -46,6 +46,13 @@ import { GetRawgGamePaltformController } from './api_rest/controller/rawg/get.ra
 import { GetRawgGamePublisherController } from './api_rest/controller/rawg/get.rawg.game.publisher.controller';
 import { GetRawgGameStoresontroller } from './api_rest/controller/rawg/get.rawg.game.stores.controller';
 import { GetGameByIdService } from './infrastructure/service/rawg/get.game.by.id.service';
+import { GetGameViewService } from './infrastructure/service/rawg/get.game.view.service';
+import { RawgGameViewController } from './api_rest/controller/rawg/get.rawg.game.view.controller';
+import { GetRawgGameGenreController } from './api_rest/controller/rawg/get.rawg.game.genre.controller';
+import { GetRawgGamePaltformController } from './api_rest/controller/rawg/get.rawg.game.patform.controller';
+import { GetRawgGamePublisherController } from './api_rest/controller/rawg/get.rawg.game.publisher.controller';
+import { GetRawgGameStoresontroller } from './api_rest/controller/rawg/get.rawg.game.stores.controller';
+import { RawgGameListController } from './api_rest/controller/rawg/get.rawg.game.list.controller';
 @Module({
   imports: [TypeOrmModule.forFeature([UserGameEntity, UserGameSavegameEntity, GameStateEntity, UserEntity, UserRolEntity]), UserModule],
   controllers: [
@@ -60,6 +67,7 @@ import { GetGameByIdService } from './infrastructure/service/rawg/get.game.by.id
     PostFavouriteGameForUserController,
     GetGameSaveGameController,
     GetWhishlistGameForUserController,
+    RawgGameViewController,
   ],
   providers: [
     UpdateGameForUserUseCase,
@@ -99,6 +107,7 @@ import { GetGameByIdService } from './infrastructure/service/rawg/get.game.by.id
     GetPublisherService,
     GetStoresService,
     GetGameByIdService,
+    GetGameViewService,
   ],
 })
 export class GameModule {}

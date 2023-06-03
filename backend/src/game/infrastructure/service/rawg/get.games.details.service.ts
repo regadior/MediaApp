@@ -3,6 +3,7 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 export class GetGamesDetailsService {
   async gameDetails(
+    page?: number,
     page_size?: number,
     search?: string,
     search_precise?: boolean,
@@ -16,6 +17,7 @@ export class GetGamesDetailsService {
     ordering?: string,
   ) {
     const queryParams = {
+      page,
       page_size,
       search,
       search_precise,
