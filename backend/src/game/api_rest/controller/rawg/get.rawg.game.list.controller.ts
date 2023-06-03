@@ -1,5 +1,5 @@
-import { GetGamesDetailsService } from './../../infrastructure/service/rawg/get.games.details.service';
 import { Controller, Get, HttpCode, HttpStatus, Query } from '@nestjs/common';
+import { GetGamesDetailsService } from 'src/game/infrastructure/service/rawg/get.games.details.service';
 @Controller('/api')
 export class RawgGameListController {
   constructor(private readonly getGamesDetailsService: GetGamesDetailsService) {}
