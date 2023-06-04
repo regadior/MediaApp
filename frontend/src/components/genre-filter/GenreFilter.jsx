@@ -1,21 +1,21 @@
 import React, { useState, useEffect, useRef } from "react";
-import "./PlattformFilter.css";
+import "./GenreFilter.css";
 import ArrowDown from '../../assets/flecha-hacia-abajo.png';
-
-export default function PlattformFilter({ onPlatformSelection }) {
-  const [platforms, setPlatforms] = useState([]);
-  const [selectedPlatform, setSelectedPlatform] = useState("");
+// { ongenreelection }
+export default function GenreFilter() {
+  const [genre, setGenre] = useState([]);
+  const [selectedGenre, setSelectedGenre] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const filterRef = useRef(null);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/games/platforms")
+    fetch("http://localhost:8000/api/games/genres")
       .then((response) => response.json())
       .then((data) => {
-        setPlatforms(data.results);
+        setGenre(data.results);
       })
       .catch((error) => {
-        console.error("Error fetching platforms:", error);
+        console.error("Error fetching genre:", error);
       });
   }, []);
 
@@ -34,9 +34,9 @@ export default function PlattformFilter({ onPlatformSelection }) {
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    const platformParam = urlParams.get("plattform");
-    if (platformParam && platformParam.trim() === "") {
-      setSelectedPlatform(""); // Establecer valor por defecto si el parámetro está vacío
+    const GenreParam = urlParams.get("genre");
+    if (GenreParam && GenreParam.trim() === "") {
+      setSelectedGenre(""); // Establecer valor por defecto si el parámetro está vacío
     }
   }, []);
 
@@ -44,38 +44,38 @@ export default function PlattformFilter({ onPlatformSelection }) {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  const handlePlatformSelection = (platform) => {
-    onPlatformSelection(platform.id);
-    setSelectedPlatform(platform.name);
+  const handlegenreelection = (Genre) => {
+    // ongenreelection(Genre.id);
+    setSelectedGenre(Genre.name);
     setIsDropdownOpen(false);
   };
 
   const handleClearSelection = () => {
-    onPlatformSelection("");
-    setSelectedPlatform("");
+    // ongenreelection("");
+    setSelectedGenre("");
     setIsDropdownOpen(false);
   };
 
   return (
     <div className="PlattformFilter_total" ref={filterRef}>
       <div className="PlattformFilter_dropdown_button" onClick={handleDropdownToggle}>
-        {selectedPlatform ? selectedPlatform : "Select Platform"}
+        {selectedGenre ? selectedGenre : "Select Genre"}
         <img src={ArrowDown} alt="Arrow down" />
       </div>
       {isDropdownOpen && (
         <div className="PlattformFilter_dropdown_content">
-          {selectedPlatform && (
+          {selectedGenre && (
             <div className="PlattformFilter_dropdown_item" onClick={handleClearSelection}>
               Clear
             </div>
           )}
-          {platforms.map((platform) => (
+          {genre.map((Genre) => (
             <div
-              key={platform.id}
+              key={Genre.id}
               className="PlattformFilter_dropdown_item"
-              onClick={() => handlePlatformSelection(platform)}
+              onClick={() => handlegenreelection(Genre)}
             >
-              {platform.name}
+              {Genre.name}
             </div>
           ))}
         </div>
