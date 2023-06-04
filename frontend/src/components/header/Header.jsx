@@ -6,11 +6,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../redux/AuthUser";
 import "./Header.css";
 export default function Header() {
-  const userData = JSON.parse(window.localStorage.getItem("userData"));
+  const userData = JSON.parse(window.localStorage.getItem("userLoginData"));
+  console.log(userData);
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.authUser.isLoggedIn);
   const handleLogout = () => {
     dispatch(logout());
+    window.localStorage.removeItem("userData");
+    window.localStorage.removeItem("userLoginData");
   };
   return (
     <header>
@@ -27,7 +30,7 @@ export default function Header() {
             </Link>
           </li>
           <li>
-            <Link className="header_Link" to={`/${userData.username}/lists`}>
+            <Link className="header_Link" to={isLoggedIn ? `/${userData.username}/lists` : "/login"}>
               My Lists
             </Link>
           </li>
