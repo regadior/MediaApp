@@ -42,9 +42,12 @@ export default function GameInfo() {
   const handleAddToWishlist = () => {
     console.log(gameData.id);
     axios
-      .post(`http://localhost:8000/api/games/${gameData.id}/users/${userData.userId}`, {
-        whishlist: true,
-      })
+      .post(
+        `http://localhost:8000/api/games/${gameData.id}/users/${userData.userId}`,
+        {
+          whishlist: true,
+        }
+      )
       .then((response) => {
         fetchData();
       })
@@ -102,11 +105,14 @@ export default function GameInfo() {
                           className="game_info_favorites_button"
                           onClick={handleAddToWishlist}
                         >
-                          <p>Add this game to your wishlist.</p>
+                          <p>Add this game to your lists.</p>
                         </div>
                       ) : (
-                        <Link to="/login" className="game_info_favorites_button">
-                          <p>Add this game to your wishlist.</p>
+                        <Link
+                          to="/login"
+                          className="game_info_favorites_button"
+                        >
+                          <p>Add this game to your lists.</p>
                         </Link>
                       )}
                     </div>
@@ -116,13 +122,28 @@ export default function GameInfo() {
             </div>
             <div className="game_info_botton">
               <div className="game_info_about">
-                <p>About</p>
+                <p className="p">About</p>
                 <div className="game_info_description">
                   {gameData.description_raw}
                 </div>
+                <p className="game_info_tags">
+                  Tags: 
+                  {gameData.tags.map((tag, index) => (
+                    <React.Fragment key={tag.id}>
+                      <span>{tag.name}</span>
+                      {index !== gameData.tags.length - 1 && (
+                        <span className="tag_separator">,</span>
+                      )}
+                    </React.Fragment>
+                  ))}
+                </p>
+
+                <p className="game_info_released">
+                  Released at: {gameData.released}
+                </p>
               </div>
               <div className="game_info_requirements">
-                <p>Requirements for PC</p>
+                <p className="p">Save Games</p>
                 <div className="game_info_req">{}</div>
               </div>
             </div>

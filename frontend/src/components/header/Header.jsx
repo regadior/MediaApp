@@ -7,7 +7,6 @@ import { logout } from "../../redux/AuthUser";
 import "./Header.css";
 export default function Header() {
   const userData = JSON.parse(window.localStorage.getItem("userLoginData"));
-  console.log(userData);
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.authUser.isLoggedIn);
   const handleLogout = () => {
@@ -44,7 +43,7 @@ export default function Header() {
               >
                 <img src={usuarionolog} alt="User avatar" />
               </Link>
-              <div onClick={handleLogout}>logout</div>
+              <div className="header_logout" onClick={handleLogout}>logout</div>
             </>
           ) : (
             <Link className="header_Link header_login2" to={`/login`}>

@@ -117,5 +117,17 @@ header {
 
 /* FIN ESTILOS DEL BOTON DE LOGIN */
 
+.header_logout{
+    color: white;
+    cursor: pointer;
+    margin-left: 8px;
+    background-color: #2b71b3;
+    border-radius: 4px;
+    padding: 4px;
+}
+.header_logout:hover{
+    background-color: #3e8eda;
+    transition: padding 0.3s;
+}
 
 @media only screen and (min-width: 650px) and (max-width: 800px) {}

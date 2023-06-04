@@ -12,7 +12,6 @@
 }
 
 .game_info_img_name {
-  border: 2px solid red;
   display: flex;
   padding: 50px 90px;
 }
@@ -29,23 +28,27 @@
 }
 
 .game_info_botton {
-  border: 2px solid blue;
+  padding-left: 90px;
+  padding-right: 90px;
   padding-top: 30px;
   display: flex;
   justify-content: center;
 }
 
-.game_info_about p {
+.game_info_about .p {
   font-size: 20px;
   font-weight: bold;
+  margin-bottom: 20px;
 }
 
 .metacritic {
+  margin-top: 5px;
   font-size: 15px;
   font-weight: 400;
 }
 
 .updated {
+  margin-top: 5px;
   font-size: 15px;
   font-weight: 400;
 }
@@ -53,26 +56,96 @@
 .game_info_about {
   width: 600px;
   font-size: 14px;
-  /* width: 800px; */
+  margin-right: 80px;
 }
 
 .game_info_requirements {
   width: 600px;
-  border: 1px solid wheat;
 }
-
-.game_info_favorites_score div {
-  border: 1px solid red;
+.game_info_requirements .p{
+  margin-bottom: 20px;
+  font-weight: bold;
+  font-size: 20px;
+}
+/* .game_info_favorites_score div {
   display: flex;
   flex-direction: row;
-}
+} */
 
 .game_info_favorites_button {
-  
+  width: 200px;
+  margin-top: 15px;
+  color: white;
+  text-decoration: none;
+  padding: 10px;
   font-size: 12px;
   background-color: #2196f3;
-
   border-radius: 5px;
   border: none;
   cursor: pointer;
+}
+.game_info_favorites_button:hover {
+  background-color: #1077cc;
+}
+.game_info_description{
+  overflow: auto;
+  height: 200px;
+  scrollbar-width: thin;
+  scrollbar-color: #888888 #f0f0f0;
+}
+.game_info_description::-webkit-scrollbar {
+  width: 6px; 
+}
+
+.game_info_description::-webkit-scrollbar-track {
+  background-color: #f0f0f0; 
+}
+
+.game_info_description::-webkit-scrollbar-thumb {
+  background-color: #7a7a7a; 
+}
+.game_info_released{
+  margin-top: 20px;
+  font-weight: bold;
+  font-size: 16px;
+}
+.game_info_tags{
+  margin-top: 20px;
+  font-weight: bold;
+  font-size: 16px;
+}
+.tag_separator {
+  margin-right: 5px;
+}
+.game_info_tags span:first-child {
+  margin-left: 5px;
+}
+.game_info_tags span {
+  font-size: 14px;
+  font-weight: 300;
+}
+.game_info_score_button p{ 
+  margin-top: 20px;
+  font-size: 16px;
+}
+
+@media only screen and (max-width: 1150px) {
+  .game_info_name {
+    margin-left: 100px;
+  }
+}
+@media only screen and (max-width: 1050px) {
+  .game_info_name {
+    margin-left: 0px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
+  .game_info_img_name {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 0px;
+  }
 }
