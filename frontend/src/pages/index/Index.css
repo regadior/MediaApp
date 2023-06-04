@@ -3,4 +3,21 @@ body {
 }
 .index_filtros{
   display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+.index_filtros > *:not(:last-child) {
+  margin-right: 20px;
+}
+@media only screen and (max-width: 1050px) {
+  .index_filtros {
+    flex-direction: column;
+    align-items: center;
+  }
+  .index_filtros > *:not(:first-child) {
+    margin-top: 20px;
+  }
+
 }

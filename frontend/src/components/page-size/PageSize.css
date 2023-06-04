@@ -5,6 +5,7 @@
   border-radius: 5px;
   cursor: pointer;
   width: 50px;
+  height: 35px;
 }
 .PageSize_dropdown_dropdown_button{
   display: flex;

@@ -9,6 +9,7 @@ export default function Inicio() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedPlatform, setSelectedPlatform] = useState("");
   const [selectedPageSize, setSelectedPageSize] = useState(20);
+  const [selectedGenre, setSelectedGenre] = useState("");
   const handleSearch = (term) => {
     setSearchTerm(term);
   };
@@ -18,18 +19,23 @@ export default function Inicio() {
   const handlePageSizeSelection = (size) => {
     setSelectedPageSize(size);
   };
+  const handleGenreSelection = (genre) => {
+    setSelectedGenre(genre);
+  };
   return (
     <div className="index_total">
       <div className="index_filtros">
-        <SearchGameBar onSearch={handleSearch} />
         <PlattformFilter
           onPlatformSelection={handlePlatformSelection}
         />
-        <GenreFilter/>
+        <GenreFilter onGenreSelection={handleGenreSelection}/>
+
         <PageSize onPageSizeSelection={handlePageSizeSelection}/>
+        <SearchGameBar onSearch={handleSearch} />
+        
       </div>
       <div className="index_cards">
-        <GameCards searchTerm={searchTerm} selectedPlatform={selectedPlatform} selectedPageSize={selectedPageSize}  />
+        <GameCards searchTerm={searchTerm} selectedPlatform={selectedPlatform} selectedPageSize={selectedPageSize} selectedGenre={selectedGenre} />
       </div>
     </div>
   );

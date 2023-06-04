@@ -4,7 +4,7 @@ import "./GameCards.css";
 import NextButton from "../buttons-next-prev/next/NextButton";
 import PrevButton from "../buttons-next-prev/previous/PrevButton";
 import Load from "../load-element/Load";
-export default function GameCards({ searchTerm, selectedPlatform, selectedPageSize }) {
+export default function GameCards({ searchTerm, selectedPlatform, selectedPageSize, selectedGenre }) {
   const isFirstRender = useRef(true);
   const navigate = useNavigate();
   const location = useLocation();
@@ -13,6 +13,7 @@ export default function GameCards({ searchTerm, selectedPlatform, selectedPageSi
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState("");
   const [search, setSearch] = useState("");
+  const [genre, setGenre] = useState("");
   const [ordering, setOrdering] = useState("");
   const [platforms, setPlatforms] = useState("");
   useEffect(() => {
@@ -26,20 +27,22 @@ export default function GameCards({ searchTerm, selectedPlatform, selectedPageSi
     setPlatforms(plattform);
     const pageSize = searchParams.get("pageSize");
     setPageSize(pageSize);
+    const genre = searchParams.get("genre");
+    setGenre(genre);
 
 }, [location.pathname, location.search]);
   useEffect(() => {
-    navigate(`?page=${1}&pageSize=${selectedPageSize}&search=${searchTerm}&plattform=${selectedPlatform}`);
-  }, [searchTerm, selectedPlatform, selectedPageSize]);
+    navigate(`?page=${1}&pageSize=${selectedPageSize}&search=${searchTerm}&plattform=${selectedPlatform}&genre=${selectedGenre}`);
+  }, [searchTerm, selectedPlatform, selectedPageSize, selectedGenre]);
   useEffect(() => {
     fetchData();
-  }, [page, search, ordering, platforms, pageSize]);
+  }, [page, search, ordering, platforms, pageSize, genre]);
 
   const fetchData = async () => {
     setIsLoading(true);
     try {
       const response = await fetch(
-        `http://localhost:8000/api/games?search_precise=true&page=${page}&page_size=${pageSize}&ordering=${ordering}&search=${search}&platforms=${platforms}`
+        `http://localhost:8000/api/games?search_precise=true&page=${page}&page_size=${pageSize}&ordering=${ordering}&search=${search}&platforms=${platforms}&genres=${genre}`
       );
       const data = await response.json();
       setGameData(data);
