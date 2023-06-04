@@ -4,10 +4,12 @@ import Load from "../load-element/Load";
 
 export default function Profile() {
   const [isLoading, setIsLoading] = useState(false);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
   const userLoginData = JSON.parse(
     window.localStorage.getItem("userLoginData")
   );
   const userData = JSON.parse(window.localStorage.getItem("userData"));
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -20,39 +22,40 @@ export default function Profile() {
       );
       const data = await response.json();
       window.localStorage.setItem("userData", JSON.stringify(data));
+      setIsDataLoaded(true);
     } catch (error) {
       console.error("Error al realizar la solicitud:", error);
     }
     setIsLoading(false);
   };
 
+  if (!isDataLoaded) {
+    return (
+      <div className="index_loader">
+        <Load />
+      </div>
+    );
+  }
+
   return (
-    <div>
-      {isLoading ? (
-        <div className="index_loader">
-          <Load />
+    <div className="Profile_total">
+      <div className="Profile_imgs">
+        <div className="Profile_banner">
+          <img src={userData.imgBanner} alt="" />
         </div>
-      ) : (
-        <div className="Profile_total">
-          <div className="Profile_imgs">
-            <div className="Profile_banner">
-              <img src={userData.imgBanner} alt="" />
-            </div>
-            <div className="Profile_avatar">
-              <img src={userData.imgPerfil} alt="" />
-            </div>
-          </div>
-          <div className="Profile_left_des">
-            <div className="Profile_username_des">
-              <div className="Profile_name">{userData.username}</div>
-              <div className="Profile_description">{userData.description}</div>
-            </div>
-            <div className="Profile_data">
-              a
-            </div>
-          </div>
+        <div className="Profile_avatar">
+          <img src={userData.imgPerfil} alt="" />
         </div>
-      )}
+      </div>
+      <div className="Profile_left_des">
+        <div className="Profile_username_des">
+          <div className="Profile_name">{userData.username}</div>
+          <div className="Profile_description">{userData.description}</div>
+        </div>
+        <div className="Profile_data">
+          a
+        </div>
+      </div>
     </div>
   );
 }
