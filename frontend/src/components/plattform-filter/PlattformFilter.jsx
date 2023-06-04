@@ -11,8 +11,7 @@ export default function PlattformFilter({ onPlatformSelection }) {
     fetch("http://localhost:8000/api/games/platforms")
       .then((response) => response.json())
       .then((data) => {
-        const platformNames = data.results.map((platform) => platform.name);
-        setPlatforms(platformNames);
+        setPlatforms(data.results);
       })
       .catch((error) => {
         console.error("Error fetching platforms:", error);
@@ -32,13 +31,21 @@ export default function PlattformFilter({ onPlatformSelection }) {
     };
   }, []);
 
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const platformParam = urlParams.get("plattform");
+    if (platformParam && platformParam.trim() === "") {
+      setSelectedPlatform(""); // Establecer valor por defecto si el parámetro está vacío
+    }
+  }, []);
+
   const handleDropdownToggle = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
   const handlePlatformSelection = (platform) => {
-    onPlatformSelection(platform);
-    setSelectedPlatform(platform);
+    onPlatformSelection(platform.id);
+    setSelectedPlatform(platform.name);
     setIsDropdownOpen(false);
   };
 
@@ -58,13 +65,13 @@ export default function PlattformFilter({ onPlatformSelection }) {
           <div className="PlattformFilter_dropdown_item" onClick={handleClearSelection}>
             Clear
           </div>
-          {platforms.map((platform, index) => (
+          {platforms.map((platform) => (
             <div
-              key={index}
+              key={platform.id}
               className="PlattformFilter_dropdown_item"
               onClick={() => handlePlatformSelection(platform)}
             >
-              {platform}
+              {platform.name}
             </div>
           ))}
         </div>

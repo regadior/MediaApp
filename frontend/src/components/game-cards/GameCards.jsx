@@ -4,8 +4,7 @@ import "./GameCards.css";
 import NextButton from "../buttons-next-prev/next/NextButton";
 import PrevButton from "../buttons-next-prev/previous/PrevButton";
 import Load from "../load-element/Load";
-import SearchGameBar from "../search-game-bar/SearchGameBar";
-export default function GameCards({ searchTerm }) {
+export default function GameCards({ searchTerm, selectedPlatform }) {
   const isFirstRender = useRef(true);
   const navigate = useNavigate();
   const location = useLocation();
@@ -15,7 +14,7 @@ export default function GameCards({ searchTerm }) {
   const [pageSize, setPageSize] = useState(null);
   const [search, setSearch] = useState("");
   const [ordering, setOrdering] = useState("");
-  const [platforms, setPlatforms] = useState("5");
+  const [platforms, setPlatforms] = useState("");
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -24,20 +23,22 @@ export default function GameCards({ searchTerm }) {
     setPage(pageNumber);
     const searchParam = searchParams.get("search");
     setSearch(searchParam);
+    const plattform = searchParams.get("plattform");
+    setPlatforms(plattform);
 
 }, [location.pathname, location.search]);
   useEffect(() => {
-    navigate(`?page=${1}&search=${searchTerm}`);
-  }, [searchTerm]);
+    navigate(`?page=${1}&search=${searchTerm}&plattform=${selectedPlatform}`);
+  }, [searchTerm, selectedPlatform]);
   useEffect(() => {
     fetchData();
-  }, [page, search, ordering]);
+  }, [page, search, ordering, platforms]);
 
   const fetchData = async () => {
     setIsLoading(true);
     try {
       const response = await fetch(
-        `http://localhost:8000/api/games?search_precise=true&page=${page}&page_size=${pageSize}&ordering=${ordering}&search=${search}&`
+        `http://localhost:8000/api/games?search_precise=true&page=${page}&page_size=${pageSize}&ordering=${ordering}&search=${search}&platforms=${platforms}`
       );
       const data = await response.json();
       setGameData(data);
@@ -48,12 +49,17 @@ export default function GameCards({ searchTerm }) {
   };
   const handleNextClick = () => {
     if (gameData.next != null) {
-      navigate(`?page=${page + 1}&search=${search}`);
+      const searchParams = new URLSearchParams(location.search);
+      searchParams.set("page", String(page + 1));
+      navigate(`?${searchParams.toString()}`);
     }
   };
+
   const handlePrevClick = () => {
     if (gameData.previous != null) {
-      navigate(`?page=${page - 1}&search=${search}`);
+      const searchParams = new URLSearchParams(location.search);
+      searchParams.set("page", String(page - 1));
+      navigate(`?${searchParams.toString()}`);
     }
   };
   return (

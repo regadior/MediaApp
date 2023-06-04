@@ -1,6 +1,7 @@
 import * as qs from 'qs';
 import * as dotenv from 'dotenv';
 dotenv.config();
+
 export class GetGamesDetailsService {
   async gameDetails(
     page?: number,
@@ -30,15 +31,17 @@ export class GetGamesDetailsService {
       metacritic,
       ordering,
     };
-    // Filtra los parámetros indefinidos
-    const filteredParams = Object.entries(queryParams)
-      .filter(([value]) => value !== undefined)
-      .reduce((obj, [key, value]) => {
-        obj[key] = value;
-        return obj;
-      }, {});
-    const queryString = qs.stringify(filteredParams);
+
+    // Eliminar parámetros con valores de cadena vacía
+    for (const key in queryParams) {
+      if (queryParams.hasOwnProperty(key) && queryParams[key] === '') {
+        delete queryParams[key];
+      }
+    }
+    const queryString = qs.stringify(queryParams);
+    console.log(platforms);
     const apiUrl = `https://api.rawg.io/api/games?key=${process.env.RAWG_API_KEY}&${queryString}`;
+
     try {
       const response = await fetch(apiUrl);
       const games = await response.json();

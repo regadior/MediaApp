@@ -16,13 +16,13 @@ export default function Header() {
     <header>
       <div className="header2">
         <div className="header_logo">
-          <Link className="header_Link" to="/?page=1&search=">
+          <Link className="header_Link" to="/?page=1&search=&plattform=">
             <img src={logo} alt="User avatar" />
           </Link>
         </div>
         <ul className="header_nav">
           <li>
-            <Link className="header_Link" to="/">
+            <Link className="header_Link" to="/?page=1&search=&plattform=">
               Buscar
             </Link>
           </li>
