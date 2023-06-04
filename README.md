@@ -74,16 +74,16 @@ This project consists of a web made with ` React.js `, `Nestjs` and `Typescript`
 
 - ~~You can follow users~~.
 
-- ~~You can update your users~~.
+- You can update your user.
 
 - ~~You can delete your users~~.
 
 ##### GAME
-- ~~You can search games~~.
+- You can search games.
 
-- ~~You can rate games~~.
+- You can rate games.
 
-- ~~You can add games to favorites~~.
+- You can add games to favorites.
 
 - ~~You can store your information about the game(state, description ...)~~.
 
