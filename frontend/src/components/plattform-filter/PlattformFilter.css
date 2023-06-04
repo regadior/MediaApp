@@ -1,5 +1,5 @@
 .PlattformFilter_total{
-  background-color: #2196f3;
+  background-color: #2b71b3;
   color: white;
   padding: 5px 10px;
   border-radius: 5px;
@@ -9,8 +9,19 @@
 .PlattformFilter_dropdown_content{
   position: absolute;
   z-index: 2;
-  background-color: #2196f3;
+  background-color: #2b71b3;
   width: 150px;
   height: 400px;
   overflow: auto;
+}
+
+.PlattformFilter_dropdown_button{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.PlattformFilter_dropdown_button img{
+  width: 10px;
+  height: 15px;
+  margin-top: 5px;
 }

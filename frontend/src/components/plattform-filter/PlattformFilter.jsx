@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./PlattformFilter.css";
+import ArrowDown from '../../assets/flecha-hacia-abajo.png';
 
 export default function PlattformFilter({ onPlatformSelection }) {
   const [platforms, setPlatforms] = useState([]);
@@ -59,6 +60,7 @@ export default function PlattformFilter({ onPlatformSelection }) {
     <div className="PlattformFilter_total" ref={filterRef}>
       <div className="PlattformFilter_dropdown_button" onClick={handleDropdownToggle}>
         {selectedPlatform ? selectedPlatform : "Select Platform"}
+        <img src={ArrowDown} alt="Arrow down" />
       </div>
       {isDropdownOpen && (
         <div className="PlattformFilter_dropdown_content">
