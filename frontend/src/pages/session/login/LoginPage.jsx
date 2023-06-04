@@ -42,9 +42,7 @@ export default function LoginPage() {
         username: nick,
         password: pass1,
       });
-      window.localStorage.setItem("session_token", res.data.session_token); //Se almacena el token de sesion en el localstorage
-      window.localStorage.setItem("user_id", res.data.user_id);
-      console.log(res.data.user_id);
+      window.localStorage.setItem("userLoginData", JSON.stringify(res.data));
       dispatch(login());
       navigate("/"); //Redirigir a /
     } catch (err) {
