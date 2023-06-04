@@ -4,6 +4,7 @@ import GameCards from "../../components/game-cards/GameCards";
 import SearchGameBar from "../../components/search-game-bar/SearchGameBar";
 import PlattformFilter from "../../components/plattform-filter/PlattformFilter";
 import PageSize from "../../components/page-size/PageSize";
+import GenreFilter from "../../components/genre-filter/GenreFilter";
 export default function Inicio() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedPlatform, setSelectedPlatform] = useState("");
@@ -24,6 +25,7 @@ export default function Inicio() {
         <PlattformFilter
           onPlatformSelection={handlePlatformSelection}
         />
+        <GenreFilter/>
         <PageSize onPageSizeSelection={handlePageSizeSelection}/>
       </div>
       <div className="index_cards">
