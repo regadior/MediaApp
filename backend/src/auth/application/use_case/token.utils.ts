@@ -19,8 +19,8 @@ export class TokenUtils {
     return user;
   }
   async verifyTokenByUserId(tokenB: string, userId2: number): Promise<void> {
-    const token = tokenB.replace('Bearer ', '');
     try {
+      const token = tokenB.replace('Bearer ', '');
       const payload = this.jwtService.verify(token, { secret: 'secretkey' });
       const { userId, rol } = payload;
       if (userId !== userId2 && rol !== 'admin') {
