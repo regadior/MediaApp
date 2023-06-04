@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import "./GenreFilter.css";
 import ArrowDown from '../../assets/flecha-hacia-abajo.png';
 // { ongenreelection }
-export default function GenreFilter() {
+export default function GenreFilter({ onGenreSelection }) {
   const [genre, setGenre] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -45,13 +45,13 @@ export default function GenreFilter() {
   };
 
   const handlegenreelection = (Genre) => {
-    // ongenreelection(Genre.id);
+    onGenreSelection(Genre.id);
     setSelectedGenre(Genre.name);
     setIsDropdownOpen(false);
   };
 
   const handleClearSelection = () => {
-    // ongenreelection("");
+    onGenreSelection("");
     setSelectedGenre("");
     setIsDropdownOpen(false);
   };

@@ -18,9 +18,9 @@ export default function SearchGameBar({ onSearch }) {
         type="text"
         value={searchText}
         onChange={handleChange}
-        placeholder="Buscar juego..."
+        placeholder="Search game..."
       />
-      <button onClick={handleSearch}>Buscar</button>
+      <button onClick={handleSearch}>Search</button>
     </div>
   );
 }

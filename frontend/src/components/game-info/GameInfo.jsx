@@ -3,8 +3,10 @@ import axios from "axios";
 import { useNavigate, Link, useLocation, useParams } from "react-router-dom";
 import Load from "../load-element/Load";
 import "./GameInfo.css";
+import { useSelector } from "react-redux";
 
 export default function GameInfo() {
+  const userData = JSON.parse(window.localStorage.getItem("userLoginData"));
   const { gameName } = useParams();
   const location = useLocation();
   const isFirstRender = useRef(true);
@@ -12,6 +14,8 @@ export default function GameInfo() {
   const [isLoading, setIsLoading] = useState(false);
   const [gameData, setGameData] = useState(null);
   const [isInWishlist, setIsInWishlist] = useState(false);
+  const isLoggedIn = useSelector((state) => state.authUser.isLoggedIn);
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -19,9 +23,14 @@ export default function GameInfo() {
   const fetchData = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch(
-        `http://localhost:8000/api/users/1/games/${gameName}`
-      );
+      let url;
+      if (userData?.userId) {
+        url = `http://localhost:8000/api/users/${userData.userId}/games/${gameName}`;
+      } else {
+        url = `http://localhost:8000/api/users/games/${gameName}`;
+      }
+
+      const response = await fetch(url);
       const data = await response.json();
       setGameData(data);
       setIsInWishlist(data?.whishlist ? true : false);
@@ -33,7 +42,7 @@ export default function GameInfo() {
   const handleAddToWishlist = () => {
     console.log(gameData.id);
     axios
-      .post(`http://localhost:8000/api/games/${gameData.id}/users/1`, {
+      .post(`http://localhost:8000/api/games/${gameData.id}/users/${userData.userId}`, {
         whishlist: true,
       })
       .then((response) => {
@@ -56,7 +65,6 @@ export default function GameInfo() {
         console.error("Error:", error);
       });
   };
-  console.log(isInWishlist);
   return (
     <div>
       {isLoading ? (
@@ -89,12 +97,18 @@ export default function GameInfo() {
                     </div>
                   ) : (
                     <div>
-                      <div
-                        className="game_info_favorites_button"
-                        onClick={handleAddToWishlist}
-                      >
-                        <p>Add this game to your wishlist.</p>
-                      </div>
+                      {isLoggedIn ? (
+                        <div
+                          className="game_info_favorites_button"
+                          onClick={handleAddToWishlist}
+                        >
+                          <p>Add this game to your wishlist.</p>
+                        </div>
+                      ) : (
+                        <Link to="/login" className="game_info_favorites_button">
+                          <p>Add this game to your wishlist.</p>
+                        </Link>
+                      )}
                     </div>
                   )}
                 </div>
