@@ -4,7 +4,8 @@ import { useNavigate, Link, useLocation, useParams } from "react-router-dom";
 import Load from "../load-element/Load";
 import "./GameInfo.css";
 
-export default function GameInfo({ searchTerm }) {
+export default function GameInfo({ searchTerm, selectedPlatform }) {
+  console.log(selectedPlatform);
   const { gameName } = useParams();
   const location = useLocation();
   const isFirstRender = useRef(true);

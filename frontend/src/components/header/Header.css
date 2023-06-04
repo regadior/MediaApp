@@ -21,6 +21,7 @@ header {
     font-family: overpass;
     position: sticky;
     top: 0;
+    z-index: 5;
 }
 
 .header2 {
