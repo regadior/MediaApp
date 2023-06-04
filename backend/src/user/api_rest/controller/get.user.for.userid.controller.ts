@@ -8,6 +8,7 @@ export class GetUserForUserIdController {
   @HttpCode(HttpStatus.OK)
   public async getGameForUser(@Param('userId') userId: number) {
     const userTarget = await this.findUserByIdUseCase.findUserByUserId(userId);
+    delete userTarget.password;
     return userTarget;
   }
 }

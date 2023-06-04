@@ -18,13 +18,17 @@ import { UserRolMapper } from './infrastructure/mapper/user.rol.mapper';
 import { TokenUtils } from 'src/auth/application/use_case/token.utils';
 import { FindUserByIdUseCase } from './application/use_case/find.user.by.id.use.case';
 import { GetUserForUserIdController } from './api_rest/controller/get.user.for.userid.controller';
+import { PatchUserController } from './api_rest/controller/patch.user.by.userid.controller';
+import { UpdateUserUseCase } from './application/use_case/update.user.usecase';
+import { RestPatchUserMapper } from './api_rest/mapper/rest.patch.user.mapper';
 @Module({
   imports: [TypeOrmModule.forFeature([UserEntity, UserRolEntity])],
-  controllers: [UserRegisterController, UserLoginController, GetUserForUserIdController],
+  controllers: [UserRegisterController, UserLoginController, GetUserForUserIdController, PatchUserController],
   providers: [
     CreateUserUseCase,
     FindUserByIdUseCase,
     LogUserUseCase,
+    UpdateUserUseCase,
     {
       provide: UserRepository,
       useClass: UserTypeOrmRepositoryImpl,
@@ -36,6 +40,7 @@ import { GetUserForUserIdController } from './api_rest/controller/get.user.for.u
     RestUserMapper,
     UserMapper,
     UserRolMapper,
+    RestPatchUserMapper,
     UserRolInitializer,
     TokenUtils,
     JwtService,
