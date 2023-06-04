@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../redux/AuthUser";
 import "./Header.css";
 export default function Header() {
-  let usuario = "regadior";
+  const userData = JSON.parse(window.localStorage.getItem("userData"));
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.authUser.isLoggedIn);
   const handleLogout = () => {
@@ -23,12 +23,12 @@ export default function Header() {
         <ul className="header_nav">
           <li>
             <Link className="header_Link" to="/?page=1&search=&plattform=">
-              Buscar
+              Search
             </Link>
           </li>
           <li>
-            <Link className="header_Link" to={`/${usuario}/listas`}>
-              Mis listas
+            <Link className="header_Link" to={`/${userData.username}/lists`}>
+              My Lists
             </Link>
           </li>
         </ul>
@@ -37,7 +37,7 @@ export default function Header() {
             <>
               <Link
                 className="header_Link header_login1"
-                to={`/profile/${usuario}`}
+                to={`/${userData.username}`}
               >
                 <img src={usuarionolog} alt="User avatar" />
               </Link>

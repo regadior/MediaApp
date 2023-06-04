@@ -6,6 +6,7 @@ import RegisterPage from './pages/session/register/RegisterPage';
 import Header from './components/header/Header';
 import ProfilePage from './pages/profile/ProfilePage';
 import GameDetails from './pages/game-details/GameDetails';
+import Lists from './pages/lists/Lists';
 function App() {
 
 
@@ -15,8 +16,9 @@ function App() {
         <Routes>
           <Route path='/login' element={<LoginPage />} />
           <Route path='/register' element={<RegisterPage />} />
-          <Route path='/profile/:username' element={<ProfilePage />} />
+          <Route path='/:username' element={<ProfilePage />} />
           <Route path='/game/:gameName' element={<GameDetails />} />
+          <Route path='/:username/lists' element={<Lists />} />
           <Route path='/' element={<Index />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
