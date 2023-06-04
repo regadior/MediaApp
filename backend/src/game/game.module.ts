@@ -48,6 +48,8 @@ import { GetRawgGamePaltformController } from './api_rest/controller/rawg/get.ra
 import { GetRawgGamePublisherController } from './api_rest/controller/rawg/get.rawg.game.publisher.controller';
 import { GetRawgGameStoresontroller } from './api_rest/controller/rawg/get.rawg.game.stores.controller';
 import { RawgGameListController } from './api_rest/controller/rawg/get.rawg.game.list.controller';
+import { TokenUtils } from 'src/auth/application/use_case/token.utils';
+import { JwtService } from '@nestjs/jwt';
 @Module({
   imports: [TypeOrmModule.forFeature([UserGameEntity, UserGameSavegameEntity, GameStateEntity, UserEntity, UserRolEntity]), UserModule],
   controllers: [
@@ -103,6 +105,8 @@ import { RawgGameListController } from './api_rest/controller/rawg/get.rawg.game
     GetStoresService,
     GetGameByIdService,
     GetGameViewService,
+    TokenUtils,
+    JwtService,
   ],
 })
 export class GameModule {}
