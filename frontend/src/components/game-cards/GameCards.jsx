@@ -4,18 +4,17 @@ import "./GameCards.css";
 import NextButton from "../buttons-next-prev/next/NextButton";
 import PrevButton from "../buttons-next-prev/previous/PrevButton";
 import Load from "../load-element/Load";
-export default function GameCards({ searchTerm, selectedPlatform }) {
+export default function GameCards({ searchTerm, selectedPlatform, selectedPageSize }) {
   const isFirstRender = useRef(true);
   const navigate = useNavigate();
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(false);
   const [gameData, setGameData] = useState(null);
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(null);
+  const [pageSize, setPageSize] = useState("");
   const [search, setSearch] = useState("");
   const [ordering, setOrdering] = useState("");
   const [platforms, setPlatforms] = useState("");
-
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     const pageParam = searchParams.get("page");
@@ -25,14 +24,16 @@ export default function GameCards({ searchTerm, selectedPlatform }) {
     setSearch(searchParam);
     const plattform = searchParams.get("plattform");
     setPlatforms(plattform);
+    const pageSize = searchParams.get("pageSize");
+    setPageSize(pageSize);
 
 }, [location.pathname, location.search]);
   useEffect(() => {
-    navigate(`?page=${1}&search=${searchTerm}&plattform=${selectedPlatform}`);
-  }, [searchTerm, selectedPlatform]);
+    navigate(`?page=${1}&pageSize=${selectedPageSize}&search=${searchTerm}&plattform=${selectedPlatform}`);
+  }, [searchTerm, selectedPlatform, selectedPageSize]);
   useEffect(() => {
     fetchData();
-  }, [page, search, ordering, platforms]);
+  }, [page, search, ordering, platforms, pageSize]);
 
   const fetchData = async () => {
     setIsLoading(true);
