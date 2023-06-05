@@ -39,7 +39,6 @@ export class GetGamesDetailsService {
       }
     }
     const queryString = qs.stringify(queryParams);
-    console.log(platforms);
     const apiUrl = `https://api.rawg.io/api/games?key=${process.env.RAWG_API_KEY}&${queryString}`;
 
     try {

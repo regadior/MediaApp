@@ -10,15 +10,39 @@ export default function GameInfo() {
   const userData = JSON.parse(window.localStorage.getItem("userLoginData"));
   const { gameName } = useParams();
   const location = useLocation();
-  const isFirstRender = useRef(true);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [gameData, setGameData] = useState(null);
   const [isInWishlist, setIsInWishlist] = useState(false);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState({
+    state: gameData?.whishlist?.gameState?.state ?? "",
+    score: gameData?.whishlist?.score ?? "",
+  });
+
+  const [inputValue, setInputValue] = useState({
+    state: gameData?.whishlist?.gameState?.state ?? "",
+    score: gameData?.whishlist?.score ?? "",
+  });
+
+  const popupRef = useRef(null);
   const isLoggedIn = useSelector((state) => state.authUser.isLoggedIn);
 
   useEffect(() => {
     fetchData();
+  }, []);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (popupRef.current && !popupRef.current.contains(event.target)) {
+        setIsPopupOpen(false);
+      }
+    }
+
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
   }, []);
 
   const fetchData = async () => {
@@ -40,6 +64,7 @@ export default function GameInfo() {
     }
     setIsLoading(false);
   };
+
   const handleAddToWishlist = () => {
     axios
       .post(
@@ -60,6 +85,7 @@ export default function GameInfo() {
         console.error("Error:", error);
       });
   };
+
   const handleRemoveToWishlist = () => {
     axios
       .delete(
@@ -77,24 +103,66 @@ export default function GameInfo() {
         console.error("Error:", error);
       });
   };
-  const handeleEditGame = () => {
-    console.log(gameData.id);
-    axios
-      .patch(
-        `http://localhost:8000/api/games/${gameData.id}/users/${userData.userId}`,
-        {},
+  const handleSaveClick = async () => {
+    if (!selectedOption.state && !inputValue.score) {
+      return;
+    }
+    try {
+      const patchData = {};
+      if (selectedOption.state) {
+        patchData.state = selectedOption.state;
+      }
+      if (inputValue.score) {
+        patchData.score = parseFloat(inputValue.score);
+      }
+
+      await axios.patch(
+        `http://localhost:8000/api/users/${userData.userId}/user-games/${gameData.whishlist.userGameId}`,
+        patchData,
         {
           headers: {
             Authorization: `Bearer ${userData.accessToken}`,
           },
         }
-      )
-      .then((response) => {
-        fetchData();
-      })
-      .catch((error) => {
-        console.error("Error:", error);
+      );
+      fetchData();
+      const updatedGameData = { ...gameData, ...patchData };
+      setGameData(updatedGameData);
+      setIsPopupOpen(false);
+
+      // Actualizar la visualización del puntaje y el estado
+      setSelectedOption({
+        state: updatedGameData.whishlist.gameState.state,
+        score: updatedGameData.whishlist.score,
       });
+      setInputValue({
+        state: updatedGameData.whishlist.gameState.state,
+        score: updatedGameData.whishlist.score,
+      });
+    } catch (error) {
+      console.error("Error al guardar los cambios:", error);
+    }
+  };
+
+  const handleEditGame = (event) => {
+    event.stopPropagation();
+    setIsPopupOpen(true);
+  };
+
+  const handleSelectChange = (event) => {
+    const { value } = event.target;
+    setSelectedOption((prevSelectedOption) => ({
+      ...prevSelectedOption,
+      state: value,
+    }));
+  };
+
+  const handleInputChange = (event) => {
+    const { value } = event.target;
+    setInputValue((prevInputValue) => ({
+      ...prevInputValue,
+      score: value,
+    }));
   };
 
   return (
@@ -125,7 +193,7 @@ export default function GameInfo() {
                       </div>
                       <div className="game_info_buttons">
                         <div className="game_info_edit">
-                          <img src={editar} alt="" onClick={handeleEditGame}/>
+                          <img src={editar} alt="" onClick={handleEditGame} />
                         </div>
                         <div
                           className="game_info_remove_button"
@@ -186,6 +254,45 @@ export default function GameInfo() {
             </div>
           </div>
         )
+      )}
+      {isPopupOpen && (
+        <div className="GameInfo_popup" ref={popupRef}>
+          <div className="game_info_popup_content">
+            <h2>Edit Game</h2>
+            <div className="game_info_popup_form">
+              <div className="select-container">
+                <label>State:</label>
+                <select
+                  value={selectedOption.state}
+                  onChange={handleSelectChange}
+                >
+                  <option value="uncategorized">Select a State</option>
+                  <option value="playing">Playing</option>
+                  <option value="completed">Completed</option>
+                  <option value="played">Played</option>
+                  <option value="not played">Not played</option>
+                  <option value="abandoned">Abandoned</option>
+                </select>
+              </div>
+              <div className="input-container">
+                <label>Score:</label>
+                <input
+                  type="number"
+                  min="0"
+                  max="10"
+                  step="1"
+                  value={inputValue.score}
+                  onChange={handleInputChange}
+                />
+              </div>
+            </div>
+
+            <div className="game_info_popup_buttons">
+              <button onClick={handleSaveClick}>Save</button>
+              <button onClick={() => setIsPopupOpen(false)}>Cancel</button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

@@ -6,7 +6,7 @@ export class RawgGameViewController {
   @Get('/users/:userId?/games/:name')
   @HttpCode(HttpStatus.OK)
   public async getGameView(@Param('name') name: string, @Param('userId') userId?: number) {
-    console.log(userId);
+    (userId);
     try {
       const game = await this.getGameViewService.gameDetails(name, userId);
       return game;

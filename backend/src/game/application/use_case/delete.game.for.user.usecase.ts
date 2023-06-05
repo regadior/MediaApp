@@ -24,7 +24,6 @@ export class DeleteGameForUserUseCase {
     if (userGameDb == null) {
       throw new UserGameNotFoundException(`UserGame with user id ${userId} and game id ${gameId} does not exists`);
     }
-    console.log(userGameDb);
     this.userGameRepository.delete(userGameDb);
   }
 }

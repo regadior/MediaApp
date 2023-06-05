@@ -44,7 +44,6 @@ export default function ListsGame({ searchTerm, selectedPlatform, selectedPageSi
     try {
       const response = await fetch(`http://localhost:8000/api/users/${userData.userId}/favourite-games`);
       const data = await response.json();
-      console.log(data.whishlistGames);
       setGameData(data.whishlistGames);
     } catch (error) {
       console.error("Error al realizar la solicitud:", error);

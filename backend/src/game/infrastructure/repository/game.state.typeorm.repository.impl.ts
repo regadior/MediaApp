@@ -10,7 +10,9 @@ import { GameStateMapper } from '../mapper/game.state.mapper';
 export class GameStateTypeOrmRepositoryImpl implements GameStateRepository {
   constructor(private readonly gameStateMapper: GameStateMapper, @InjectRepository(GameStateEntity) private readonly gameStateRepository: Repository<GameStateEntity>) {}
   async findOneByState(state: string): Promise<GameStateModel | null> {
+    console.log(state);
     const gameState = await this.gameStateRepository.findOne({ where: { state: state } });
+    console.log(gameState);
     return gameState ? this.gameStateMapper.GameStateEntityToGameStateModel(gameState) : null;
   }
 }

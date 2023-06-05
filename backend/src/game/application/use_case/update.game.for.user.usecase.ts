@@ -15,6 +15,7 @@ export class UpdateGameForUserUseCase {
     private readonly gameStateRepository: GameStateRepository,
   ) {}
   public async UpdateGameForUserUseCase(userGameModel: UserGameModel, userGameId: number) {
+    console.log(userGameModel);
     const userGameExists = await this.userGameRepository.findOneGameUserByUserGameId(userGameId);
     if (userGameExists == null) {
       throw new UserGameNotFoundException(`UserGame with id ${userGameId} does not exists`);
@@ -23,6 +24,9 @@ export class UpdateGameForUserUseCase {
       const stateDef = await this.gameStateRepository.findOneByState('uncategorized');
       userGameModel.gameState = stateDef;
     }
+    const state = await this.gameStateRepository.findOneByState(`${userGameModel.gameState.state}`);
+    console.log(state);
+    userGameModel.gameState = state;
     console.log(userGameModel);
     this.userGameRepository.updateGameUser(userGameModel);
   }
