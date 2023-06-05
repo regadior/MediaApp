@@ -24,12 +24,12 @@ export default function Header() {
         </div>
         <ul className="header_nav">
           <li>
-            <Link className="header_Link" to="/?page=1&search=&plattform=&genre">
+            <Link className="header_Link header_Link2" to="/?page=1&search=&plattform=&genre">
               Search
             </Link>
           </li>
           <li>
-            <Link className="header_Link" to={isLoggedIn ? `/${userData.username}/lists` : "/login"}>
+            <Link className="header_Link header_Link2" to={isLoggedIn ? `/${userData.username}/lists` : "/login"}>
               My Lists
             </Link>
           </li>
