@@ -14,9 +14,11 @@ export class UpdateUserUseCase {
     if (userGameExists == null) {
       throw new UserNotFoundException(`User with id ${userId} does not exists`);
     }
-    const usernameExists = await this.userRepository.findOneByUsername(userModel.username);
-    if (usernameExists != null) {
-      throw new UsernameUsedException(`Username ${userModel.username} already exists`);
+    if (userModel.username !== userGameExists.username) {
+      const usernameExists = await this.userRepository.findOneByUsername(userModel.username);
+      if (usernameExists) {
+        throw new UsernameUsedException(`Username ${userModel.username} already exists`);
+      }
     }
     this.userRepository.createUser(userModel);
   }

@@ -45,6 +45,17 @@
   font-weight: bold;
   font-size: 30px;
   text-align: center;
+  position: relative;
+}
+.Profile_edit {
+  right: 0;
+  position: absolute;
+  top: 2%;
+  margin-left: 10px;
+  cursor: pointer;
+}
+.Profile_edit img{
+  width: 20px;
 }
 .Profile_description{
   border: 1px solid rgb(94, 94, 94);
@@ -52,4 +63,57 @@
   color: white;
   font-size: 18px;
   margin-top: 50px;
+}
+/* POP UP */
+.Profile_Popup{
+  color: white;
+  border-radius: 5px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #174453;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+}
+.profile_buttons_save_clo button{
+  background-color: #2b71b3;
+  color: white;
+  border: 0;
+  padding: 4px 8px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.profile_buttons_save_clo button:hover{
+  background-color: #225f97;
+}
+.profile_buttons_save_clo{
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-around;
+}
+.select-container {
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+.select-container select {
+  background-color: #e6f0ff;
+  border: none;
+  padding: 5px;
+  font-size: 16px;
+  color: #333;
+}
+
+.input-container {
+  margin-bottom: 10px;
+}
+
+.input-container input {
+  background-color: #e6f0ff;
+  border: none;
+  padding: 5px;
+  font-size: 16px;
+  color: #333;
 }
