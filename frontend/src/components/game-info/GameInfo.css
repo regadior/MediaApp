@@ -172,6 +172,74 @@
   justify-content: space-between;
   align-items: center;
 }
+/* POP UP */
+.GameInfo_popup {
+  color: white;
+  border-radius: 5px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #174453;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+}
+
+.game_info_popup_buttons button {
+  background-color: #2b71b3;
+  color: white;
+  border: 0;
+  padding: 4px 8px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.game_info_popup_buttons button:hover {
+  background-color: #225f97;
+}
+
+.game_info_popup_buttons {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.select-container {
+  margin-top: 15px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.select-container select {
+  background-color: #e6f0ff;
+  border: none;
+  padding: 5px;
+  font-size: 16px;
+  color: #333;
+}
+.select-container select option {
+  color: #333;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.input-container input {
+  background-color: #e6f0ff;
+  border: none;
+  padding: 5px;
+  font-size: 16px;
+  color: #333;
+}
+.game_info_popup_form{
+  display: flex;
+  flex-direction: column;
+}
 
 @media only screen and (max-width: 1150px) {
   .game_info_name {

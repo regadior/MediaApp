@@ -19,7 +19,6 @@ export class GetGameViewService {
       const game = await response.json();
       if (userId) {
         const whishlist = await this.userGameRepository.findOneGameUserByGameIdAndUserId(game.id, userId);
-        console.log(whishlist);
         game.whishlist = whishlist; // Añadir la propiedad 'whishlist' al objeto 'game'
       }
       return game; // Devolver el objeto 'game' actualizado

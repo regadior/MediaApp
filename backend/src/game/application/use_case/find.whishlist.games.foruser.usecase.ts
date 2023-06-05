@@ -27,7 +27,6 @@ export class FindWhishlistGameForUserUseCase {
     }
     const gameDetails = [];
     for (const game of gameWishlistDb) {
-      console.log(game.gameId);
       const gameDetail = await this.getGameByIdService.gameGameById(game.gameId);
       gameDetails.push(gameDetail);
     }
