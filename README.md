@@ -11,6 +11,7 @@
 </h4>
 
  <a href="#ℹ️-about">ℹ️ About</a> •
+ <a href="#-install"> ✨ Install</a> •
  <a href="#-backend"> 🔒 Backend</a> •
  <a href="#-general-app-features"> ⚒ General-App-Features</a> •
  <a href="#-backend-features"> 📋 Backend-Features</a> •
@@ -42,6 +43,26 @@ This project consists of a web made with ` React.js `, `Nestjs` and `Typescript`
   - ![GitHub Actions](https://img.shields.io/badge/github%20actions-%232671E5.svg?&logo=githubactions&logoColor=white)
   - ![Postman](https://img.shields.io/badge/Postman-FF6C37?&logo=postman&logoColor=white)
   - ![Swagger](https://img.shields.io/badge/-Swagger-%23Clojure?&logo=swagger&logoColor=white)
+
+## ✨ Install
+#### Windows
+1. Install Node: 
+	- Click this [link]([https://jdk.java.net/19/](https://nodejs.org/es) "link") to download Node.
+
+2. Install Docker: 
+	- Click this [link]([https://maven.apache.org/download.cgi](https://www.docker.com/)") to download Docker.
+
+3. Clone this repository: `git clone https://github.com/plexus-tech/book-swap-hub.git`.
+
+4. Run de docker-compose : 
+	- Go to the docker folder to run the docker-compose.
+	- Ejecuta el Docker-compose con: `docker-compose up`
+5. Run the frontend: 
+	- Go to Backend folder to run the backend: `cd backend`.
+	- 🚀Run the app with: `npm run start:dev`
+6. Run the backend: 
+	- Go to Frontend folder to run the Frontend: `cd frontend`.
+	- 🚀Run the app with: `npm run start`
 ## 🔒 Backend
 ### 📋 Backend-Features
 - Built using **SOLID** principles.
@@ -84,6 +105,8 @@ This project consists of a web made with ` React.js `, `Nestjs` and `Typescript`
 - You can rate games.
 
 - You can add games to favorites.
+
+- You delete your games.
 
 - ~~You can store your information about the game(state, description ...)~~.
 
