@@ -1,0 +1,58 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    color: white;
+    text-decoration: none;
+}
+footer{
+    margin-top: 50px;
+    width: 100%;
+    height: 190px;
+    background-color: #0B252E;
+    display: grid;
+    grid-template:  "logo col1 col2 col3"
+                    "logo col1 col2 col3"
+                    "copyr copyr copyr copyr"
+    
+    ;
+    grid-template-columns: 25% 25% 25% 25%;
+}
+
+.logo{
+    grid-area: logo;
+}
+.logo>img{
+    margin: 15px;
+
+}
+.col1{
+    grid-area: col1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+
+}
+.col2{
+    grid-area: col2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+.col3{
+    grid-area: col3;
+
+}
+.copyr{ 
+    grid-area: copyr;
+    display: flex;
+    align-items: center;    
+    justify-content: center;
+}
+
+
+

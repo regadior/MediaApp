@@ -7,6 +7,8 @@ import Header from './components/header/Header';
 import ProfilePage from './pages/profile/ProfilePage';
 import GameDetails from './pages/game-details/GameDetails';
 import Lists from './pages/lists/Lists';
+import Footer from './components/footer/Footer';
+import Contact from './pages/contact/Contact';
 function App() {
 
 
@@ -19,9 +21,11 @@ function App() {
           <Route path='/:username' element={<ProfilePage />} />
           <Route path='/game/:gameName' element={<GameDetails />} />
           <Route path='/:username/lists' element={<Lists />} />
+          <Route path='/contact' element={<Contact />} />
           <Route path='/' element={<Index />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
+      <Footer/>
     </>
   );
 }
