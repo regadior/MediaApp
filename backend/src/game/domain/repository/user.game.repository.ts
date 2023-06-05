@@ -8,5 +8,6 @@ export interface UserGameRepository {
   findOneGameUserByUserGameId(userGameId: number): Promise<UserGameModel | null>;
   findAllByWhishlistTrueAndUserId(userId: number): Promise<UserGameModel[] | null>;
   updateGameUser(userGameModel: UserGameModel);
+  delete(userGameModel: UserGameModel);
 }
 export const UserGameRepository = Symbol('UserGameRepository');

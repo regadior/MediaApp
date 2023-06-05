@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { useNavigate, Link, useLocation, useParams } from "react-router-dom";
 import Load from "../load-element/Load";
+import editar from "../../assets/editar.png";
 import "./GameInfo.css";
 import { useSelector } from "react-redux";
 
@@ -60,18 +61,42 @@ export default function GameInfo() {
       });
   };
   const handleRemoveToWishlist = () => {
-    console.log(gameData.id);
     axios
-      .post(`http://localhost:8000/api/games/${gameData.id}/users/1`, {
-        whishlist: true,
-      })
+      .delete(
+        `http://localhost:8000/api/users/${userData.userId}/games/${gameData.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${userData.accessToken}`,
+          },
+        }
+      )
       .then((response) => {
-        // Lógica adicional después de la respuesta del servidor
+        fetchData();
       })
       .catch((error) => {
         console.error("Error:", error);
       });
   };
+  const handeleEditGame = () => {
+    console.log(gameData.id);
+    axios
+      .patch(
+        `http://localhost:8000/api/games/${gameData.id}/users/${userData.userId}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${userData.accessToken}`,
+          },
+        }
+      )
+      .then((response) => {
+        fetchData();
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
   return (
     <div>
       {isLoading ? (
@@ -92,13 +117,22 @@ export default function GameInfo() {
                 <div className="game_info_favorites_score">
                   {isInWishlist ? (
                     <div>
-                      <div
-                        className="game_info_favorites_button"
-                      >
-                        <p>{gameData.whishlist.gameState.description}</p>
+                      <div className="game_info_favorites_button">
+                        <p>{gameData.whishlist.gameState.state}</p>
                       </div>
                       <div className="game_info_score_button">
-                        <p>Score: {gameData.whishlist.score}</p>
+                        <p>Your score: {gameData.whishlist.score}</p>
+                      </div>
+                      <div className="game_info_buttons">
+                        <div className="game_info_edit">
+                          <img src={editar} alt="" onClick={handeleEditGame}/>
+                        </div>
+                        <div
+                          className="game_info_remove_button"
+                          onClick={handleRemoveToWishlist}
+                        >
+                          <p>Remove</p>
+                        </div>
                       </div>
                     </div>
                   ) : (
@@ -130,7 +164,7 @@ export default function GameInfo() {
                   {gameData.description_raw}
                 </div>
                 <p className="game_info_tags">
-                  Tags: 
+                  Tags:
                   {gameData.tags.map((tag, index) => (
                     <React.Fragment key={tag.id}>
                       <span>{tag.name}</span>
