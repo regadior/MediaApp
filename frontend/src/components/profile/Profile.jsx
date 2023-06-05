@@ -79,7 +79,6 @@ export default function Profile() {
         },
         body: JSON.stringify(patchData),
       });
-
       // Actualizar los datos en el almacenamiento local
       const updatedUserData = { ...userData, [selectedOption]: inputValue };
       window.localStorage.setItem("userData", JSON.stringify(updatedUserData));

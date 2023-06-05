@@ -12,7 +12,7 @@ export class PatchGameForUserController {
     private readonly findUserGameByIdUseCase: FindUserGameByIdUseCase,
     private readonly tokenUtils: TokenUtils,
   ) {}
-  @Patch('/:userId/games/:userGameId')
+  @Patch('/:userId/user-games/:userGameId')
   @HttpCode(HttpStatus.NO_CONTENT)
   @UsePipes(new ValidationPipe({ transform: true }))
   public async patchGameForUser(
@@ -21,6 +21,7 @@ export class PatchGameForUserController {
     @Param('userId') userId: number,
     @Headers('Authorization') token: string,
   ) {
+    console.log(userGamePatchDto);
     await this.tokenUtils.verifyTokenByUserId(token, userId);
     const userTarget = await this.findUserGameByIdUseCase.findUserGameByIdUseCase(userGameId);
     this.updateGameForUserUseCase.UpdateGameForUserUseCase(this.restPatchGameUserMapper.patchUserGameDtoToUserGameModel(userGamePatchDto, userTarget), userGameId);
