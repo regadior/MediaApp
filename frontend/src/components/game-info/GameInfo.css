@@ -82,6 +82,8 @@
   background-color: #2196f3;
   border-radius: 5px;
   border: none;
+  cursor: pointer;
+  text-align: center;
 }
 .game_info_favorites_button:hover {
   background-color: #1077cc;

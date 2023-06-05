@@ -40,12 +40,16 @@ export default function GameInfo() {
     setIsLoading(false);
   };
   const handleAddToWishlist = () => {
-    console.log(gameData.id);
     axios
       .post(
         `http://localhost:8000/api/games/${gameData.id}/users/${userData.userId}`,
         {
           whishlist: true,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${userData.accessToken}`,
+          },
         }
       )
       .then((response) => {
