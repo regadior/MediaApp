@@ -47,6 +47,7 @@
   height: 80vh;
 }
 .index_total_next_prev{
+  margin-top: 50px;
   display: flex;
   justify-content: center;
 }
