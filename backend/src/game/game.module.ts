@@ -50,6 +50,8 @@ import { GetRawgGameStoresontroller } from './api_rest/controller/rawg/get.rawg.
 import { RawgGameListController } from './api_rest/controller/rawg/get.rawg.game.list.controller';
 import { TokenUtils } from 'src/auth/application/use_case/token.utils';
 import { JwtService } from '@nestjs/jwt';
+import { DeleteGameForUserController } from './api_rest/controller/delete.game.for.user.controller';
+import { DeleteGameForUserUseCase } from './application/use_case/delete.game.for.user.usecase';
 @Module({
   imports: [TypeOrmModule.forFeature([UserGameEntity, UserGameSavegameEntity, GameStateEntity, UserEntity, UserRolEntity]), UserModule],
   controllers: [
@@ -65,6 +67,7 @@ import { JwtService } from '@nestjs/jwt';
     GetGameSaveGameController,
     GetWhishlistGameForUserController,
     RawgGameViewController,
+    DeleteGameForUserController,
   ],
   providers: [
     UpdateGameForUserUseCase,
@@ -74,6 +77,7 @@ import { JwtService } from '@nestjs/jwt';
     CreateSavegameForUserGameUseCase,
     CreateFavouriteGameForUserUseCase,
     FindSaveGameByIdForUserUseCase,
+    DeleteGameForUserUseCase,
     UserGameStateInitializer,
     GameStateMapper,
     UserGameMapper,

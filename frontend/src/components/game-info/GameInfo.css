@@ -73,7 +73,7 @@
 } */
 
 .game_info_favorites_button {
-  width: 200px;
+  width: 180px;
   margin-top: 15px;
   color: white;
   text-decoration: none;
@@ -84,6 +84,22 @@
   border: none;
   cursor: pointer;
   text-align: center;
+}
+.game_info_remove_button {
+  width: 90px;
+  margin-top: 15px;
+  color: white;
+  text-decoration: none;
+  padding: 10px;
+  font-size: 12px;
+  background-color: #f12525;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+}
+.game_info_remove_button:hover {
+  background-color: #bd1818;
 }
 .game_info_favorites_button:hover {
   background-color: #1077cc;
@@ -144,6 +160,17 @@
 }
 .game_info_favorites_button_log:hover {
   background-color: #1077cc;
+}
+.game_info_edit img{
+  display: flex;
+  width: 35px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+.game_info_buttons{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 @media only screen and (max-width: 1150px) {
