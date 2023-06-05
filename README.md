@@ -45,7 +45,7 @@ This project consists of a web made with ` React.js `, `Nestjs` and `Typescript`
   - ![Swagger](https://img.shields.io/badge/-Swagger-%23Clojure?&logo=swagger&logoColor=white)
 
 ## ✨ Install
-#### Windows
+#### Raspberry Pi OS
 1. Install Node: 
 	- Click this [link]([https://jdk.java.net/19/](https://nodejs.org/es) "link") to download Node.
 
