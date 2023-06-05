@@ -54,7 +54,6 @@ header {
 
 .header_logo .header_Link img {
     width: 200px;
-
 }
 
 /* INICIO ESTILOS DE LA PARTE DEL LOGO */
@@ -130,4 +129,88 @@ header {
     transition: padding 0.3s;
 }
 
-@media only screen and (min-width: 650px) and (max-width: 800px) {}
+@media only screen and (max-width: 1000px) {
+    .header_nav {
+        width: 150px;
+        display: flex;
+        list-style: none;
+        justify-content: space-between;
+    }
+}
+@media only screen and (max-width: 800px) {
+    .header_nav {
+        margin-left: 30px;
+    }
+    .header_logo .header_Link img {
+        width: 180px;
+    }
+}
+@media only screen and (max-width: 750px) {
+    .header_nav {
+        margin-left: 45px;
+    }
+}
+@media only screen and (max-width: 650px) {
+
+    .header2 {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .header_login2 {
+        position: initial;
+        margin-right: 0px;
+    }
+    .header_logo{
+        margin-top: 10px;
+    }
+    .header_logo .header_Link {
+        position: initial;
+         margin-left: 0px;
+    }
+    header {
+        height: 200px;
+        padding: 0px;
+        display: flex;
+        justify-content: unset;
+        align-items: unset;
+        position: initial;
+
+    }
+    .header_nav {
+        margin-top: 0px;
+        margin-left: 0px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .header_nav li  {
+        border: 1px solid black;
+        width: 100%;
+        text-align: center;
+        
+    }
+    .header_Link2 {
+        display: block;
+        width: 100%;
+        background-color: #2b71b3;
+    }
+    .header_Link2:hover {
+        background-color: #3e8eda;
+    }
+    .header_login2 {
+        position: initial;
+        margin-right: 0px;
+        padding: 5px;
+        color: #fff;
+        margin-bottom: 15px;
+    }
+    .header_login2:hover {
+        padding: 5px;
+    }
+    
+    
+}
