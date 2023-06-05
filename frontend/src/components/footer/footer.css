@@ -53,6 +53,18 @@ footer{
     align-items: center;    
     justify-content: center;
 }
-
+@media only screen and (max-width: 850px) {
+    footer {
+        grid-template:
+            "logo logo logo logo"
+            "col1 col1 col2 col2"
+            "col3 col3 col3 col3"
+            "copyr copyr copyr copyr";
+    }
+    .logo{
+        display: flex;
+        justify-content: center;
+    }
+}
 
 
