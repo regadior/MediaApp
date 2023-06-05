@@ -90,7 +90,6 @@ export default function GameInfo() {
                     <div>
                       <div
                         className="game_info_favorites_button"
-                        onClick={handleRemoveToWishlist}
                       >
                         <p>{gameData.whishlist.gameState.description}</p>
                       </div>
@@ -110,7 +109,7 @@ export default function GameInfo() {
                       ) : (
                         <Link
                           to="/login"
-                          className="game_info_favorites_button"
+                          className="game_info_favorites_button_log"
                         >
                           <p>Add this game to your lists.</p>
                         </Link>
